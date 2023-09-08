@@ -36,7 +36,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "src/theme-soho-light.scss",
+                "bundleName": "soho-light",
+                "inject": false
+              },
+              {
+                "input": "src/theme-soho-dark.scss",
+                "bundleName": "soho-dark",
+                "inject": false
+              }
             ],
             "scripts": []
           },
