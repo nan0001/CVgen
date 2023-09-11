@@ -1,6 +1,7 @@
 <form
   [formGroup]="authForm"
-  class="auth-form card flex flex-column justify-content-center gap-3">
+  class="auth-form card flex flex-column justify-content-center gap-3"
+  (submit)="onSubmit()">
   <div class="flex flex-column gap-2">
     <label htmlFor="username">Username</label>
     <input
@@ -13,8 +14,8 @@
     <small
       id="username-help"
       class="error-msg"
-      [ngClass]="{ visible: !username.valid && username.touched }"
-      >Enter your username.</small
+      [ngClass]="{ visible: username.invalid && username.touched }"
+      >{{ showError(username, 'username') }}</small
     >
   </div>
   <div class="flex flex-column gap-2">
@@ -27,8 +28,8 @@
     <small
       id="password-help"
       class="error-msg"
-      [ngClass]="{ visible: !password.valid && password.touched }"
-      >Enter your password.</small
+      [ngClass]="{ visible: password.invalid && password.touched }"
+      >{{ showError(password, 'password') }}</small
     >
   </div>
   <div class="btn-container flex justify-content-around gap-2">
@@ -38,6 +39,7 @@
       type="submit"></p-button>
     <p-button
       label="Cancel"
-      styleClass="p-button-raised p-button-text"></p-button>
+      styleClass="p-button-raised p-button-text"
+      (onClick)="onCancel()"></p-button>
   </div>
 </form>
