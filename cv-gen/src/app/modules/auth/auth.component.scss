@@ -1,0 +1,22 @@
+@use '../../styles/mixins' as m;
+
+:host {
+  @include m.host-flex;
+}
+
+.auth-form{
+  width: 40%;
+  padding: var(--content-padding);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius);
+  box-shadow: 4px 5px 10px var(--maskbg);
+}
+
+.error-msg{
+  color: var(--red-500);
+  visibility: hidden;
+
+  &.visible{
+    visibility: visible;
+  }
+}
