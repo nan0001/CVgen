@@ -122,6 +122,13 @@
               "src/**/*.html"
             ]
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2,
+            "browserTarget": "cv-gen:build:production"
+          }
         }
       }
     }
