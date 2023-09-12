@@ -9,6 +9,8 @@ import {
 } from '@angular/forms';
 import { ValidatorType } from './models/validator.model';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { LanguageService } from '../core/services/language.service';
 
 @Component({
   selector: 'app-auth',
@@ -20,7 +22,12 @@ export class AuthComponent {
   public authForm = this.fb.group({
     username: [
       '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(15)],
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(25),
+        Validators.email,
+      ],
     ],
     password: [
       '',
@@ -38,7 +45,8 @@ export class AuthComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private langService: LanguageService
   ) {}
 
   public get username(): FormControl<string | null> {
@@ -50,6 +58,7 @@ export class AuthComponent {
   }
 
   public onSubmit(): void {
+    console.log(this.authForm);
     if (this.authForm.valid) {
       this.router.navigate(['']);
     }
@@ -61,44 +70,96 @@ export class AuthComponent {
     this.router.navigate(['']);
   }
 
-  public showError(control: FormControl<string | null>, name: string): string {
+  public showError(
+    control: FormControl<string | null>,
+    name: string
+  ): Observable<string> {
+    // TODO: refactor code below
     if (control.hasError('required')) {
-      return `Enter your ${name}.`;
+      // return `Enter your ${name}.`;
+      return this.langService.getTranslationObservable('AUTH.errors.required', {
+        name,
+      });
+    }
+
+    if (control.hasError('email')) {
+      // return `Enter your ${name}.`;
+      return this.langService.getTranslationObservable('AUTH.errors.email', {
+        name,
+      });
     }
 
     if (control.hasError('minlength')) {
-      return `Minimum length is ${control.errors?.['minlength'].requiredLength} characters.`;
+      // return `Minimum length is ${control.errors?.['minlength'].requiredLength} characters.`;
+      const num = control.errors?.['minlength'].requiredLength;
+      return this.langService.getTranslationObservable(
+        'AUTH.errors.minlength',
+        {
+          num,
+        }
+      );
     }
 
     if (control.hasError('maxlength')) {
-      return `Maximum length is ${control.errors?.['maxlength'].requiredLength} characters.`;
+      // return `Maximum length is ${control.errors?.['maxlength'].requiredLength} characters.`;
+      const num = control.errors?.['maxlength'].requiredLength;
+      return this.langService.getTranslationObservable(
+        'AUTH.errors.maxlength',
+        {
+          num,
+        }
+      );
     }
 
     if (control.hasError('hasNumeric')) {
-      return `${
-        name[0].toUpperCase() + name.slice(1)
-      } must contain at least one number.`;
+      // return `${
+      //   name[0].toUpperCase() + name.slice(1)
+      // } must contain at least one number.`;
+      return this.langService.getTranslationObservable(
+        'AUTH.errors.hasNumeric',
+        {
+          name,
+        }
+      );
     }
 
     if (control.hasError('hasLowerCase')) {
-      return `${
-        name[0].toUpperCase() + name.slice(1)
-      } must contain at least one lower case character.`;
+      // return `${
+      //   name[0].toUpperCase() + name.slice(1)
+      // } must contain at least one lower case character.`;
+      return this.langService.getTranslationObservable(
+        'AUTH.errors.hasLowerCase',
+        {
+          name,
+        }
+      );
     }
 
     if (control.hasError('hasUpperCase')) {
-      return `${
-        name[0].toUpperCase() + name.slice(1)
-      } must contain at least one upper case character.`;
+      // return `${
+      //   name[0].toUpperCase() + name.slice(1)
+      // } must contain at least one upper case character.`;
+      return this.langService.getTranslationObservable(
+        'AUTH.errors.hasUpperCase',
+        {
+          name,
+        }
+      );
     }
 
     if (control.hasError('hasSpecialChars')) {
-      return `${
-        name[0].toUpperCase() + name.slice(1)
-      } must contain at least one special character.`;
+      // return `${
+      //   name[0].toUpperCase() + name.slice(1)
+      // } must contain at least one special character.`;
+      return this.langService.getTranslationObservable(
+        'AUTH.errors.hasSpecialChars',
+        {
+          name,
+        }
+      );
     }
 
-    return 'Ok';
+    return of('Ok');
   }
 
   private createValidator(propName: ValidatorType): ValidatorFn {

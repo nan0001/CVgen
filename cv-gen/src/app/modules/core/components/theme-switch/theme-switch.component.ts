@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
-import { THEMES } from '../../models/themes.model';
+import { THEMES } from '../../constants/themes.constant';
 import { Subscription } from 'rxjs';
 import {
   animate,

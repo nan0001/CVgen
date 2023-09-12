@@ -1,0 +1,18 @@
+{
+  "AUTH":{
+    "username": "Username",
+    "password": "Password",
+    "cancel": "Cancel",
+    "confirm":"Confirm",
+    "errors": {
+      "required": "Enter your {{name}}.",
+      "email": "{{name}} should be an email.",
+      "minlength": "Minimum length is {{num}} characters.",
+      "maxlength": "Maximum length is {{num}} characters.",
+      "hasNumeric": "{{name}} must contain at least one number.",
+      "hasLowerCase": "{{name}} must contain at least one lower case character.",
+      "hasUpperCase": "{{name}} must contain at least one upper case character.",
+      "hasSpecialChars": "{{name}} must contain at least one special character."
+    }
+  }
+}

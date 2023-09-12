@@ -5,10 +5,10 @@
     (submit)="onSubmit()">
     <div class="inputs flex flex-column gap-1">
       <div class="flex flex-column gap-1">
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">{{ 'AUTH.username' | translate }}</label>
         <input
           pInputText
-          placeholder="Username"
+          placeholder="johndoe@mail.com"
           type="text"
           formControlName="username"
           id="username"
@@ -17,31 +17,31 @@
           id="username-help"
           class="error-msg"
           [ngClass]="{ visible: username.invalid && username.touched }"
-          >{{ showError(username, 'username') }}</small
+          >{{ showError(username, 'AUTH.username' | translate) | async }}</small
         >
       </div>
       <div class="flex flex-column gap-1">
-        <label for="password">Password</label>
+        <label for="password">{{ 'AUTH.password' | translate }}</label>
         <p-password
           formControlName="password"
           [feedback]="false"
           [toggleMask]="true"
-          placeholder="Password"></p-password>
+          placeholder="********"></p-password>
         <small
           id="password-help"
           class="error-msg"
           [ngClass]="{ visible: password.invalid && password.touched }"
-          >{{ showError(password, 'password') }}</small
+          >{{ showError(password, 'AUTH.password' | translate) | async }}</small
         >
       </div>
     </div>
     <div class="btn-container flex justify-content-around gap-2">
       <p-button
-        label="Confirm"
+        [label]="'AUTH.confirm' | translate"
         styleClass="p-button-raised"
         type="submit"></p-button>
       <p-button
-        label="Cancel"
+        [label]="'AUTH.cancel' | translate"
         styleClass="p-button-raised p-button-text"
         (onClick)="onCancel()"></p-button>
     </div>

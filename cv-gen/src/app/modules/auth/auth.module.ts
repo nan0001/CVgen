@@ -5,6 +5,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PrimeDesignModule } from '../prime-design/prime-design.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [AuthComponent],
@@ -14,6 +15,7 @@ import { PrimeDesignModule } from '../prime-design/prime-design.module';
     ReactiveFormsModule,
     PrimeDesignModule,
     FormsModule,
+    TranslateModule,
   ],
 })
 export class AuthModule {}
