@@ -1,0 +1,15 @@
+@use '../../../../styles/variables' as v;
+
+:host{
+  display: flex;
+  flex-direction: column;
+}
+
+.container{
+  padding: v.$padding-vertical v.$padding-horizontal;
+  justify-content: space-between;
+}
+
+.year{
+  color: var(--text-color-secondary);
+}

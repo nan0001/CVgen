@@ -8,3 +8,40 @@
 .p-password-input{
   width: 100%;
 }
+
+.p-divider.p-divider-horizontal{
+  margin: 0.25rem 0;
+}
+
+app-theme-switch {
+  .p-button{
+    display: flex;
+    padding: .2rem var(--inline-spacing);
+    background-color: var(--surface-0);
+    border-radius: calc(var(--border-radius) * 4);
+    width: 35px;
+    overflow: hidden;
+
+    &:focus{
+      box-shadow: none !important;
+    }
+
+    &.p-button-text{
+      color: var(--text-color);
+
+      &:enabled:hover{
+        color: var(--text-color-secondary);
+      }
+    }
+  }
+}
+
+.p-card .p-card-content{
+  padding: var(--content-padding);
+}
+
+app-auth{
+  .p-card .p-card-content{
+    padding: var(--content-padding) var(--content-padding) 0;
+  }
+}

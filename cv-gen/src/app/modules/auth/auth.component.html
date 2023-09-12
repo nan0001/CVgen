@@ -1,45 +1,49 @@
-<form
-  [formGroup]="authForm"
-  class="auth-form card flex flex-column justify-content-center gap-3"
-  (submit)="onSubmit()">
-  <div class="flex flex-column gap-2">
-    <label htmlFor="username">Username</label>
-    <input
-      pInputText
-      placeholder="Username"
-      type="text"
-      formControlName="username"
-      id="username"
-      aria-describedby="username-help" />
-    <small
-      id="username-help"
-      class="error-msg"
-      [ngClass]="{ visible: username.invalid && username.touched }"
-      >{{ showError(username, 'username') }}</small
-    >
-  </div>
-  <div class="flex flex-column gap-2">
-    <label for="password">Password</label>
-    <p-password
-      formControlName="password"
-      [feedback]="false"
-      [toggleMask]="true"
-      placeholder="Password"></p-password>
-    <small
-      id="password-help"
-      class="error-msg"
-      [ngClass]="{ visible: password.invalid && password.touched }"
-      >{{ showError(password, 'password') }}</small
-    >
-  </div>
-  <div class="btn-container flex justify-content-around gap-2">
-    <p-button
-      label="Confirm"
-      styleClass="p-button-raised"
-      type="submit"></p-button>
-    <p-button
-      label="Cancel"
-      styleClass="p-button-raised p-button-text"
-      (onClick)="onCancel()"></p-button>
-  </div>
-</form>
+<p-card class="auth-card">
+  <form
+    [formGroup]="authForm"
+    class="card flex flex-column justify-content-center gap-5"
+    (submit)="onSubmit()">
+    <div class="inputs flex flex-column gap-1">
+      <div class="flex flex-column gap-1">
+        <label htmlFor="username">Username</label>
+        <input
+          pInputText
+          placeholder="Username"
+          type="text"
+          formControlName="username"
+          id="username"
+          aria-describedby="username-help" />
+        <small
+          id="username-help"
+          class="error-msg"
+          [ngClass]="{ visible: username.invalid && username.touched }"
+          >{{ showError(username, 'username') }}</small
+        >
+      </div>
+      <div class="flex flex-column gap-1">
+        <label for="password">Password</label>
+        <p-password
+          formControlName="password"
+          [feedback]="false"
+          [toggleMask]="true"
+          placeholder="Password"></p-password>
+        <small
+          id="password-help"
+          class="error-msg"
+          [ngClass]="{ visible: password.invalid && password.touched }"
+          >{{ showError(password, 'password') }}</small
+        >
+      </div>
+    </div>
+    <div class="btn-container flex justify-content-around gap-2">
+      <p-button
+        label="Confirm"
+        styleClass="p-button-raised"
+        type="submit"></p-button>
+      <p-button
+        label="Cancel"
+        styleClass="p-button-raised p-button-text"
+        (onClick)="onCancel()"></p-button>
+    </div>
+  </form>
+</p-card>

@@ -4,12 +4,8 @@
   @include m.host-flex;
 }
 
-.auth-form{
+.auth-card{
   width: 40%;
-  padding: var(--content-padding);
-  border: 1px solid var(--surface-border);
-  border-radius: var(--border-radius);
-  box-shadow: 4px 5px 10px var(--maskbg);
 }
 
 .error-msg{

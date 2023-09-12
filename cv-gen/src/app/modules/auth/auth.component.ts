@@ -98,7 +98,7 @@ export class AuthComponent {
       } must contain at least one special character.`;
     }
 
-    return '';
+    return 'Ok';
   }
 
   private createValidator(propName: ValidatorType): ValidatorFn {
