@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "cvgen-5725c": {
+      "hosting": {
+        "cv-gen": [
+          "cvgen-5725c"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "cvgen-5725c"
+  }
+}
