@@ -51,3 +51,28 @@ app-auth{
     padding: var(--content-padding) var(--content-padding) 0;
   }
 }
+
+app-crumbs{
+  .p-breadcrumb{
+    padding: var(--inline-spacing);
+
+    .p-breadcrumb-list li.p-menuitem-separator{
+      margin: 0 0.25rem 0 0.25rem;
+    }
+  }
+
+  .p-component,
+  .pi{
+    font-size: 0.75rem;
+  }
+
+  .p-icon{
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .p-icon-wrapper{
+    display: flex;
+  }
+
+}

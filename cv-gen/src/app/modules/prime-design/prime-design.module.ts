@@ -5,6 +5,7 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { CardModule } from 'primeng/card';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,7 @@ import { CardModule } from 'primeng/card';
     ButtonModule,
     DividerModule,
     CardModule,
+    BreadcrumbModule,
   ],
 })
 export class PrimeDesignModule {}

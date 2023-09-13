@@ -11,6 +11,15 @@ const routes: Routes = [
   {
     path: '',
     component: MainPageComponent,
+    children: [
+      {
+        path: 'employees',
+        loadChildren: () =>
+          import('./modules/employees/employees.module').then(
+            m => m.EmployeesModule
+          ),
+      },
+    ],
   },
 ];
 
