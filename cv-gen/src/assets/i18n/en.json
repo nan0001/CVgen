@@ -14,5 +14,11 @@
       "hasUpperCase": "{{name}} must contain at least one upper case character.",
       "hasSpecialChars": "{{name}} must contain at least one special character."
     }
+  },
+  "NAV": {
+    "employees": "Employees",
+    "projects": "Projects",
+    "cvs": "CVs",
+    "entities": "Entities"
   }
 }

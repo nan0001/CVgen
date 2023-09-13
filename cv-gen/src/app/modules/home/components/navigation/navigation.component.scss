@@ -1,0 +1,19 @@
+@use '../../../../styles/variables' as v;
+
+:host{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 17%;
+  border-right: 1px solid var(--surface-d);
+}
+
+.nav-link{
+  padding: 0 var(--content-padding);
+  line-height: 250%;
+
+  &:hover{
+    width: 100%;
+    background-color: var(--surface-c);
+  }
+}

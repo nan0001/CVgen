@@ -6,6 +6,7 @@ import { AuthComponent } from './auth.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PrimeDesignModule } from '../prime-design/prime-design.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [AuthComponent],
@@ -16,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     PrimeDesignModule,
     FormsModule,
     TranslateModule,
+    SharedModule,
   ],
 })
 export class AuthModule {}

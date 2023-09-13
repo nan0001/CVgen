@@ -1,0 +1,13 @@
+<nav>
+  <ul class="flex flex-column">
+    <li *ngFor="let link of links">
+      <a
+        [routerLink]="[link.name]"
+        routerLinkActive="active"
+        class="flex gap-2 align-items-center nav-link">
+        <i [class]="'pi ' + link.icon"></i>
+        {{ 'NAV.' + link.name | translate }}
+      </a>
+    </li>
+  </ul>
+</nav>

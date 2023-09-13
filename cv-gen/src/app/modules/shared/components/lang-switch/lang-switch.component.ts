@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { LanguageService } from '../../services/language.service';
-import { LANGUAGE } from '../../constants/language.constant';
+import { LanguageService } from '../../../core/services/language.service';
+import { LANGUAGE } from '../../../core/constants/language.constant';
 
 @Component({
   selector: 'app-lang-switch',

@@ -1,0 +1,12 @@
+@use '../../../../styles/variables' as v;
+
+:host{
+  width: 100%;
+}
+
+.header{
+  width: 100%;
+  padding: v.$padding-vertical v.$padding-horizontal;
+  background-color: var(--surface-a);
+  border-bottom: 1px solid var(--surface-d);
+}

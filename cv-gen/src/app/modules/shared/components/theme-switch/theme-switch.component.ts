@@ -4,8 +4,6 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { ThemeService } from '../../services/theme.service';
-import { THEMES } from '../../constants/themes.constant';
 import { Subscription } from 'rxjs';
 import {
   animate,
@@ -14,6 +12,8 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { THEMES } from '../../../core/constants/themes.constant';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-theme-switch',
