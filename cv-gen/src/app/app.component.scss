@@ -1,6 +1,14 @@
+@use './styles/variables' as v;
+
 :host{
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
+}
+
+.switchers{
+  position: absolute;
+  right: v.$padding-horizontal;
+  top: v.$padding-vertical;
 }

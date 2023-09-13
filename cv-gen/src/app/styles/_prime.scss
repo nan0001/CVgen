@@ -13,10 +13,11 @@
   margin: 0.25rem 0;
 }
 
-app-theme-switch {
+app-theme-switch,
+app-lang-switch {
   .p-button{
     display: flex;
-    padding: .2rem var(--inline-spacing);
+    padding: var(--inline-spacing);
     background-color: var(--surface-0);
     border-radius: calc(var(--border-radius) * 4);
     width: 35px;
@@ -32,6 +33,11 @@ app-theme-switch {
       &:enabled:hover{
         color: var(--text-color-secondary);
       }
+    }
+
+    &.p-button-icon-only{
+      width: 35px;
+      padding: var(--inline-spacing);
     }
   }
 }

@@ -1,7 +1,0 @@
-@use '../../../../styles/variables' as v;
-
-:host{
-  position: absolute;
-  right: v.$padding-horizontal;
-  top: v.$padding-vertical;
-}
