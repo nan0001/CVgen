@@ -14,7 +14,8 @@
 }
 
 app-theme-switch,
-app-lang-switch {
+app-lang-switch,
+app-employee-table {
   .p-button{
     display: flex;
     padding: var(--inline-spacing);
@@ -22,6 +23,7 @@ app-lang-switch {
     border-radius: calc(var(--border-radius) * 4);
     width: 35px;
     overflow: hidden;
+    cursor: pointer;
 
     &:focus{
       box-shadow: none !important;
@@ -39,6 +41,13 @@ app-lang-switch {
       width: 35px;
       padding: var(--inline-spacing);
     }
+  }
+}
+
+app-employee-table {
+  .p-button.p-button-text:enabled:hover{
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--primary-color);
   }
 }
 

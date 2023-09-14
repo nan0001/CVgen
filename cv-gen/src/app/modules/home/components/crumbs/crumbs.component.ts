@@ -5,7 +5,9 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-crumbs',
@@ -14,16 +16,19 @@ import { MenuItem } from 'primeng/api';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CrumbsComponent implements OnInit, OnDestroy {
-  public pathSegments: MenuItem[] = [];
+  public pathSegments$ = new BehaviorSubject<MenuItem[]>([]);
   public home = { icon: 'pi pi-home', routerLink: '/' };
   private unsubscribeLocation!: () => void;
 
-  constructor(private location: Location) {}
+  constructor(
+    private location: Location,
+    private translateService: TranslateService
+  ) {}
 
   public ngOnInit(): void {
-    this.pathSegments = this.getPathArr();
+    this.pathSegments$.next(this.getPathArr());
     this.unsubscribeLocation = this.location.onUrlChange(() => {
-      this.pathSegments = this.getPathArr();
+      this.pathSegments$.next(this.getPathArr());
     });
   }
 
@@ -31,7 +36,7 @@ export class CrumbsComponent implements OnInit, OnDestroy {
     this.unsubscribeLocation();
   }
 
-  public getPathArr() {
+  public getPathArr(): MenuItem[] {
     const arr = this.location.path().split('/').slice(1);
     const pathArr = arr.map((val, ind) => {
       return {
@@ -39,6 +44,8 @@ export class CrumbsComponent implements OnInit, OnDestroy {
         routerLink: '/' + arr.slice(0, ind + 1).join('/'),
       };
     });
+
+    // console.log(this.translateService.get(`${arr[0].toUpperCase()}.title`));
 
     return pathArr;
   }

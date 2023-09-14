@@ -9,9 +9,8 @@ import {
 } from '@angular/forms';
 import { ValidatorType } from './models/validator.model';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { LanguageService } from '../core/services/language.service';
-import { ERRORS } from './constants/errors.constant';
+import { Observable } from 'rxjs';
+import { ValidationErrorService } from '../core/services/validation-error.service';
 
 @Component({
   selector: 'app-auth',
@@ -47,7 +46,7 @@ export class AuthComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private langService: LanguageService
+    private errorService: ValidationErrorService
   ) {}
 
   public get username(): FormControl<string | null> {
@@ -75,25 +74,7 @@ export class AuthComponent {
     control: FormControl<string | null>,
     name: string
   ): Observable<string> {
-    let message = of('Ok');
-
-    ERRORS.every(val => {
-      if (control.hasError(val.error)) {
-        const param: { [key: string]: string } = val.numerical
-          ? { num: String(control.errors?.[val.error].requiredLength) }
-          : { name };
-        message = this.langService.getTranslationObservable(
-          'AUTH.errors.' + val.error,
-          param
-        );
-
-        return false;
-      }
-
-      return true;
-    });
-
-    return message;
+    return this.errorService.showError(control, name);
   }
 
   private createValidator(propName: ValidatorType): ValidatorFn {

@@ -6,6 +6,9 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { CardModule } from 'primeng/card';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [],
@@ -17,6 +20,9 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
     DividerModule,
     CardModule,
     BreadcrumbModule,
+    TableModule,
+    TabViewModule,
+    AccordionModule,
   ],
 })
 export class PrimeDesignModule {}

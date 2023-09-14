@@ -15,10 +15,44 @@
       "hasSpecialChars": "{{name}} must contain at least one special character."
     }
   },
+  "ERRORS":{
+    "required": "Enter your {{name}}.",
+    "email": "{{name}} should be an email.",
+    "minlength": "Minimum length is {{num}} characters.",
+    "maxlength": "Maximum length is {{num}} characters.",
+    "hasNumeric": "{{name}} must contain at least one number.",
+    "hasLowerCase": "{{name}} must contain at least one lower case character.",
+    "hasUpperCase": "{{name}} must contain at least one upper case character.",
+    "hasSpecialChars": "{{name}} must contain at least one special character."
+  },
   "NAV": {
     "employees": "Employees",
     "projects": "Projects",
     "cvs": "CVs",
     "entities": "Entities"
+  },
+  "EMPLOYEES":{
+    "title": "Employees",
+    "list": "Employees list",
+    "tabs": {
+      "info": {
+        "title": "Info",
+        "panelInfo": "Info",
+        "panelSkills": "Skills",
+        "panelLangs": "Languages"
+      },
+      "cvList": {
+        "title": "CV List"
+      }
+    }
+  },
+  "INFO":{
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "department": "Department",
+    "line": "Line",
+    "username": "Username",
+    "password": "Password"
   }
 }

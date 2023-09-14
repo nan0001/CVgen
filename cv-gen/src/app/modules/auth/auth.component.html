@@ -8,22 +8,9 @@
     class="card flex flex-column justify-content-center gap-5"
     (submit)="onSubmit()">
     <div class="inputs flex flex-column gap-1">
-      <div class="flex flex-column gap-1">
-        <label htmlFor="username">{{ 'AUTH.username' | translate }}</label>
-        <input
-          pInputText
-          placeholder="johndoe@mail.com"
-          type="text"
-          formControlName="username"
-          id="username"
-          aria-describedby="username-help" />
-        <small
-          id="username-help"
-          class="error-msg"
-          [ngClass]="{ visible: username.invalid && username.touched }"
-          >{{ showError(username, 'AUTH.username' | translate) | async }}</small
-        >
-      </div>
+      <app-text-input
+        [control]="{ key: 'username', value: username }"></app-text-input>
+
       <div class="flex flex-column gap-1">
         <label for="password">{{ 'AUTH.password' | translate }}</label>
         <p-password
