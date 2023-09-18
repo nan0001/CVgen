@@ -9,8 +9,6 @@ import {
 } from '@angular/forms';
 import { ValidatorType } from './models/validator.model';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { ValidationErrorService } from '../core/services/validation-error.service';
 
 @Component({
   selector: 'app-auth',
@@ -45,8 +43,7 @@ export class AuthComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router,
-    private errorService: ValidationErrorService
+    private router: Router
   ) {}
 
   public get username(): FormControl<string | null> {
@@ -68,13 +65,6 @@ export class AuthComponent {
 
   public onCancel(): void {
     this.router.navigate(['']);
-  }
-
-  public showError(
-    control: FormControl<string | null>,
-    name: string
-  ): Observable<string> {
-    return this.errorService.showError(control, name);
   }
 
   private createValidator(propName: ValidatorType): ValidatorFn {

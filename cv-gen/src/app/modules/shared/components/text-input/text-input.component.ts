@@ -5,9 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { ControlInterface } from '../../../core/models/control.model';
-import { FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { ValidationErrorService } from '../../../core/services/validation-error.service';
+import { FormGroup, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'app-text-input',
@@ -20,19 +18,9 @@ export class TextInputComponent implements OnInit {
 
   public form!: FormGroup;
 
-  constructor(
-    private rootFormGroup: FormGroupDirective,
-    private errorService: ValidationErrorService
-  ) {}
+  constructor(private rootFormGroup: FormGroupDirective) {}
 
   public ngOnInit(): void {
     this.form = this.rootFormGroup.form;
-  }
-
-  public showError(
-    control: FormControl<string | null>,
-    name: string
-  ): Observable<string> {
-    return this.errorService.showError(control, name);
   }
 }

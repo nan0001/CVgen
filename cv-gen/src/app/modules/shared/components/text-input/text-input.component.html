@@ -12,12 +12,12 @@
     <small
       [id]="control.key + '-help'"
       class="error-msg"
-      [ngClass]="{
-        visible: control.value.invalid && control.value.touched
-      }"
-      >{{
-        showError(control.value, 'INFO.' + control.key | translate) | async
-      }}</small
-    >
+      [appInputError]="control.value">
+      {{
+        control.value.errors
+          | errorMsg: ('INFO.' + control.key | translate)
+          | async
+      }}
+    </small>
   </div>
 </ng-container>

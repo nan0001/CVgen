@@ -18,12 +18,11 @@
           [feedback]="false"
           [toggleMask]="true"
           placeholder="********"></p-password>
-        <small
-          id="password-help"
-          class="error-msg"
-          [ngClass]="{ visible: password.invalid && password.touched }"
-          >{{ showError(password, 'AUTH.password' | translate) | async }}</small
-        >
+        <small id="password-help" class="error-msg" [appInputError]="password"
+          >{{
+            password.errors | errorMsg: ('AUTH.password' | translate) | async
+          }}
+        </small>
       </div>
     </div>
     <div class="btn-container flex justify-content-around gap-2">
