@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { EmployeeDetailsComponent } from './components/employee-details/employee-details.component';
 import { EmployeeInfoComponent } from './components/employee-info/employee-info.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     EmployeeTableComponent,
     EmployeeDetailsComponent,
     EmployeeInfoComponent,
+    PersonalInfoComponent,
   ],
   imports: [
     CommonModule,

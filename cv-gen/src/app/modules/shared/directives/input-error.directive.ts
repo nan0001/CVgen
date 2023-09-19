@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   selector: '[appInputError]',
 })
 export class InputErrorDirective implements OnInit, OnDestroy {
-  @Input('appInputError') control!: FormControl<string | null>;
+  @Input('appInputError') control!: FormControl;
 
   @HostBinding('style.color') color = 'var(--red-500)';
   @HostBinding('style.visibility') visibility = 'hidden';

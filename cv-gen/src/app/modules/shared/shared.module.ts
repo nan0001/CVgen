@@ -5,9 +5,11 @@ import { ThemeSwitchComponent } from './components/theme-switch/theme-switch.com
 import { PrimeDesignModule } from '../prime-design/prime-design.module';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputErrorDirective } from './directives/input-error.directive';
 import { ErrorMsgPipe } from './pipes/error-msg.pipe';
+import { LevelInputComponent } from './components/level-input/level-input.component';
+import { SkillsComponent } from './components/skills/skills.component';
 
 @NgModule({
   declarations: [
@@ -16,12 +18,15 @@ import { ErrorMsgPipe } from './pipes/error-msg.pipe';
     TextInputComponent,
     InputErrorDirective,
     ErrorMsgPipe,
+    LevelInputComponent,
+    SkillsComponent,
   ],
   imports: [
     CommonModule,
     PrimeDesignModule,
     TranslateModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   exports: [
     LangSwitchComponent,
@@ -29,6 +34,8 @@ import { ErrorMsgPipe } from './pipes/error-msg.pipe';
     TextInputComponent,
     InputErrorDirective,
     ErrorMsgPipe,
+    LevelInputComponent,
+    SkillsComponent,
   ],
 })
 export class SharedModule {}

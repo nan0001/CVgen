@@ -31,4 +31,8 @@ export const ERRORS = [
     error: 'hasSpecialChars',
     numerical: false,
   },
+  {
+    error: 'bothRequired',
+    numerical: false,
+  },
 ];

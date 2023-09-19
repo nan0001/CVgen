@@ -9,5 +9,5 @@ export interface EmployeeInterface {
   id: string;
   cvsId: string[];
   skills: SkillsInterface[];
-  lang: SkillsInterface[];
+  langs: SkillsInterface[];
 }

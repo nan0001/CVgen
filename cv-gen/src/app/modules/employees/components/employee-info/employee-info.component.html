@@ -1,4 +1,7 @@
-<form [formGroup]="infoForm" (submit)="onSubmit()">
+<form
+  [formGroup]="infoForm"
+  (submit)="onSubmit()"
+  class="flex flex-column gap-2">
   <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2]">
     <p-accordionTab [header]="'EMPLOYEES.tabs.info.panelInfo' | translate">
       <div class="inputs formgrid grid">
@@ -19,10 +22,36 @@
           [control]="{ key: 'line', value: line }"></app-text-input>
       </div>
     </p-accordionTab>
-    <p-accordionTab [header]="'EMPLOYEES.tabs.info.panelSkills' | translate">
+
+    <p-accordionTab
+      [header]="'EMPLOYEES.tabs.info.panelSkills' | translate"
+      contentStyleClass="flex flex-column gap-4 align-items-end">
+      <app-skills
+        [formArrayName]="'skills'"
+        [itemName]="'skill'"
+        [optionsAvailable]="skillsOptions"
+        [initialItems]="employee.skills"></app-skills>
     </p-accordionTab>
-    <p-accordionTab [header]="'EMPLOYEES.tabs.info.panelLangs' | translate">
+
+    <p-accordionTab
+      [header]="'EMPLOYEES.tabs.info.panelLangs' | translate"
+      contentStyleClass="flex flex-column gap-4 align-items-end">
+      <app-skills
+        [formArrayName]="'langs'"
+        [itemName]="'lang'"
+        [optionsAvailable]="langsOptions"
+        [initialItems]="employee.langs"></app-skills>
     </p-accordionTab>
   </p-accordion>
-  <button type="submit">Confirm</button>
+  <div class="btn-container flex justify-content-end gap-3">
+    <p-button
+      [label]="'Save'"
+      styleClass="p-button-raised"
+      type="submit"></p-button>
+    <p-button
+      [label]="'Cancel'"
+      styleClass="p-button-raised p-button-text"
+      type="button"
+      (onClick)="onCancel()"></p-button>
+  </div>
 </form>

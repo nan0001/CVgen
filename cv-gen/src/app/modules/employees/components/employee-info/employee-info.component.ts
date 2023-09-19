@@ -3,9 +3,13 @@ import {
   Component,
   Input,
   OnInit,
+  ViewChildren,
+  QueryList,
 } from '@angular/core';
 import { EmployeeInterface } from '../../../core/models/employee.model';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { EmployeesService } from '../../../core/services/employees.service';
+import { SkillsComponent } from '../../../shared/components/skills/skills.component';
 
 @Component({
   selector: 'app-employee-info',
@@ -15,8 +19,12 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 })
 export class EmployeeInfoComponent implements OnInit {
   @Input() employee!: EmployeeInterface;
-  public infoForm = this.fb.group({
-    firstName: ['', [Validators.required, Validators.minLength(2)]],
+
+  @ViewChildren(SkillsComponent)
+  private skillsComponents!: QueryList<SkillsComponent>;
+
+  public infoForm = this.fb.nonNullable.group({
+    firstName: ['Default', [Validators.required, Validators.minLength(2)]],
     lastName: ['', [Validators.required, Validators.minLength(2)]],
     email: [
       '',
@@ -26,14 +34,16 @@ export class EmployeeInfoComponent implements OnInit {
     line: ['', [Validators.required, Validators.minLength(2)]],
   });
 
-  constructor(private fb: FormBuilder) {}
+  public skillsOptions = ['Javascript', 'Angular']; //get from entities
+  public langsOptions = ['English', 'Russian']; //get from entities
+
+  constructor(
+    private fb: FormBuilder,
+    private employeeService: EmployeesService
+  ) {}
 
   public ngOnInit(): void {
-    this.firstName.setValue(this.employee.firstName);
-    this.lastName.setValue(this.employee.lastName);
-    this.email.setValue(this.employee.email);
-    this.department.setValue(this.employee.department);
-    this.line.setValue(this.employee.line);
+    this.addFormInitialValues();
   }
 
   public get firstName(): FormControl<string | null> {
@@ -56,7 +66,31 @@ export class EmployeeInfoComponent implements OnInit {
     return this.infoForm.controls.line;
   }
 
+  private addFormInitialValues(): void {
+    this.firstName.setValue(this.employee.firstName);
+    this.lastName.setValue(this.employee.lastName);
+    this.email.setValue(this.employee.email);
+    this.department.setValue(this.employee.department);
+    this.line.setValue(this.employee.line);
+  }
+
   public onSubmit(): void {
-    console.log(this.infoForm);
+    if (this.infoForm.valid) {
+      this.employeeService.updateEmployee(
+        this.infoForm.getRawValue() as Omit<EmployeeInterface, 'id' | 'cvsId'>,
+        this.employee.id
+      );
+      return;
+    }
+
+    this.infoForm.markAllAsTouched();
+  }
+
+  public onCancel(): void {
+    if (this.skillsComponents) {
+      this.skillsComponents.forEach(val => {
+        val.reset();
+      });
+    }
   }
 }

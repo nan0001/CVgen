@@ -1,19 +1,7 @@
 {
   "AUTH":{
-    "username": "Username",
-    "password": "Password",
     "cancel": "Cancel",
-    "confirm":"Confirm",
-    "errors": {
-      "required": "Enter your {{name}}.",
-      "email": "{{name}} should be an email.",
-      "minlength": "Minimum length is {{num}} characters.",
-      "maxlength": "Maximum length is {{num}} characters.",
-      "hasNumeric": "{{name}} must contain at least one number.",
-      "hasLowerCase": "{{name}} must contain at least one lower case character.",
-      "hasUpperCase": "{{name}} must contain at least one upper case character.",
-      "hasSpecialChars": "{{name}} must contain at least one special character."
-    }
+    "confirm":"Confirm"
   },
   "ERRORS":{
     "required": "Enter your {{name}}.",
@@ -23,7 +11,8 @@
     "hasNumeric": "{{name}} must contain at least one number.",
     "hasLowerCase": "{{name}} must contain at least one lower case character.",
     "hasUpperCase": "{{name}} must contain at least one upper case character.",
-    "hasSpecialChars": "{{name}} must contain at least one special character."
+    "hasSpecialChars": "{{name}} must contain at least one special character.",
+    "bothRequired": "Fill in both {{name}} fields"
   },
   "NAV": {
     "employees": "Employees",
@@ -53,6 +42,12 @@
     "department": "Department",
     "line": "Line",
     "username": "Username",
-    "password": "Password"
+    "password": "Password",
+    "skill": "Skill",
+    "lang": "Language",
+    "addSkill": "Add skill",
+    "addLang": "Add language",
+    "name": "Name",
+    "level": "Level"
   }
 }

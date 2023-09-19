@@ -12,7 +12,7 @@
         [control]="{ key: 'username', value: username }"></app-text-input>
 
       <div class="flex flex-column gap-1">
-        <label for="password">{{ 'AUTH.password' | translate }}</label>
+        <label for="password">{{ 'INFO.password' | translate }}</label>
         <p-password
           formControlName="password"
           [feedback]="false"
@@ -20,7 +20,7 @@
           placeholder="********"></p-password>
         <small id="password-help" class="error-msg" [appInputError]="password"
           >{{
-            password.errors | errorMsg: ('AUTH.password' | translate) | async
+            password.errors | errorMsg: ('INFO.password' | translate) | async
           }}
         </small>
       </div>
