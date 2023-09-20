@@ -2,7 +2,14 @@
   <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
   <p-tabView>
     <p-tabPanel [header]="'EMPLOYEES.tabs.info.title' | translate">
-      <app-employee-info [employee]="employee"></app-employee-info>
+      <app-employee-info
+        [employee]="employee"
+        (saveInfo)="onUpdateEmployee($event)"></app-employee-info>
+      <div class="save-msg" *ngIf="showSaveMessage">
+        <p-card>
+          <p class="m-0">Information has been saved</p>
+        </p-card>
+      </div>
     </p-tabPanel>
     <p-tabPanel [header]="'EMPLOYEES.tabs.cvList.title' | translate">
       <p>

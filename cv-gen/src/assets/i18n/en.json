@@ -49,5 +49,15 @@
     "addLang": "Add language",
     "name": "Name",
     "level": "Level"
+  },
+  "LANGS":{
+    "ru":  "Russian",
+    "en": "English",
+    "fr": "French"
+  },
+  "LEVELS":{
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
   }
 }

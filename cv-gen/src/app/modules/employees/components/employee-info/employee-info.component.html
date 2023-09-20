@@ -4,23 +4,7 @@
   class="flex flex-column gap-2">
   <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2]">
     <p-accordionTab [header]="'EMPLOYEES.tabs.info.panelInfo' | translate">
-      <div class="inputs formgrid grid">
-        <app-text-input
-          class="field col-6"
-          [control]="{ key: 'firstName', value: firstName }"></app-text-input>
-        <app-text-input
-          class="field col-6"
-          [control]="{ key: 'lastName', value: lastName }"></app-text-input>
-        <app-text-input
-          class="field col-6"
-          [control]="{ key: 'email', value: email }"></app-text-input>
-        <app-text-input
-          class="field col-6"
-          [control]="{ key: 'department', value: department }"></app-text-input>
-        <app-text-input
-          class="field col-6"
-          [control]="{ key: 'line', value: line }"></app-text-input>
-      </div>
+      <app-personal-info [employee]="employee"></app-personal-info>
     </p-accordionTab>
 
     <p-accordionTab
