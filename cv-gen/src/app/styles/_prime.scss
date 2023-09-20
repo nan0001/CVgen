@@ -8,3 +8,95 @@
 .p-password-input{
   width: 100%;
 }
+
+.p-divider.p-divider-horizontal{
+  margin: 0.25rem 0;
+}
+
+app-theme-switch,
+app-lang-switch,
+app-employee-table {
+  .p-button{
+    display: flex;
+    padding: var(--inline-spacing);
+    background-color: var(--surface-0);
+    border-radius: calc(var(--border-radius) * 4);
+    width: 35px;
+    overflow: hidden;
+    cursor: pointer;
+
+    &:focus{
+      box-shadow: none !important;
+    }
+
+    &.p-button-text{
+      color: var(--text-color);
+
+      &:enabled:hover{
+        color: var(--text-color-secondary);
+      }
+    }
+
+    &.p-button-icon-only{
+      width: 35px;
+      padding: var(--inline-spacing);
+    }
+  }
+}
+
+app-employee-table {
+  .p-button.p-button-text:enabled:hover{
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--primary-color);
+  }
+}
+
+.p-card .p-card-content{
+  padding: var(--content-padding);
+}
+
+app-auth{
+  .p-card .p-card-content{
+    padding: var(--content-padding) var(--content-padding) 0;
+  }
+}
+
+app-crumbs{
+  .p-breadcrumb{
+    padding: var(--inline-spacing);
+
+    .p-breadcrumb-list li.p-menuitem-separator{
+      margin: 0 0.25rem 0 0.25rem;
+    }
+  }
+
+  .p-component,
+  .pi{
+    font-size: 0.75rem;
+  }
+
+  .p-icon{
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .p-icon-wrapper{
+    display: flex;
+  }
+
+}
+
+app-employee-details{
+  .p-dialog-header{
+    border-radius: var(--border-radius);
+  }
+
+  .p-dialog-title{
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .p-dialog-content{
+    padding: 0 !important;
+  }
+}

@@ -10,4 +10,24 @@ body {
 
 body {
   font-family: var(--font-family);
+  color: var(--text-color);
+}
+
+a{
+  text-decoration: none;
+  color: var(--text-color-secondary);
+  transition: .3s;
+
+  &:hover {
+    color: var(--text-color);
+  }
+}
+
+ul{
+  padding: 0;
+  margin: 0;
+}
+
+li{
+  list-style: none;
 }

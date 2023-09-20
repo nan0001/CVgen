@@ -1,0 +1,23 @@
+<ng-container [formGroup]="form">
+  <ul
+    [formArrayName]="formArrayName"
+    class="flex flex-column gap-3 justify-content-center w-full">
+    <li *ngFor="let item of formArray.controls; let i = index">
+      <app-level-input
+        [formControlName]="i"
+        [options]="optionsAvailable"
+        [id]="itemName + '-' + i"
+        [selectedLevel]="item.value?.level || ''"
+        [selectedOption]="item.value?.name || ''"
+        (optionRemoved)="onItemRemove(i)"></app-level-input>
+      <small [id]="itemName + '-' + i + '-help'" [appInputError]="item">
+        {{ item.errors | errorMsg: ('INFO.' + itemName | translate) | async }}
+      </small>
+    </li>
+  </ul>
+  <p-button
+    icon="pi pi-plus"
+    styleClass="p-button-text"
+    (onClick)="addItem()"
+    [label]="'Add ' + itemName"></p-button>
+</ng-container>

@@ -1,0 +1,5 @@
+<p-breadcrumb
+  *ngIf="pathSegments$ | async as segments"
+  class="max-w-full text-xs"
+  [model]="segments"
+  [home]="home"></p-breadcrumb>

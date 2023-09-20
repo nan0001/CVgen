@@ -1,0 +1,27 @@
+<p-table
+  [value]="(employees$ | async) || []"
+  [tableStyle]="{ 'min-width': '35rem', width: '100%' }"
+  [paginator]="true"
+  [rows]="10">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>{{ 'INFO.firstName' | translate }}</th>
+      <th>{{ 'INFO.lastName' | translate }}</th>
+      <th>{{ 'INFO.email' | translate }}</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-employee>
+    <tr class="table-row" (click)="navigateToInfo(employee.id)">
+      <td>{{ employee.firstName }}</td>
+      <td>{{ employee.lastName }}</td>
+      <td>{{ employee.email }}</td>
+      <td>
+        <p-button
+          icon="pi pi-trash"
+          styleClass="p-button-text"
+          (onClick)="removeEmployee($event, employee.id)"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

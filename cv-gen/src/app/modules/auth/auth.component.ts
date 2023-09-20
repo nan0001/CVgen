@@ -20,7 +20,12 @@ export class AuthComponent {
   public authForm = this.fb.group({
     username: [
       '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(15)],
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30),
+        Validators.email,
+      ],
     ],
     password: [
       '',
@@ -50,6 +55,7 @@ export class AuthComponent {
   }
 
   public onSubmit(): void {
+    console.log(this.authForm);
     if (this.authForm.valid) {
       this.router.navigate(['']);
     }
@@ -59,46 +65,6 @@ export class AuthComponent {
 
   public onCancel(): void {
     this.router.navigate(['']);
-  }
-
-  public showError(control: FormControl<string | null>, name: string): string {
-    if (control.hasError('required')) {
-      return `Enter your ${name}.`;
-    }
-
-    if (control.hasError('minlength')) {
-      return `Minimum length is ${control.errors?.['minlength'].requiredLength} characters.`;
-    }
-
-    if (control.hasError('maxlength')) {
-      return `Maximum length is ${control.errors?.['maxlength'].requiredLength} characters.`;
-    }
-
-    if (control.hasError('hasNumeric')) {
-      return `${
-        name[0].toUpperCase() + name.slice(1)
-      } must contain at least one number.`;
-    }
-
-    if (control.hasError('hasLowerCase')) {
-      return `${
-        name[0].toUpperCase() + name.slice(1)
-      } must contain at least one lower case character.`;
-    }
-
-    if (control.hasError('hasUpperCase')) {
-      return `${
-        name[0].toUpperCase() + name.slice(1)
-      } must contain at least one upper case character.`;
-    }
-
-    if (control.hasError('hasSpecialChars')) {
-      return `${
-        name[0].toUpperCase() + name.slice(1)
-      } must contain at least one special character.`;
-    }
-
-    return '';
   }
 
   private createValidator(propName: ValidatorType): ValidatorFn {

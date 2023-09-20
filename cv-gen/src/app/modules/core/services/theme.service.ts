@@ -1,16 +1,14 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-
-enum THEMES {
-  Light = 'soho-light',
-  Dark = 'soho-dark',
-}
+import { BehaviorSubject } from 'rxjs';
+import { THEMES } from '../constants/themes.constant';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
-  public currentTheme = THEMES.Light;
+  private currentTheme = THEMES.Light;
+  public currentTheme$ = new BehaviorSubject<THEMES>(THEMES.Light);
 
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
@@ -25,5 +23,7 @@ export class ThemeService {
     if (themeLink) {
       themeLink.href = this.currentTheme + '.css';
     }
+
+    this.currentTheme$.next(this.currentTheme);
   }
 }

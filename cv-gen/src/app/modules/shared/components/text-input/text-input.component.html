@@ -1,0 +1,23 @@
+<ng-container [formGroup]="form">
+  <div class="flex flex-column gap-1 w-full">
+    <label [htmlFor]="control.key">{{
+      'INFO.' + [control.key] | translate
+    }}</label>
+    <input
+      pInputText
+      type="text"
+      [formControlName]="control.key"
+      [id]="control.key"
+      [attr.aria-describedby]="control.key + '-help'" />
+    <small
+      [id]="control.key + '-help'"
+      class="error-msg"
+      [appInputError]="control.value">
+      {{
+        control.value.errors
+          | errorMsg: ('INFO.' + control.key | translate)
+          | async
+      }}
+    </small>
+  </div>
+</ng-container>

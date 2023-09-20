@@ -1,0 +1,16 @@
+:host{
+  width: 100%;
+}
+
+.save-msg{
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--maskbg);
+}

@@ -1,0 +1,26 @@
+<div
+  class="container flex gap-2 w-full justify-content-between align-items-end">
+  <div class="flex flex-column gap-1">
+    <label htmlFor="option">{{ 'INFO.name' | translate }}</label>
+    <p-autoComplete
+      [dropdown]="true"
+      [suggestions]="options"
+      [(ngModel)]="selectedOption"
+      (completeMethod)="filterOptions($event)"
+      name="option"></p-autoComplete>
+  </div>
+  <div class="flex flex-column gap-1">
+    <label htmlFor="level">{{ 'INFO.level' | translate }}</label>
+    <p-autoComplete
+      [dropdown]="true"
+      [suggestions]="levels"
+      (completeMethod)="filterLevel($event)"
+      [(ngModel)]="selectedLevel"
+      name="level"></p-autoComplete>
+  </div>
+
+  <p-button
+    icon="pi pi-times"
+    styleClass="p-button-text p-button-rounded"
+    (onClick)="onRemove()"></p-button>
+</div>
