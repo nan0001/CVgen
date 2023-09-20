@@ -17,8 +17,10 @@
       <td>{{ employee.lastName }}</td>
       <td>{{ employee.email }}</td>
       <td>
-        <!-- TODO: add removal function onClick -->
-        <p-button icon="pi pi-trash" styleClass="p-button-text"></p-button>
+        <p-button
+          icon="pi pi-trash"
+          styleClass="p-button-text"
+          (onClick)="removeEmployee($event, employee.id)"></p-button>
       </td>
     </tr>
   </ng-template>

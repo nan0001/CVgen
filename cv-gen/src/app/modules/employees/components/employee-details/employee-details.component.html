@@ -5,11 +5,14 @@
       <app-employee-info
         [employee]="employee"
         (saveInfo)="onUpdateEmployee($event)"></app-employee-info>
-      <div class="save-msg" *ngIf="showSaveMessage">
-        <p-card>
-          <p class="m-0">Information has been saved</p>
-        </p-card>
-      </div>
+      <p-dialog
+        [(visible)]="showSaveMessage"
+        header="Information has been saved"
+        [modal]="true"
+        [style]="{ width: '50vw', backgroundColor: 'var(--surface-a)' }"
+        [draggable]="false"
+        [resizable]="false">
+      </p-dialog>
     </p-tabPanel>
     <p-tabPanel [header]="'EMPLOYEES.tabs.cvList.title' | translate">
       <p>

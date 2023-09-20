@@ -85,3 +85,18 @@ app-crumbs{
   }
 
 }
+
+app-employee-details{
+  .p-dialog-header{
+    border-radius: var(--border-radius);
+  }
+
+  .p-dialog-title{
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .p-dialog-content{
+    padding: 0 !important;
+  }
+}

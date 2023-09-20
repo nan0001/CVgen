@@ -8,8 +8,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputErrorDirective } from './directives/input-error.directive';
 import { ErrorMsgPipe } from './pipes/error-msg.pipe';
-import { LevelInputComponent } from './components/level-input/level-input.component';
-import { SkillsComponent } from './components/skills/skills.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +16,6 @@ import { SkillsComponent } from './components/skills/skills.component';
     TextInputComponent,
     InputErrorDirective,
     ErrorMsgPipe,
-    LevelInputComponent,
-    SkillsComponent,
   ],
   imports: [
     CommonModule,
@@ -34,8 +30,6 @@ import { SkillsComponent } from './components/skills/skills.component';
     TextInputComponent,
     InputErrorDirective,
     ErrorMsgPipe,
-    LevelInputComponent,
-    SkillsComponent,
   ],
 })
 export class SharedModule {}

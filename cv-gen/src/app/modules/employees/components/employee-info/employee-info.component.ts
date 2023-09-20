@@ -10,7 +10,7 @@ import {
 import { EmployeeInterface } from '../../../core/models/employee.model';
 import { FormBuilder } from '@angular/forms';
 import { EmployeesService } from '../../../core/services/employees.service';
-import { SkillsComponent } from '../../../shared/components/skills/skills.component';
+import { SkillsComponent } from '../skills/skills.component';
 
 @Component({
   selector: 'app-employee-info',

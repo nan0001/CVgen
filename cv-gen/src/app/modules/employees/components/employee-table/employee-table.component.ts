@@ -28,4 +28,9 @@ export class EmployeeTableComponent implements OnInit {
       relativeTo: this.route,
     });
   }
+
+  public removeEmployee(event: Event, id: string): void {
+    event.stopPropagation();
+    this.employeeService.deleteEmployee(id);
+  }
 }

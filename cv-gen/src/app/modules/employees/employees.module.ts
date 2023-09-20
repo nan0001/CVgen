@@ -9,8 +9,10 @@ import { EmployeeTableComponent } from './components/employee-table/employee-tab
 import { TranslateModule } from '@ngx-translate/core';
 import { EmployeeDetailsComponent } from './components/employee-details/employee-details.component';
 import { EmployeeInfoComponent } from './components/employee-info/employee-info.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
+import { LevelInputComponent } from './components/level-input/level-input.component';
+import { SkillsComponent } from './components/skills/skills.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { PersonalInfoComponent } from './components/personal-info/personal-info.
     EmployeeDetailsComponent,
     EmployeeInfoComponent,
     PersonalInfoComponent,
+    LevelInputComponent,
+    SkillsComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +31,7 @@ import { PersonalInfoComponent } from './components/personal-info/personal-info.
     SharedModule,
     TranslateModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
 })
 export class EmployeesModule {}
