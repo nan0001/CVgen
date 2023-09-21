@@ -35,4 +35,16 @@ export const ERRORS = [
     error: 'bothRequired',
     numerical: false,
   },
+  {
+    error: 'noConflictDates',
+    numerical: false,
+  },
+  {
+    error: 'noStartDate',
+    numerical: false,
+  },
+  {
+    error: 'noEndDate',
+    numerical: false,
+  },
 ];

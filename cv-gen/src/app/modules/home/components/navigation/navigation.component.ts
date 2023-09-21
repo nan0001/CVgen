@@ -10,7 +10,7 @@ export class NavigationComponent {
   public links = [
     { name: 'employees', icon: 'pi-users' },
     { name: 'projects', icon: 'pi-list' },
-    { name: 'cvs', icon: 'pi-id-card' },
+    // { name: 'cvs', icon: 'pi-id-card' },
     { name: 'entities', icon: 'pi-inbox' },
   ];
 }

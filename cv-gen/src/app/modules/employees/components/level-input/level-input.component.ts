@@ -44,8 +44,7 @@ export class LevelInputComponent implements ControlValueAccessor {
   @Input()
   public set selectedLevel(value: string) {
     this._selectedLevel = value;
-    this.onChange({ name: this.selectedOption, level: this.selectedLevel });
-    this.onTouch({ name: this.selectedOption, level: this.selectedLevel });
+    this.performListeners();
   }
 
   public get selectedLevel(): string {
@@ -55,8 +54,7 @@ export class LevelInputComponent implements ControlValueAccessor {
   @Input()
   public set selectedOption(value: string) {
     this._selectedOption = value;
-    this.onChange({ name: this.selectedOption, level: this.selectedLevel });
-    this.onTouch({ name: this.selectedOption, level: this.selectedLevel });
+    this.performListeners();
   }
 
   public get selectedOption(): string {
@@ -94,7 +92,13 @@ export class LevelInputComponent implements ControlValueAccessor {
     this.onTouch = fn;
   }
 
-  onRemove() {
+  public onRemove() {
     this.optionRemoved.emit();
+  }
+
+  private performListeners(): void {
+    const newValue = { name: this.selectedOption, level: this.selectedLevel };
+    this.onChange(newValue);
+    this.onTouch(newValue);
   }
 }

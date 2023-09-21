@@ -11,6 +11,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DialogModule } from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [],
@@ -27,6 +28,7 @@ import { DialogModule } from 'primeng/dialog';
     AccordionModule,
     AutoCompleteModule,
     DialogModule,
+    CalendarModule,
   ],
 })
 export class PrimeDesignModule {}

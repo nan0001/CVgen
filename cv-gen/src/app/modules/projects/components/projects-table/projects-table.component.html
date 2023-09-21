@@ -1,0 +1,27 @@
+<p-table
+  [value]="(projects$ | async) || []"
+  [tableStyle]="{ 'min-width': '35rem', width: '100%' }"
+  [paginator]="true"
+  [rows]="10">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>{{ 'INFO.name' | translate }}</th>
+      <th>{{ 'INFO.startDate' | translate }}</th>
+      <th>{{ 'INFO.endDate' | translate }}</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-project>
+    <tr class="table-row" (click)="navigateToInfo(project.id)">
+      <td>{{ project.name }}</td>
+      <td>{{ project.start | date}}</td>
+      <td>{{ project.end | date}}</td>
+      <td>
+        <p-button
+          icon="pi pi-trash"
+          styleClass="p-button-text"
+          (onClick)="removeProject($event, project.id)"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

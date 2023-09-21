@@ -1,0 +1,28 @@
+<div class="inputs formgrid grid" [formGroup]="form">
+  <app-text-input
+    class="field col-12"
+    [control]="{ key: 'internalName', value: internalName }"></app-text-input>
+    <app-text-input
+    class="field col-4"
+    [control]="{ key: 'name', value: name }"></app-text-input>
+    <div class="field col-8">
+      <app-double-date [startDate]="project.start" [endDate]="project.end" formControlName="dates">
+      </app-double-date>
+      <small
+      id="dates-help"
+      class="error-msg"
+      [appInputError]="dates">
+      {{
+        dates.errors
+          | errorMsg: ('INFO.startDate' | translate) : ('INFO.endDate' | translate)
+          | async
+      }}
+    </small>
+    </div>
+    <app-text-input
+    class="field col-7"
+    [control]="{ key: 'domain', value: domain }"></app-text-input>
+    <app-text-input
+    class="field col-12"
+    [control]="{ key: 'description', value: description }"></app-text-input>
+</div>
