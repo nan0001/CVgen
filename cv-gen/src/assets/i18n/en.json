@@ -56,7 +56,8 @@
     "endDate": "End Date",
     "internalName": "Internal Name",
     "domain": "Domain",
-    "description": "Description"
+    "description": "Description",
+    "techStack": "Tech Stack"
   },
   "LANGS":{
     "ru":  "Russian",

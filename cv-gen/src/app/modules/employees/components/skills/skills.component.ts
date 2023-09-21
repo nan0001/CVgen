@@ -13,7 +13,7 @@ import {
   FormGroupDirective,
 } from '@angular/forms';
 import { SkillsInterface } from '../../../core/models/skills.model';
-import { bothFieldsRequired } from '../../../core/helpers/skill.validator';
+import { bothFieldsRequired } from '../../../core/utils/skill.validator';
 
 @Component({
   selector: 'app-skills',

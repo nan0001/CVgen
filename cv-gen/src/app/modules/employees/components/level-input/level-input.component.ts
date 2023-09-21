@@ -9,11 +9,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SkillsInterface } from '../../../core/models/skills.model';
-
-interface AutoCompleteEvent {
-  originalEvent: Event;
-  query: string;
-}
+import { AutoCompleteEvent } from '../../../core/models/autocomplete-event.model';
 
 @Component({
   selector: 'app-level-input',
@@ -32,7 +28,10 @@ export class LevelInputComponent implements ControlValueAccessor {
   @Input() options: string[] = [];
   @Output() optionRemoved = new EventEmitter();
 
-  public levels = ['Beginner', 'Intermediate', 'Advanced'];
+  private levels = ['Beginner', 'Intermediate', 'Advanced'];
+  public filteredOptions: string[] = [];
+  public filteredLevels: string[] = [];
+
   public _selectedOption = '';
   public _selectedLevel = '';
 
@@ -62,19 +61,15 @@ export class LevelInputComponent implements ControlValueAccessor {
   }
 
   public filterLevel(event: AutoCompleteEvent): void {
-    this.levels = [
-      ...this.levels.filter(val =>
-        val.toLowerCase().includes(event.query.toLowerCase())
-      ),
-    ];
+    this.filteredLevels = this.levels.filter(val =>
+      val.toLowerCase().includes(event.query.toLowerCase())
+    );
   }
 
   public filterOptions(event: AutoCompleteEvent): void {
-    this.options = [
-      ...this.options.filter(val =>
-        val.toLowerCase().includes(event.query.toLowerCase())
-      ),
-    ];
+    this.filteredOptions = this.options.filter(val =>
+      val.toLowerCase().includes(event.query.toLowerCase())
+    );
   }
 
   public writeValue(value: SkillsInterface | null): void {

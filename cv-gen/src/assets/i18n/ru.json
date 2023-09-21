@@ -56,7 +56,8 @@
     "endDate": "Дата завершения",
     "internalName": "Внутреннее название",
     "domain": "Домен",
-    "description": "Описание"
+    "description": "Описание",
+    "techStack": "Стек технологий"
   },
   "LANGS":{
     "ru":  "Русский",

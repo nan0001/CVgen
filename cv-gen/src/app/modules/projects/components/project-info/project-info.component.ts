@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ProjectInterface } from '../../../core/models/project.model';
-import { noConflictDates } from '../../../core/helpers/date.validator';
+import { noConflictDates } from '../../../core/utils/date.validator';
 
 @Component({
   selector: 'app-project-info',
@@ -22,7 +22,8 @@ export class ProjectInfoComponent {
 
   constructor(
     private rootFormGroup: FormGroupDirective,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   public ngOnInit(): void {
@@ -45,8 +46,7 @@ export class ProjectInfoComponent {
       noConflictDates(),
     ]);
     this.techStack = this.fb.nonNullable.control(this.project.techStack, [
-      // Validators.required,
-      // Validators.minLength(2),
+      Validators.required,
     ]);
     this.domain = this.fb.nonNullable.control(this.project.domain, [
       Validators.required,
@@ -54,7 +54,7 @@ export class ProjectInfoComponent {
     ]);
     this.description = this.fb.nonNullable.control(this.project.description, [
       Validators.required,
-      Validators.minLength(2),
+      Validators.minLength(5),
     ]);
   }
 

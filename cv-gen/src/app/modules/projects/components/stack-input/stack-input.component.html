@@ -1,0 +1,21 @@
+<ng-container [formGroup]="form">
+  <div class="flex flex-column gap-1 w-full">
+    <label [htmlFor]="controlName">{{
+      'INFO.' + controlName | translate
+    }}</label>
+    <p-autoComplete [formControlName]="controlName" [suggestions]="optionsFiltered"
+    (completeMethod)="filterOptions($event)" [multiple]="true" [name]="controlName"
+    [dropdown]="true"></p-autoComplete>
+  </div>
+  <small
+  [id]="controlName + '-help'"
+  class="error-msg"
+  [appInputError]="control">
+  {{
+    control.errors
+      | errorMsg: ('INFO.' + controlName | translate)
+      | async
+  }}
+</small>
+</ng-container>
+

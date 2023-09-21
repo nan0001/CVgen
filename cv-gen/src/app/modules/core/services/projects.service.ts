@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map, from } from 'rxjs';
 import {
   Firestore,
+  Timestamp,
   UpdateData,
   addDoc,
   collection,
@@ -71,10 +72,11 @@ export class ProjectsService {
     project: Omit<ProjectInterface, 'id'>,
     id: string
   ): void {
-    updateDoc(
-      doc(this.projectsRef, id),
-      project as UpdateData<Omit<ProjectInterface, 'id'>>
-    );
+    updateDoc(doc(this.projectsRef, id), {
+      ...project,
+      start: Timestamp.fromDate(project.start),
+      end: Timestamp.fromDate(project.end),
+    } as UpdateData<Omit<FirestoreProjectInterface, 'id'>>);
   }
 
   public deleteProject(projectId: string): void {

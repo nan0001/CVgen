@@ -3,9 +3,10 @@
     <h2>{{ project.name }}</h2>
     <p-button
     [label]="'BUTTONS.archive' | translate"
-    styleClass="p-button-raised p-button-text"></p-button>
+    styleClass="p-button-raised p-button-text"
+    (onClick)="deleteProject()"></p-button>
   </div>
-  <form [formGroup]="infoForm" class="flex flex-column gap-2">
+  <form [formGroup]="infoForm" class="flex flex-column gap-2" (submit)="onSubmit()">
     <app-project-info [project]="project"></app-project-info>
     <div class="flex justify-content-end gap-3">
       <p-button
@@ -26,3 +27,12 @@
     </div>
   </form>
 </div>
+
+<p-dialog
+[(visible)]="showSaveMessage"
+header="Information has been saved"
+[modal]="true"
+[style]="{ width: '50vw', backgroundColor: 'var(--surface-a)' }"
+[draggable]="false"
+[resizable]="false">
+</p-dialog>

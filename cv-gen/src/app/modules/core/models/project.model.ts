@@ -16,3 +16,11 @@ export interface ProjectInterface
   start: Date;
   end: Date;
 }
+
+export interface ProjectFormInterface
+  extends Omit<FirestoreProjectInterface, 'start' | 'end' | 'id'> {
+  dates: {
+    start: Date;
+    end: Date;
+  };
+}
