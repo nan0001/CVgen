@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputErrorDirective } from './directives/input-error.directive';
 import { ErrorMsgPipe } from './pipes/error-msg.pipe';
+import { DoubleDateComponent } from './components/double-date/double-date.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ErrorMsgPipe } from './pipes/error-msg.pipe';
     TextInputComponent,
     InputErrorDirective,
     ErrorMsgPipe,
+    DoubleDateComponent,
   ],
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { ErrorMsgPipe } from './pipes/error-msg.pipe';
     TextInputComponent,
     InputErrorDirective,
     ErrorMsgPipe,
+    DoubleDateComponent,
   ],
 })
 export class SharedModule {}

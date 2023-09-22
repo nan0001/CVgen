@@ -24,7 +24,7 @@ export class InputErrorDirective implements OnInit, OnDestroy {
     this.visibility = 'hidden';
 
     this.subscription = this.control.statusChanges.subscribe(() => {
-      if (this.control.invalid && this.control.dirty) {
+      if (this.control.invalid && this.control.touched) {
         this.visibility = 'visible';
       } else {
         this.visibility = 'hidden';

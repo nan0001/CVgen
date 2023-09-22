@@ -1,0 +1,12 @@
+<div class="flex flex-column gap-1 col-6">
+  <label htmlFor="start">{{ 'INFO.startDate' | translate }}</label>
+  <p-calendar
+    [(ngModel)]="startDate"
+    [showIcon]="true"
+    name="start"></p-calendar>
+</div>
+
+<div class="flex flex-column gap-1 col-6">
+  <label htmlFor="end">{{ 'INFO.endDate' | translate }}</label>
+  <p-calendar [(ngModel)]="endDate" [showIcon]="true" name="end"></p-calendar>
+</div>

@@ -11,6 +11,7 @@ import { EmployeeInterface } from '../../../core/models/employee.model';
 import { FormBuilder } from '@angular/forms';
 import { EmployeesService } from '../../../core/services/employees.service';
 import { SkillsComponent } from '../skills/skills.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-info',
@@ -32,7 +33,8 @@ export class EmployeeInfoComponent {
 
   constructor(
     private fb: FormBuilder,
-    private employeeService: EmployeesService
+    private employeeService: EmployeesService,
+    private router: Router
   ) {}
 
   public onSubmit(): void {
@@ -57,5 +59,9 @@ export class EmployeeInfoComponent {
         val.reset();
       });
     }
+  }
+
+  public navigateToList() {
+    this.router.navigateByUrl('employees');
   }
 }

@@ -4,7 +4,7 @@
     <label htmlFor="option">{{ 'INFO.name' | translate }}</label>
     <p-autoComplete
       [dropdown]="true"
-      [suggestions]="options"
+      [suggestions]="filteredOptions"
       [(ngModel)]="selectedOption"
       (completeMethod)="filterOptions($event)"
       name="option"></p-autoComplete>
@@ -13,7 +13,7 @@
     <label htmlFor="level">{{ 'INFO.level' | translate }}</label>
     <p-autoComplete
       [dropdown]="true"
-      [suggestions]="levels"
+      [suggestions]="filteredLevels"
       (completeMethod)="filterLevel($event)"
       [(ngModel)]="selectedLevel"
       name="level"></p-autoComplete>

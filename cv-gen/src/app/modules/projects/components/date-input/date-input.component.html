@@ -1,0 +1,14 @@
+<ng-container [formGroup]="form">
+  <app-double-date [startDate]="control.value?.start || dates.start" [endDate]="control.value?.end || dates.end" formControlName="dates">
+  </app-double-date>
+  <small
+  id="dates-help"
+  class="error-msg"
+  [appInputError]="control">
+    {{
+      control.errors
+        | errorMsg: ('INFO.startDate' | translate) : ('INFO.endDate' | translate)
+        | async
+    }}
+  </small>
+</ng-container>

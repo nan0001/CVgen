@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
-import { ERRORS } from '../../auth/constants/errors.constant';
+import { ERRORS } from '../../core/constants/errors.constant';
 import { LanguageService } from '../../core/services/language.service';
 import { Observable, of } from 'rxjs';
 
@@ -10,13 +10,19 @@ import { Observable, of } from 'rxjs';
 export class ErrorMsgPipe implements PipeTransform {
   constructor(private langService: LanguageService) {}
 
-  transform(errors: ValidationErrors | null, name: string): Observable<string> {
+  transform(
+    errors: ValidationErrors | null,
+    name: string,
+    secondName?: string
+  ): Observable<string> {
     let message = of('Ok');
 
     ERRORS.every(val => {
       if (errors && val.error in errors) {
         const param: { [key: string]: string } = val.numerical
           ? { num: String(errors?.[val.error].requiredLength) }
+          : secondName
+          ? { name, secondName }
           : { name };
         message = this.langService.getTranslationObservable(
           'ERRORS.' + val.error,
