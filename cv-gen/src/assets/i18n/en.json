@@ -77,6 +77,7 @@
     "save": "Save",
     "cancel": "Cancel",
     "back": "Back to list",
-    "archive": "Archive"
+    "archive": "Archive",
+    "newProject": "New project"
   }
 }

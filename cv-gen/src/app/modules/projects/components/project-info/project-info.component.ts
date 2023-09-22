@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ProjectInterface } from '../../../core/models/project.model';
 import { noConflictDates } from '../../../core/utils/date.validator';
@@ -10,7 +10,7 @@ import { noConflictDates } from '../../../core/utils/date.validator';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectInfoComponent {
-  @Input() project!: ProjectInterface;
+  @Input() project!: Omit<ProjectInterface, 'id'>;
 
   public form!: FormGroup;
   public internalName!: FormControl<string | null>;
@@ -23,7 +23,6 @@ export class ProjectInfoComponent {
   constructor(
     private rootFormGroup: FormGroupDirective,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef,
   ) {}
 
   public ngOnInit(): void {

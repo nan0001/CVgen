@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ProjectFormInterface, ProjectInterface } from '../../../core/models/project.model';
+import { BehaviorSubject, Observable, take, tap } from 'rxjs';
+import { FirestoreProjectInterface, ProjectFormInterface, ProjectInterface } from '../../../core/models/project.model';
 import { ProjectsService } from '../../../core/services/projects.service';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,9 +14,19 @@ import { Router } from '@angular/router';
 export class ProjectDetailsComponent {
   @Input() id = '';
 
-  public project$!: Observable<ProjectInterface | null>;
+  public project$!: Observable<ProjectInterface | null> | Observable<Omit<ProjectInterface, "id">>;
   public infoForm = this.fb.nonNullable.group({});
   public showSaveMessage = false;
+  public emptyProject: Omit<ProjectInterface, 'id'> = {
+    name: '',
+    internalName: '',
+    start: new Date(),
+    end: new Date(),
+    domain: '',
+    description: '',
+    techStack: [],
+  }
+  public emptyProject$ = new BehaviorSubject(this.emptyProject);
 
   constructor(
     private projectsService: ProjectsService,
@@ -26,7 +36,7 @@ export class ProjectDetailsComponent {
   ) {}
 
   public ngOnInit(): void {
-    this.project$ = this.projectsService.getProjectById(this.id);
+    this.project$ = this.id === 'new-project'? this.emptyProject$.asObservable() : this.projectsService.getProjectById(this.id);
   }
 
   public onCancel(): void {
@@ -37,32 +47,15 @@ export class ProjectDetailsComponent {
 
   public onSubmit(): void {
     if (this.infoForm.valid) {
-      const {dates, ...otherFields} = this.infoForm.getRawValue() as ProjectFormInterface;
-      this.projectsService.updateProject(
-        {
-          ...otherFields,
-          start: dates.start,
-          end: dates.end
-        },
-        this.id
-      );
-
-      this.project$ = this.projectsService.getProjectById(this.id);
       this.showMessage();
-
+      this.sendProjectData();
       return;
     }
 
     this.infoForm.markAllAsTouched();
-  }
-
-  public showMessage(): void {
-    this.showSaveMessage = true;
-
-    setTimeout(() => {
-      this.showSaveMessage = false;
-      this.cdr.markForCheck();
-    }, 2000);
+    Object.keys(this.infoForm.controls).forEach((key) => {
+      this.infoForm.get(key)?.updateValueAndValidity();
+    })
   }
 
   public deleteProject(): void {
@@ -72,5 +65,33 @@ export class ProjectDetailsComponent {
 
   public navigateToList() {
     this.router.navigateByUrl('projects');
+  }
+
+  private sendProjectData(): void {
+    const {dates, ...otherFields} = this.infoForm.getRawValue() as ProjectFormInterface;
+    const newValue: Omit<ProjectInterface, 'id'> = {
+      ...otherFields,
+      start: dates.start,
+      end: dates.end
+    }
+
+    if (this.id === 'new-project'){
+      this.projectsService.addProject(newValue).pipe(take(1)).subscribe((val) => {
+        this.router.navigate(['projects', val])
+      })
+      return;
+    }
+
+    this.projectsService.updateProject(newValue, this.id);
+    this.project$ = this.projectsService.getProjectById(this.id);
+  }
+
+  private showMessage(): void {
+    this.showSaveMessage = true;
+
+    setTimeout(() => {
+      this.showSaveMessage = false;
+      this.cdr.markForCheck();
+    }, 2000);
   }
 }

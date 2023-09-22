@@ -64,8 +64,10 @@ export class ProjectsService {
     return project$;
   }
 
-  public addProject(project: Omit<ProjectInterface, 'id'>): void {
-    addDoc(this.projectsRef, project);
+  public addProject(project: Omit<ProjectInterface, 'id'>): Observable<string> {
+    const docRef = addDoc(this.projectsRef, project);
+    const id$ = from(docRef).pipe(map(val => val.id));
+    return id$;
   }
 
   public updateProject(

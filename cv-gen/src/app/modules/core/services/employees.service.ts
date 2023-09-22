@@ -42,8 +42,12 @@ export class EmployeesService {
     return employee$;
   }
 
-  public addEmployee(employee: Omit<EmployeeInterface, 'id'>): void {
-    addDoc(this.employeesRef, employee);
+  public addEmployee(
+    employee: Omit<EmployeeInterface, 'id'>
+  ): Observable<string> {
+    const docRef = addDoc(this.employeesRef, employee);
+    const id$ = from(docRef).pipe(map(val => val.id));
+    return id$;
   }
 
   public updateEmployee(
