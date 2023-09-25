@@ -1,7 +1,12 @@
-.p-input-icon-right>.p-icon-wrapper {
-  position: absolute;
-  top: 50%;
-  margin-top: -0.5rem;
+.p-input-icon-right{
+  position: relative;
+
+  &>.p-icon-wrapper,
+  &>i {
+    position: absolute;
+    top: 50%;
+    margin-top: -0.5rem;
+  }
 }
 
 .p-inputwrapper,

@@ -26,6 +26,13 @@ const routes: Routes = [
             m => m.ProjectsModule
           ),
       },
+      {
+        path: 'entities',
+        loadChildren: () =>
+          import('./modules/entities/entities.module').then(
+            m => m.EntitiesModule
+          ),
+      },
     ],
   },
 ];

@@ -79,5 +79,12 @@
     "back": "Back to list",
     "archive": "Archive",
     "newProject": "New project"
+  },
+  "ENTITIES":{
+    "title": "Entities",
+    "langs": "Languages",
+    "responsibilities": "Responsibilities",
+    "skills": "Skills",
+    "addItem": "Add item"
   }
 }

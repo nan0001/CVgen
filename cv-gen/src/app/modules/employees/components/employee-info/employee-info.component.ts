@@ -12,6 +12,7 @@ import { FormBuilder } from '@angular/forms';
 import { EmployeesService } from '../../../core/services/employees.service';
 import { SkillsComponent } from '../skills/skills.component';
 import { Router } from '@angular/router';
+import { EntitiesService } from '../../../core/services/entities.service';
 
 @Component({
   selector: 'app-employee-info',
@@ -28,13 +29,14 @@ export class EmployeeInfoComponent {
 
   public infoForm = this.fb.nonNullable.group({});
 
-  public skillsOptions = ['Javascript', 'Angular']; //get from entities
-  public langsOptions = ['English', 'Russian']; //get from entities
+  public skillsOptions$ = this.entitiesService.getEntityList('skills');
+  public langsOptions$ = this.entitiesService.getEntityList('langs');
 
   constructor(
     private fb: FormBuilder,
     private employeeService: EmployeesService,
-    private router: Router
+    private router: Router,
+    private entitiesService: EntitiesService
   ) {}
 
   public onSubmit(): void {
