@@ -9,11 +9,11 @@
       (completeMethod)="filterOptions($event)"
       name="option"></p-autoComplete>
   </div>
-  <div class="flex flex-column gap-1">
+  <div class="flex flex-column gap-1" *ngIf="filteredLevels$ | async as levels">
     <label htmlFor="level">{{ 'INFO.level' | translate }}</label>
     <p-autoComplete
       [dropdown]="true"
-      [suggestions]="filteredLevels"
+      [suggestions]="levels"
       (completeMethod)="filterLevel($event)"
       [(ngModel)]="selectedLevel"
       name="level"></p-autoComplete>

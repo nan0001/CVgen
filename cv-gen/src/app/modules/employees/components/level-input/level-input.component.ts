@@ -10,6 +10,8 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SkillsInterface } from '../../../core/models/skills.model';
 import { AutoCompleteEvent } from '../../../core/models/autocomplete-event.model';
+import { LanguageService } from '../../../core/services/language.service';
+import { BehaviorSubject, take } from 'rxjs';
 
 @Component({
   selector: 'app-level-input',
@@ -28,17 +30,25 @@ export class LevelInputComponent implements ControlValueAccessor {
   @Input() options: string[] = [];
   @Output() optionRemoved = new EventEmitter();
 
-  private levels = ['Beginner', 'Intermediate', 'Advanced'];
+  public levels$ = this.langService.getMultipleTranslationStream([
+    'LEVELS.beginner',
+    'LEVELS.intermediate',
+    'LEVELS.advanced',
+  ]);
   public filteredOptions: string[] = [];
-  public filteredLevels: string[] = [];
+  public filteredLevels$: BehaviorSubject<string[]> = new BehaviorSubject<
+    string[]
+  >([]);
 
-  public _selectedOption = '';
-  public _selectedLevel = '';
+  private _selectedOption = '';
+  private _selectedLevel = '';
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public onChange: any = () => {};
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public onTouch: any = () => {};
+
+  constructor(private langService: LanguageService) {}
 
   @Input()
   public set selectedLevel(value: string) {
@@ -61,9 +71,16 @@ export class LevelInputComponent implements ControlValueAccessor {
   }
 
   public filterLevel(event: AutoCompleteEvent): void {
-    this.filteredLevels = this.levels.filter(val =>
-      val.toLowerCase().includes(event.query.toLowerCase())
-    );
+    this.levels$.pipe(take(1)).subscribe(val => {
+      if (val) {
+        const filteredArray = val.filter(elem =>
+          elem.toLowerCase().includes(event.query.toLowerCase())
+        );
+        this.filteredLevels$.next(filteredArray);
+        return;
+      }
+      this.filteredLevels$.next([]);
+    });
   }
 
   public filterOptions(event: AutoCompleteEvent): void {
