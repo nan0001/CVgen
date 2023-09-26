@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LANGUAGE } from '../constants/language.constant';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +23,14 @@ export class LanguageService {
     key: string,
     params?: { [key: string]: string }
   ): Observable<string> {
-    return this.translate.get(key, params);
+    return this.translate.stream(key, params);
+  }
+
+  public getMultipleTranslationStream(keys: string[]): Observable<string[]> {
+    const observableArray: Observable<string>[] = keys.map(val => {
+      return this.translate.stream(val);
+    });
+
+    return combineLatest(observableArray);
   }
 }

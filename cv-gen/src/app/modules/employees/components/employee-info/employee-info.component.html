@@ -13,7 +13,7 @@
       <app-skills
         [formArrayName]="'skills'"
         [itemName]="'skill'"
-        [optionsAvailable]="skillsOptions"
+        [optionsAvailable]="(skillsOptions$ | async) || []"
         [initialItems]="employee.skills"></app-skills>
     </p-accordionTab>
 
@@ -23,7 +23,7 @@
       <app-skills
         [formArrayName]="'langs'"
         [itemName]="'lang'"
-        [optionsAvailable]="langsOptions"
+        [optionsAvailable]="(langsOptions$ | async) || []"
         [initialItems]="employee.langs"></app-skills>
     </p-accordionTab>
   </p-accordion>

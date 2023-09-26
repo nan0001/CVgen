@@ -1,0 +1,14 @@
+@use '../../styles/mixins' as m;
+
+:host {
+  @include m.host-flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.container{
+  padding: var(--content-padding);
+}

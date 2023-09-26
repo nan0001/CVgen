@@ -79,5 +79,12 @@
     "back": "Назад к списку",
     "archive": "В архив",
     "newProject": "Новый проект"
+  },
+  "ENTITIES":{
+    "title": "Сущности",
+    "langs": "Языки",
+    "responsibilities": "Обязанности",
+    "skills": "Навыки",
+    "addItem": "Добавить элемент"
   }
 }
