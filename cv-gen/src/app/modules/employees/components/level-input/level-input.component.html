@@ -14,8 +14,9 @@
     <p-autoComplete
       [dropdown]="true"
       [suggestions]="levels"
-      (completeMethod)="filterLevel($event)"
-      [(ngModel)]="selectedLevel"
+      (completeMethod)="filterLevel($event.query)"
+      [ngModel]="'LEVELS.' + levelsEnum[selectedLevelIndex] | translate"
+      (ngModelChange)="onLevelChange($event, levels)"
       name="level"></p-autoComplete>
   </div>
 

@@ -6,11 +6,9 @@ export function bothFieldsRequired(): ValidatorFn {
     control: AbstractControl<SkillsInterface | null>
   ): ValidationErrors | null {
     if (control.value) {
-      return control.value.level && control.value.name
-        ? null
-        : { bothRequired: true };
+      return control.value.name ? null : { bothRequired: true };
     }
 
-    return null;
+    return { bothRequired: true };
   };
 }

@@ -7,7 +7,7 @@
         [formControlName]="i"
         [options]="optionsAvailable"
         [id]="itemName + '-' + i"
-        [selectedLevel]="item.value?.level || ''"
+        [selectedLevelIndex]="item.value?.level || 0"
         [selectedOption]="item.value?.name || ''"
         (optionRemoved)="onItemRemove(i)"></app-level-input>
       <small [id]="itemName + '-' + i + '-help'" [appInputError]="item">

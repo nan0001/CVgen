@@ -1,4 +1,4 @@
 export interface SkillsInterface {
   name: string;
-  level: string;
+  level: number;
 }
