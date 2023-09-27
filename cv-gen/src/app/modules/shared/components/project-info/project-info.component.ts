@@ -1,5 +1,16 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  Validators,
+} from '@angular/forms';
 import { ProjectInterface } from '../../../core/models/project.model';
 import { noConflictDates } from '../../../core/utils/date.validator';
 
@@ -7,10 +18,11 @@ import { noConflictDates } from '../../../core/utils/date.validator';
   selector: 'app-project-info',
   templateUrl: './project-info.component.html',
   styleUrls: ['./project-info.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectInfoComponent {
+export class ProjectInfoComponent implements OnInit {
   @Input() project!: Omit<ProjectInterface, 'id'>;
+  @Input() forCv = false;
 
   public form!: FormGroup;
   public internalName!: FormControl<string | null>;
@@ -22,13 +34,14 @@ export class ProjectInfoComponent {
 
   constructor(
     private rootFormGroup: FormGroupDirective,
-    private fb: FormBuilder,
+    private fb: FormBuilder
   ) {}
 
   public ngOnInit(): void {
     this.form = this.rootFormGroup.form;
     this.createControls();
     this.setControls();
+    console.log(this.form);
   }
 
   private createControls(): void {
@@ -40,10 +53,10 @@ export class ProjectInfoComponent {
       Validators.required,
       Validators.minLength(2),
     ]);
-    this.dates = this.fb.nonNullable.control({start: this.project.start, end: this.project.end}, [
-      Validators.required,
-      noConflictDates(),
-    ]);
+    this.dates = this.fb.nonNullable.control(
+      { start: this.project.start, end: this.project.end },
+      [Validators.required, noConflictDates()]
+    );
     this.techStack = this.fb.nonNullable.control(this.project.techStack, [
       Validators.required,
     ]);

@@ -13,6 +13,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
 import { LevelInputComponent } from './components/level-input/level-input.component';
 import { SkillsComponent } from './components/skills/skills.component';
+import { CvsComponent } from './components/cvs/cvs.component';
+import { CvListComponent } from './components/cv-list/cv-list.component';
+import { CvInfoComponent } from './components/cv-info/cv-info.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { SkillsComponent } from './components/skills/skills.component';
     PersonalInfoComponent,
     LevelInputComponent,
     SkillsComponent,
+    CvsComponent,
+    CvListComponent,
+    CvInfoComponent,
   ],
   imports: [
     CommonModule,

@@ -9,6 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputErrorDirective } from './directives/input-error.directive';
 import { ErrorMsgPipe } from './pipes/error-msg.pipe';
 import { DoubleDateComponent } from './components/double-date/double-date.component';
+import { TextareaInputComponent } from './components/textarea-input/textarea-input.component';
+import { StackInputComponent } from './components/stack-input/stack-input.component';
+import { ProjectInfoComponent } from './components/project-info/project-info.component';
+import { DateInputComponent } from './components/date-input/date-input.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +22,10 @@ import { DoubleDateComponent } from './components/double-date/double-date.compon
     InputErrorDirective,
     ErrorMsgPipe,
     DoubleDateComponent,
+    TextareaInputComponent,
+    StackInputComponent,
+    ProjectInfoComponent,
+    DateInputComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +41,10 @@ import { DoubleDateComponent } from './components/double-date/double-date.compon
     InputErrorDirective,
     ErrorMsgPipe,
     DoubleDateComponent,
+    TextareaInputComponent,
+    StackInputComponent,
+    ProjectInfoComponent,
+    DateInputComponent,
   ],
 })
 export class SharedModule {}

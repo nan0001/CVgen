@@ -4,3 +4,18 @@
   align-items: center;
   justify-content: center;
 }
+
+@mixin div-button{
+  padding: 0 1rem;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  color: var(--text-color);
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:hover{
+    background-color: var(--surface-c);
+  }
+}

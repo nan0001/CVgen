@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ControlInterface } from '../../../core/models/control.model';
 import { FormGroup, FormGroupDirective } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -7,7 +14,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-textarea-input',
   templateUrl: './textarea-input.component.html',
   styleUrls: ['./textarea-input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TextareaInputComponent implements OnInit, OnDestroy {
   @Input() control!: ControlInterface;
@@ -22,9 +29,9 @@ export class TextareaInputComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.form = this.rootFormGroup.form;
-    this.subscription = this.control.value.valueChanges.subscribe(()=>{
+    this.subscription = this.control.value.valueChanges.subscribe(() => {
       this.cdr.markForCheck();
-    })
+    });
   }
 
   public ngOnDestroy(): void {

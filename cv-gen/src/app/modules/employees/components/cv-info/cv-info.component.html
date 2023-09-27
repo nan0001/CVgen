@@ -1,0 +1,68 @@
+<form [formGroup]="cvForm" (submit)="onSubmit()" class="flex flex-column gap-2">
+  <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2]">
+    <p-accordionTab [header]="'EMPLOYEES.tabs.info.panelInfo' | translate">
+      <div class="inputs formgrid grid">
+        <app-text-input
+          class="field col-6"
+          [control]="{ key: 'firstName', value: firstName }"></app-text-input>
+        <app-text-input
+          class="field col-6"
+          [control]="{ key: 'lastName', value: lastName }"></app-text-input>
+        <app-textarea-input
+          class="field col-12"
+          [control]="{
+            key: 'description',
+            value: description
+          }"></app-textarea-input>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab
+      [header]="'EMPLOYEES.tabs.info.panelSkills' | translate"
+      contentStyleClass="flex flex-column gap-4 align-items-end">
+      <app-skills
+        [formArrayName]="'skills'"
+        [itemName]="'skill'"
+        [optionsAvailable]="(skillsOptions$ | async) || []"
+        [initialItems]="cv.skills"></app-skills>
+    </p-accordionTab>
+
+    <p-accordionTab
+      [header]="'EMPLOYEES.tabs.info.panelLangs' | translate"
+      contentStyleClass="flex flex-column gap-4 align-items-end">
+      <app-skills
+        [formArrayName]="'langs'"
+        [itemName]="'lang'"
+        [optionsAvailable]="(langsOptions$ | async) || []"
+        [initialItems]="cv.langs"></app-skills>
+    </p-accordionTab>
+    <ul formArrayName="projects">
+      <li
+        *ngFor="let project$ of projectsObservables; let i = index"
+        [formGroup]="getProjectGroup(i)">
+        <p-accordionTab
+          *ngIf="project$ | async as project"
+          [header]="project.name"
+          contentStyleClass="flex flex-column gap-4 align-items-end">
+          <app-project-info [forCv]="true" [project]="project">
+            <app-stack-input
+              controlName="responsibilities"
+              class="field col-7"></app-stack-input>
+          </app-project-info>
+        </p-accordionTab>
+      </li>
+    </ul>
+  </p-accordion>
+
+  <div class="btn-container flex justify-content-end gap-3">
+    <p-button
+      [label]="'BUTTONS.cancel' | translate"
+      styleClass="p-button-raised p-button-text"
+      type="button"
+      (onClick)="onCancel()"></p-button>
+    <p-button
+      [label]="'BUTTONS.save' | translate"
+      styleClass="p-button-raised"
+      type="submit"></p-button>
+  </div>
+</form>

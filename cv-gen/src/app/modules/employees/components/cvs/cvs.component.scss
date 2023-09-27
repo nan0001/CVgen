@@ -1,0 +1,11 @@
+@use '../../../../styles/mixins' as m;
+
+:host {
+  @include m.host-flex;
+  height: 100%;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  // padding: var(--content-padding) 0;
+  gap: 1rem;
+}

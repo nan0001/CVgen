@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
 import { ProjectInterface } from '../../../core/models/project.model';
 import { Subscription } from 'rxjs';
@@ -7,10 +14,13 @@ import { Subscription } from 'rxjs';
   selector: 'app-date-input',
   templateUrl: './date-input.component.html',
   styleUrls: ['./date-input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateInputComponent implements OnInit {
-  @Input() control!: FormControl<Pick<ProjectInterface, 'start' | 'end'> | null>;
+export class DateInputComponent implements OnInit, OnDestroy {
+  @Input() control!: FormControl<Pick<
+    ProjectInterface,
+    'start' | 'end'
+  > | null>;
   @Input() dates!: Pick<ProjectInterface, 'start' | 'end'>;
 
   public form!: FormGroup;
@@ -19,17 +29,16 @@ export class DateInputComponent implements OnInit {
   constructor(
     private rootFormGroup: FormGroupDirective,
     private cdr: ChangeDetectorRef
-    ) {}
+  ) {}
 
   public ngOnInit(): void {
     this.form = this.rootFormGroup.form;
-    this.subscription = this.control.valueChanges.subscribe(()=>{
+    this.subscription = this.control.valueChanges.subscribe(() => {
       this.cdr.markForCheck();
-    })
+    });
   }
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 }
