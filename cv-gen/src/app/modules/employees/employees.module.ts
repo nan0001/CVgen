@@ -16,6 +16,7 @@ import { SkillsComponent } from './components/skills/skills.component';
 import { CvsComponent } from './components/cvs/cvs.component';
 import { CvListComponent } from './components/cv-list/cv-list.component';
 import { CvInfoComponent } from './components/cv-info/cv-info.component';
+import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CvInfoComponent } from './components/cv-info/cv-info.component';
     CvsComponent,
     CvListComponent,
     CvInfoComponent,
+    EmployeeFormComponent,
   ],
   imports: [
     CommonModule,

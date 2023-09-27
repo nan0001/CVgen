@@ -29,9 +29,7 @@
     "tabs": {
       "info": {
         "title": "Info",
-        "panelInfo": "Info",
-        "panelSkills": "Skills",
-        "panelLangs": "Languages"
+        "panelInfo": "Info"
       },
       "cvList": {
         "title": "CV List"
