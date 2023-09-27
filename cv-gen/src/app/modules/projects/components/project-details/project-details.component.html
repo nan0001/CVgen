@@ -6,26 +6,14 @@
     styleClass="p-button-raised p-button-text"
     (onClick)="deleteProject()"></p-button>
   </div>
-  <form [formGroup]="infoForm" class="flex flex-column gap-2" (submit)="onSubmit()">
-    <app-project-info [project]="project"></app-project-info>
-    <div class="flex justify-content-end gap-3">
-      <p-button
-      [label]="'BUTTONS.back' | translate"
-      styleClass="p-button-raised p-button-text"
-      type="button"
-      class="mr-auto"
-      (onClick)="navigateToList()"></p-button>
+  <app-project-form [project]="project" (sendFormData)="submitData($event)">
     <p-button
-      [label]="'BUTTONS.cancel' | translate"
-      styleClass="p-button-raised p-button-text"
-      type="button"
-      (onClick)="onCancel()"></p-button>
-    <p-button
-      [label]="'BUTTONS.save' | translate"
-      styleClass="p-button-raised"
-      type="submit"></p-button>
-    </div>
-  </form>
+    [label]="'BUTTONS.back' | translate"
+    styleClass="p-button-raised p-button-text"
+    type="button"
+    class="mr-auto"
+    (onClick)="navigateToList()"></p-button>
+  </app-project-form>
 </div>
 
 <p-dialog

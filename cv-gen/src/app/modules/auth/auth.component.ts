@@ -55,7 +55,6 @@ export class AuthComponent {
   }
 
   public onSubmit(): void {
-    console.log(this.authForm);
     if (this.authForm.valid) {
       this.router.navigate(['']);
     }

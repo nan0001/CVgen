@@ -1,0 +1,84 @@
+<form [formGroup]="infoForm" class="flex flex-column gap-2" (submit)="onSubmit()">
+  <div class="inputs formgrid grid">
+    <app-labelled-input
+      controlName="internalName"
+      class="field col-12"
+      [errors]="internalName.errors"
+      [showError]="internalName.invalid && internalName.touched">
+      <input
+        pInputText
+        type="text"
+        formControlName="internalName"/>
+    </app-labelled-input>
+
+    <app-labelled-input
+      controlName="name"
+      class="field col-4"
+      [errors]="name.errors"
+      [showError]="name.invalid && name.touched">
+      <input
+        pInputText
+        type="text"
+        formControlName="name"/>
+    </app-labelled-input>
+
+    <app-labelled-input
+      controlName="dates"
+      class="field col-8"
+      [showLabel]="false"
+      [errors]="dates.errors"
+      [showError]="dates.invalid && dates.touched"
+      [translationParams]="['INFO.startDate', 'INFO.endDate']">
+      <app-double-date
+        [startDate]="dates.value.start"
+        [endDate]="dates.value.end"
+        formControlName="dates">
+      </app-double-date>
+    </app-labelled-input>
+
+    <app-labelled-input
+      controlName="techStack"
+      [errors]="techStack.errors"
+      class="field col-7"
+      [showError]="techStack.invalid && techStack.touched">
+      <p-autoComplete
+        formControlName="techStack"
+        [suggestions]="(optionsFiltered$ | async) || []"
+        (completeMethod)="filterOptions($event.query)"
+        [multiple]="true"
+        [dropdown]="true"></p-autoComplete>
+    </app-labelled-input>
+
+    <app-labelled-input
+      controlName="domain"
+      class="field col-7"
+      [errors]="domain.errors"
+      [showError]="domain.invalid && domain.touched">
+      <input
+        pInputText
+        type="text"
+        formControlName="domain"/>
+    </app-labelled-input>
+
+    <app-labelled-input
+      controlName="description"
+      class="field col-12"
+      [errors]="description.errors"
+      [showError]="description.invalid && description.touched">
+      <textarea rows="5" cols="30" pInputTextarea formControlName="description"></textarea>
+    </app-labelled-input>
+
+  </div>
+  <div class="flex justify-content-end gap-3">
+    <ng-content></ng-content>
+    <p-button
+      [label]="'BUTTONS.cancel' | translate"
+      styleClass="p-button-raised p-button-text"
+      type="button"
+      (onClick)="onCancel()"></p-button>
+    <p-button
+      [label]="'BUTTONS.save' | translate"
+      styleClass="p-button-raised"
+      type="submit"></p-button>
+  </div>
+</form>

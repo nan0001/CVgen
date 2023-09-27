@@ -13,6 +13,8 @@ import { TextareaInputComponent } from './components/textarea-input/textarea-inp
 import { StackInputComponent } from './components/stack-input/stack-input.component';
 import { ProjectInfoComponent } from './components/project-info/project-info.component';
 import { DateInputComponent } from './components/date-input/date-input.component';
+import { LabelledInputComponent } from './components/labelled-input/labelled-input.component';
+import { ErrorMessageDirective } from './directives/error-message.directive';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { DateInputComponent } from './components/date-input/date-input.component
     StackInputComponent,
     ProjectInfoComponent,
     DateInputComponent,
+    LabelledInputComponent,
+    ErrorMessageDirective,
   ],
   imports: [
     CommonModule,
@@ -45,6 +49,8 @@ import { DateInputComponent } from './components/date-input/date-input.component
     StackInputComponent,
     ProjectInfoComponent,
     DateInputComponent,
+    LabelledInputComponent,
+    ErrorMessageDirective,
   ],
 })
 export class SharedModule {}

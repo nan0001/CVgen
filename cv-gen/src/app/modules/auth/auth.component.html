@@ -8,22 +8,28 @@
     class="card flex flex-column justify-content-center gap-5"
     (submit)="onSubmit()">
     <div class="inputs flex flex-column gap-1">
-      <app-text-input
-        [control]="{ key: 'username', value: username }"></app-text-input>
+      <app-labelled-input
+        controlName="username"
+        [errors]="username.errors"
+        [showError]="username.invalid && username.touched">
+        <input
+          pInputText
+          type="text"
+          formControlName="username"
+          id="username"
+          aria-describedby="username-help" />
+      </app-labelled-input>
 
-      <div class="flex flex-column gap-1">
-        <label for="password">{{ 'INFO.password' | translate }}</label>
+      <app-labelled-input
+        controlName="password"
+        [errors]="password.errors"
+        [showError]="password.invalid && password.touched">
         <p-password
           formControlName="password"
           [feedback]="false"
           [toggleMask]="true"
           placeholder="********"></p-password>
-        <small id="password-help" class="error-msg" [appInputError]="password"
-          >{{
-            password.errors | errorMsg: ('INFO.password' | translate) | async
-          }}
-        </small>
-      </div>
+      </app-labelled-input>
     </div>
     <div class="btn-container flex justify-content-around gap-2">
       <p-button

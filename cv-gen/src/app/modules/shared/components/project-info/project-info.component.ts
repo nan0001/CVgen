@@ -41,7 +41,6 @@ export class ProjectInfoComponent implements OnInit {
     this.form = this.rootFormGroup.form;
     this.createControls();
     this.setControls();
-    console.log(this.form);
   }
 
   private createControls(): void {

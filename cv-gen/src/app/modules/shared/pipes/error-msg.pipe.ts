@@ -12,18 +12,19 @@ export class ErrorMsgPipe implements PipeTransform {
 
   transform(
     errors: ValidationErrors | null,
-    name: string,
-    secondName?: string
+    // name: string,
+    // secondName?: string,
+    params: string[]
   ): Observable<string> {
     let message = of('Ok');
 
     ERRORS.every(val => {
       if (errors && val.error in errors) {
+        const [name, secondName] = params;
         const param: { [key: string]: string } = val.numerical
           ? { num: String(errors?.[val.error].requiredLength) }
-          : secondName
-          ? { name, secondName }
-          : { name };
+          : { name, secondName };
+
         message = this.langService.getTranslationObservable(
           'ERRORS.' + val.error,
           param

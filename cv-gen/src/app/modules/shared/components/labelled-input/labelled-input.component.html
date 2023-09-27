@@ -1,0 +1,14 @@
+<ng-container>
+  <div class="flex flex-column gap-1 w-full">
+    <label *ngIf="showLabel" [htmlFor]="controlName">{{
+      'INFO.' + [controlName] | translate
+    }}</label>
+    <ng-content></ng-content>
+    <small
+      [id]="controlName + '-help'"
+      class="error-msg"
+      [appErrorMessage]="showError">
+      {{ errors | errorMsg: (messageParams | async) || [] | async }}
+    </small>
+  </div>
+</ng-container>

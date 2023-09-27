@@ -9,6 +9,7 @@ import { PrimeDesignModule } from '../prime-design/prime-design.module';
 import { ProjectDetailsComponent } from './components/project-details/project-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { ProjectFormComponent } from './components/project-form/project-form.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { SharedModule } from '../shared/shared.module';
     ProjectsComponent,
     ProjectsTableComponent,
     ProjectDetailsComponent,
+    ProjectFormComponent,
   ],
   imports: [
     CommonModule,

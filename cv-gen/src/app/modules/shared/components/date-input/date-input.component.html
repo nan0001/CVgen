@@ -4,7 +4,7 @@
     [endDate]="control.value?.end || dates.end"
     formControlName="dates">
   </app-double-date>
-  <small id="dates-help" class="error-msg" [appInputError]="control">
+  <!-- <small id="dates-help" class="error-msg" [appInputError]="control">
     {{
       control.errors
         | errorMsg
@@ -12,5 +12,5 @@
           : ('INFO.endDate' | translate)
         | async
     }}
-  </small>
+  </small> -->
 </ng-container>
