@@ -29,9 +29,7 @@
     "tabs": {
       "info": {
         "title": "Профиль",
-        "panelInfo": "Информация",
-        "panelSkills": "Навыки",
-        "panelLangs": "Языки"
+        "panelInfo": "Информация"
       },
       "cvList": {
         "title": "Резюме"
@@ -86,5 +84,8 @@
     "responsibilities": "Обязанности",
     "skills": "Навыки",
     "addItem": "Добавить элемент"
+  },
+  "CV": {
+    "addCv": "Добавить резюме"
   }
 }

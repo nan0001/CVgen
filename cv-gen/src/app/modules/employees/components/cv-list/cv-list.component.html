@@ -1,0 +1,30 @@
+<div class="list-container flex flex-column gap-3 h-full">
+  <div class="search p-3">
+    <span class="p-input-icon-right">
+      <i class="pi pi-search"></i>
+      <input
+        type="text"
+        pInputText
+        (input)="filterItems()"
+        [(ngModel)]="filterString" />
+    </span>
+  </div>
+  <ul class="list flex flex-column">
+    <li *ngFor="let item of filteredItems">
+      <button
+        class="cv-item flex justify-content-between align-items-center w-full"
+        (click)="setPickedId(item)">
+        <span class="line-height-1">{{ item }}</span>
+        <p-button
+          icon="pi pi-trash"
+          styleClass="p-button-text p-button-rounded"
+          (onClick)="removeCv($event, item)"></p-button>
+      </button>
+    </li>
+  </ul>
+</div>
+<p-button
+  icon="pi pi-plus"
+  [label]="'CV.addCv' | translate"
+  styleClass="p-button-raised"
+  type="submit"></p-button>

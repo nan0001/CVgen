@@ -7,12 +7,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProjectsTableComponent } from './components/projects-table/projects-table.component';
 import { PrimeDesignModule } from '../prime-design/prime-design.module';
 import { ProjectDetailsComponent } from './components/project-details/project-details.component';
-import { ProjectInfoComponent } from './components/project-info/project-info.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { DateInputComponent } from './components/date-input/date-input.component';
-import { StackInputComponent } from './components/stack-input/stack-input.component';
-import { TextareaInputComponent } from './components/textarea-input/textarea-input.component';
+import { ProjectFormComponent } from './components/project-form/project-form.component';
 
 
 @NgModule({
@@ -20,10 +17,7 @@ import { TextareaInputComponent } from './components/textarea-input/textarea-inp
     ProjectsComponent,
     ProjectsTableComponent,
     ProjectDetailsComponent,
-    ProjectInfoComponent,
-    DateInputComponent,
-    StackInputComponent,
-    TextareaInputComponent
+    ProjectFormComponent,
   ],
   imports: [
     CommonModule,

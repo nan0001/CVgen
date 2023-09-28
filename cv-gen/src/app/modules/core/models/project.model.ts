@@ -1,4 +1,5 @@
 import { Timestamp } from '@angular/fire/firestore';
+import { FormControl } from '@angular/forms';
 
 export interface FirestoreProjectInterface {
   id: string;
@@ -17,10 +18,19 @@ export interface ProjectInterface
   end: Date;
 }
 
-export interface ProjectFormInterface
-  extends Omit<FirestoreProjectInterface, 'start' | 'end' | 'id'> {
-  dates: {
+export interface ProjectFormInterface {
+  name: FormControl<string>;
+  internalName: FormControl<string>;
+  domain: FormControl<string>;
+  description: FormControl<string>;
+  techStack: FormControl<string[]>;
+  dates: FormControl<{
     start: Date;
     end: Date;
-  };
+  }>;
+}
+
+export interface CvProjectFormInterface
+  extends Omit<ProjectFormInterface, 'internalName'> {
+  responsibilities: FormControl<string>;
 }

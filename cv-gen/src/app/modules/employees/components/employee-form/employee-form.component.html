@@ -1,0 +1,65 @@
+<form
+  [formGroup]="infoForm"
+  (submit)="onSubmit()"
+  class="flex flex-column gap-2">
+  <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2]">
+    <p-accordionTab [header]="'EMPLOYEES.tabs.info.panelInfo' | translate">
+      <div class="inputs formgrid grid">
+        <ng-container *ngFor="let controlName of personalInfoControlNames">
+          <app-labelled-input
+            *ngIf="infoForm | getControl: controlName as control"
+            [controlName]="controlName"
+            class="field col-6"
+            [errors]="control.errors || null"
+            [showError]="control.invalid && control.touched">
+            <input pInputText type="text" [formControlName]="controlName" />
+          </app-labelled-input>
+        </ng-container>
+      </div>
+    </p-accordionTab>
+
+    <p-accordionTab
+      *ngFor="let array of skillsControl"
+      [header]="'ENTITIES.' + array.name | translate"
+      contentStyleClass="flex flex-column gap-4 align-items-end">
+      <ul
+        [formArrayName]="array.name"
+        class="flex flex-column gap-3 justify-content-center w-full">
+        <li *ngFor="let item of array.control.controls; let i = index">
+          <app-labelled-input
+            [controlName]="array.itemName"
+            [showLabel]="false"
+            class="field col-6"
+            [errors]="item.errors || null"
+            [showError]="item.invalid && item.touched">
+            <app-level-input
+              [formControlName]="i"
+              [options]="(array.options | async) || []"
+              [selectedLevelIndex]="item.value?.level || 0"
+              [selectedOption]="item.value?.name || ''"
+              (optionRemoved)="
+                onItemRemove(i, array.control)
+              "></app-level-input>
+          </app-labelled-input>
+        </li>
+      </ul>
+      <p-button
+        icon="pi pi-plus"
+        styleClass="p-button-text"
+        (onClick)="addItem(array.control)"
+        [label]="'INFO.add' + array.itemName | translate"></p-button>
+    </p-accordionTab>
+  </p-accordion>
+  <div class="btn-container flex justify-content-end gap-3">
+    <ng-content></ng-content>
+    <p-button
+      [label]="'BUTTONS.cancel' | translate"
+      styleClass="p-button-raised p-button-text"
+      type="button"
+      (onClick)="onCancel()"></p-button>
+    <p-button
+      [label]="'BUTTONS.save' | translate"
+      styleClass="p-button-raised"
+      type="submit"></p-button>
+  </div>
+</form>

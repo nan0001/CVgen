@@ -8,6 +8,7 @@ import {
 import { EmployeeInterface } from '../../../core/models/employee.model';
 import { Observable } from 'rxjs';
 import { EmployeesService } from '../../../core/services/employees.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-details',
@@ -23,15 +24,25 @@ export class EmployeeDetailsComponent implements OnInit {
 
   constructor(
     private employeeService: EmployeesService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
     this.employee$ = this.employeeService.getEmployeeById(this.id);
   }
 
-  public onUpdateEmployee(id: string): void {
-    this.employee$ = this.employeeService.getEmployeeById(id);
+  public navigateToList() {
+    this.router.navigateByUrl('employees');
+  }
+
+  public submitData(formValue: Omit<EmployeeInterface, 'id' | 'cvsId'>): void {
+    this.employeeService.updateEmployee(formValue, this.id);
+    this.showMessage();
+    this.employee$ = this.employeeService.getEmployeeById(this.id);
+  }
+
+  private showMessage(): void {
     this.showSaveMessage = true;
 
     setTimeout(() => {
