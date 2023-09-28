@@ -7,7 +7,7 @@
       <div class="inputs formgrid grid">
         <ng-container *ngFor="let controlName of personalInfoControlNames">
           <app-labelled-input
-            *ngIf="infoForm.get(controlName); let control"
+            *ngIf="infoForm | getControl: controlName as control"
             [controlName]="controlName"
             class="field col-6"
             [errors]="control.errors || null"

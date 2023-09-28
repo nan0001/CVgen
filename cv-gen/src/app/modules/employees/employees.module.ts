@@ -13,6 +13,7 @@ import { CvsComponent } from './components/cvs/cvs.component';
 import { CvListComponent } from './components/cv-list/cv-list.component';
 import { CvInfoComponent } from './components/cv-info/cv-info.component';
 import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
+import { GetControlPipe } from './pipes/get-control.pipe';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { EmployeeFormComponent } from './components/employee-form/employee-form.
     CvListComponent,
     CvInfoComponent,
     EmployeeFormComponent,
+    GetControlPipe,
   ],
   imports: [
     CommonModule,
