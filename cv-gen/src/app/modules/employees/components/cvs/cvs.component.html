@@ -2,5 +2,8 @@
   <app-cv-list
     [cvsList]="employee.cvsId"
     (setCvId)="setPickedCv($event)"></app-cv-list>
-  <app-cv-info *ngIf="pickedCv$ | async as cv" [cv]="cv"></app-cv-info>
+  <app-cv-info
+    *ngIf="pickedCv$ | async as cv"
+    [cv]="cv"
+    [cvProjects]="projectsObservable$ | async"></app-cv-info>
 </div>

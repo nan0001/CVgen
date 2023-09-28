@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map, from } from 'rxjs';
+import { Observable, map, from, combineLatest } from 'rxjs';
 import {
   Firestore,
   Timestamp,
@@ -62,6 +62,18 @@ export class ProjectsService {
       })
     );
     return project$;
+  }
+
+  public getArrayOfProjects(
+    ids: string[]
+  ): Observable<(ProjectInterface | null)[]> {
+    const observableArray: Observable<ProjectInterface | null>[] = ids.map(
+      id => {
+        return this.getProjectById(id);
+      }
+    );
+
+    return combineLatest(observableArray);
   }
 
   public addProject(project: Omit<ProjectInterface, 'id'>): Observable<string> {

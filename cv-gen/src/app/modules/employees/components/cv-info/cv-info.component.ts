@@ -14,11 +14,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { EntitiesService } from '../../../core/services/entities.service';
-import { CvInterface } from '../../../core/models/cv.models';
+import { CvFormInterface, CvInterface } from '../../../core/models/cv.models';
 import { SkillsComponent } from '../skills/skills.component';
 import { ProjectsService } from '../../../core/services/projects.service';
-import { Observable } from 'rxjs';
-import { ProjectInterface } from '../../../core/models/project.model';
+import { BehaviorSubject, Observable, take } from 'rxjs';
+import {
+  CvProjectFormInterface,
+  ProjectInterface,
+} from '../../../core/models/project.model';
+import { SkillsInterface } from '../../../core/models/skills.model';
+import { bothFieldsRequired } from '../../../core/utils/skill.validator';
+import { noConflictDates } from '../../../core/utils/date.validator';
 
 @Component({
   selector: 'app-cv-info',
@@ -28,20 +34,20 @@ import { ProjectInterface } from '../../../core/models/project.model';
 })
 export class CvInfoComponent implements OnInit {
   @Input() cv!: CvInterface;
-  public cvForm = this.fb.nonNullable.group({});
+  @Input() cvProjects!: (ProjectInterface | null)[] | null;
 
-  public firstName!: FormControl<string>;
-  public lastName!: FormControl<string>;
-  public description!: FormControl<string>;
-  public projects!: FormArray<any>;
+  public infoForm!: FormGroup<CvFormInterface>; //create on Init
 
-  public skillsOptions$ = this.entitiesService.getEntityList('skills');
-  public langsOptions$ = this.entitiesService.getEntityList('langs');
-
-  public projectsObservables: Observable<ProjectInterface | null>[] = [];
-
-  @ViewChildren(SkillsComponent)
-  private skillsComponents!: QueryList<SkillsComponent>;
+  public skillsControl!: {
+    name: string;
+    control: FormArray<FormControl<SkillsInterface | null>>;
+    itemName: string;
+    options: Observable<string[] | null>;
+  }[];
+  private options$ = this.entitiesService.getEntityList('skills');
+  public optionsFiltered$: BehaviorSubject<string[]> = new BehaviorSubject<
+    string[]
+  >([]);
 
   constructor(
     private fb: FormBuilder,
@@ -50,49 +56,167 @@ export class CvInfoComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.firstName = this.fb.nonNullable.control(this.cv.firstName, [
-      Validators.required,
-      Validators.minLength(2),
-    ]);
-    this.lastName = this.fb.nonNullable.control(this.cv.lastName, [
-      Validators.required,
-      Validators.minLength(2),
-    ]);
-    this.description = this.fb.nonNullable.control(this.cv.description, [
-      Validators.required,
-      Validators.minLength(5),
-    ]);
-    this.projects = this.fb.nonNullable.array([]);
+    this.createControls();
+    this.filterOptions('');
+    this.skillsControl = [
+      {
+        name: 'skills',
+        control: this.skills,
+        itemName: 'skill',
+        options: this.entitiesService.getEntityList('skills'),
+      },
+      {
+        name: 'langs',
+        control: this.langs,
+        itemName: 'lang',
+        options: this.entitiesService.getEntityList('langs'),
+      },
+    ];
+  }
 
-    this.cv.projects.forEach(val => {
-      const group = this.fb.group({
-        responsibilities: this.fb.nonNullable.control(val.responsibilities),
-      });
-      this.projects.push(group);
-      const project = this.projectService.getProjectById(val.id);
-      this.projectsObservables.push(project);
+  public get firstName(): FormControl<string> {
+    return this.infoForm.controls.firstName;
+  }
+
+  public get lastName(): FormControl<string> {
+    return this.infoForm.controls.lastName;
+  }
+
+  public get description(): FormControl<string> {
+    return this.infoForm.controls.description;
+  }
+
+  public get skills(): FormArray<FormControl<SkillsInterface | null>> {
+    return this.infoForm.controls.skills;
+  }
+
+  public get langs(): FormArray<FormControl<SkillsInterface | null>> {
+    return this.infoForm.controls.langs;
+  }
+
+  public get projects(): FormArray<FormGroup<CvProjectFormInterface>> {
+    return this.infoForm.controls.projects;
+  }
+
+  public onItemRemove(
+    index: number,
+    array: FormArray<FormControl<SkillsInterface | null>>
+  ): void {
+    array.removeAt(index);
+  }
+
+  public filterOptions(query: string): void {
+    this.options$.pipe(take(1)).subscribe(val => {
+      if (val) {
+        const filteredArray = val.filter(elem =>
+          elem.toLowerCase().includes(query.toLowerCase())
+        );
+        this.optionsFiltered$.next(filteredArray);
+        return;
+      }
+      this.optionsFiltered$.next([]);
     });
+  }
 
-    this.cvForm.setControl('firstName', this.firstName);
-    this.cvForm.setControl('lastName', this.lastName);
-    this.cvForm.setControl('description', this.description);
-    this.cvForm.setControl('projects', this.projects);
+  public addItem(array: FormArray<FormControl<SkillsInterface | null>>): void {
+    array.push(this.getNewSkillControl(null));
   }
 
   public onSubmit(): void {
-    console.log(this.cvForm);
+    console.log(this.infoForm);
   }
 
   public onCancel(): void {
-    this.cvForm.reset();
-    if (this.skillsComponents) {
-      this.skillsComponents.forEach(val => {
-        val.reset();
-      });
-    }
+    this.infoForm.reset();
+    this.resetArray(this.skills, this.cv.skills);
+    this.resetArray(this.langs, this.cv.langs);
   }
 
-  public getProjectGroup(index: number): FormGroup {
-    return this.projects.controls[index] as FormGroup;
+  private resetArray(
+    formArray: FormArray<FormControl<SkillsInterface | null>>,
+    initArray: SkillsInterface[]
+  ): void {
+    formArray.clear();
+    this.getInitialControlArray(initArray).forEach(control => {
+      formArray.push(control);
+    });
+  }
+
+  private resetProjects(): void {
+    this.projects.clear();
+    this.getProjectsControlArray().forEach(control => {
+      this.projects.push(control);
+    });
+  }
+
+  private createControls(): void {
+    this.infoForm = this.fb.nonNullable.group({
+      firstName: [
+        this.cv.firstName,
+        [Validators.required, Validators.minLength(2)],
+      ],
+      lastName: [
+        this.cv.lastName,
+        [Validators.required, Validators.minLength(2)],
+      ],
+      description: [
+        this.cv.description,
+        [Validators.required, Validators.minLength(2)],
+      ],
+      skills: this.fb.nonNullable.array(
+        this.getInitialControlArray(this.cv.skills)
+      ),
+      langs: this.fb.nonNullable.array(
+        this.getInitialControlArray(this.cv.langs)
+      ),
+      projects: this.fb.nonNullable.array(this.getProjectsControlArray()),
+    });
+  }
+
+  private getProjectsControlArray(): FormGroup<CvProjectFormInterface>[] {
+    if (this.cvProjects) {
+      return this.cvProjects.map(val => {
+        const projectForm = this.fb.nonNullable.group({
+          name: [
+            val ? val.name : '',
+            [Validators.required, Validators.minLength(2)],
+          ],
+          dates: [
+            val
+              ? { start: val.start, end: val.end }
+              : { start: new Date(), end: new Date() },
+            [Validators.required, noConflictDates()],
+          ],
+          techStack: [val ? val.techStack : [], [Validators.required]],
+          responsibilities: [''],
+          domain: [
+            val ? val.domain : '',
+            [Validators.required, Validators.minLength(2)],
+          ],
+          description: [
+            val ? val.description : '',
+            [Validators.required, Validators.minLength(2)],
+          ],
+        });
+
+        return projectForm as FormGroup<CvProjectFormInterface>;
+      });
+    }
+
+    return [];
+  }
+
+  private getNewSkillControl(
+    val: SkillsInterface | null
+  ): FormControl<SkillsInterface | null> {
+    return this.fb.control(val, [bothFieldsRequired()]);
+  }
+
+  private getInitialControlArray(
+    array: SkillsInterface[]
+  ): FormControl<SkillsInterface | null>[] {
+    return array.map(val => {
+      return this.getNewSkillControl(val);
+    });
   }
 }

@@ -34,8 +34,6 @@ export class EmployeeFormComponent implements OnInit {
     Omit<EmployeeInterface, 'id' | 'cvsId'>
   >();
 
-  public skillsOptions$ = this.entitiesService.getEntityList('skills');
-
   public infoForm!: FormGroup<EmployeeFormInterface>;
   public personalInfoControlNames = [
     'firstName',

@@ -20,14 +20,15 @@ import { ErrorMessageDirective } from './directives/error-message.directive';
   declarations: [
     LangSwitchComponent,
     ThemeSwitchComponent,
-    TextInputComponent,
-    InputErrorDirective,
+    TextInputComponent, //remove
+    InputErrorDirective, //remove
     ErrorMsgPipe,
     DoubleDateComponent,
-    TextareaInputComponent,
-    StackInputComponent,
-    ProjectInfoComponent,
-    DateInputComponent,
+    TextareaInputComponent, //remove
+    StackInputComponent, //remove
+    ProjectInfoComponent, //remove
+    DateInputComponent, //remove
+    //add level-input
     LabelledInputComponent,
     ErrorMessageDirective,
   ],

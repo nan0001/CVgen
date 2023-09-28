@@ -1,54 +1,148 @@
-<form [formGroup]="cvForm" (submit)="onSubmit()" class="flex flex-column gap-2">
+<form
+  [formGroup]="infoForm"
+  (submit)="onSubmit()"
+  class="flex flex-column gap-2">
   <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2]">
     <p-accordionTab [header]="'EMPLOYEES.tabs.info.panelInfo' | translate">
       <div class="inputs formgrid grid">
-        <app-text-input
+        <app-labelled-input
+          controlName="firstName"
           class="field col-6"
-          [control]="{ key: 'firstName', value: firstName }"></app-text-input>
-        <app-text-input
+          [errors]="firstName.errors"
+          [showError]="firstName.invalid && firstName.touched">
+          <input pInputText type="text" formControlName="firstName" />
+        </app-labelled-input>
+
+        <app-labelled-input
+          controlName="lastName"
           class="field col-6"
-          [control]="{ key: 'lastName', value: lastName }"></app-text-input>
-        <app-textarea-input
+          [errors]="lastName.errors"
+          [showError]="lastName.invalid && lastName.touched">
+          <input pInputText type="text" formControlName="lastName" />
+        </app-labelled-input>
+
+        <app-labelled-input
+          controlName="description"
           class="field col-12"
-          [control]="{
-            key: 'description',
-            value: description
-          }"></app-textarea-input>
+          [errors]="description.errors"
+          [showError]="description.invalid && description.touched">
+          <textarea
+            rows="5"
+            cols="30"
+            pInputTextarea
+            formControlName="description"></textarea>
+        </app-labelled-input>
       </div>
     </p-accordionTab>
 
     <p-accordionTab
-      [header]="'EMPLOYEES.tabs.info.panelSkills' | translate"
+      *ngFor="let array of skillsControl"
+      [header]="'ENTITIES.' + array.name | translate"
       contentStyleClass="flex flex-column gap-4 align-items-end">
-      <app-skills
-        [formArrayName]="'skills'"
-        [itemName]="'skill'"
-        [optionsAvailable]="(skillsOptions$ | async) || []"
-        [initialItems]="cv.skills"></app-skills>
+      <ul
+        [formArrayName]="array.name"
+        class="flex flex-column gap-3 justify-content-center w-full">
+        <li *ngFor="let item of array.control.controls; let i = index">
+          <app-labelled-input
+            [controlName]="array.itemName"
+            [showLabel]="false"
+            class="field col-6"
+            [errors]="item.errors || null"
+            [showError]="item.invalid && item.touched">
+            <app-level-input
+              [formControlName]="i"
+              [options]="(array.options | async) || []"
+              [selectedLevelIndex]="item.value?.level || 0"
+              [selectedOption]="item.value?.name || ''"
+              (optionRemoved)="
+                onItemRemove(i, array.control)
+              "></app-level-input>
+          </app-labelled-input>
+        </li>
+      </ul>
+      <p-button
+        icon="pi pi-plus"
+        styleClass="p-button-text"
+        (onClick)="addItem(array.control)"
+        [label]="'INFO.add' + array.itemName | translate"></p-button>
     </p-accordionTab>
 
-    <p-accordionTab
-      [header]="'EMPLOYEES.tabs.info.panelLangs' | translate"
-      contentStyleClass="flex flex-column gap-4 align-items-end">
-      <app-skills
-        [formArrayName]="'langs'"
-        [itemName]="'lang'"
-        [optionsAvailable]="(langsOptions$ | async) || []"
-        [initialItems]="cv.langs"></app-skills>
-    </p-accordionTab>
     <ul formArrayName="projects">
-      <li
-        *ngFor="let project$ of projectsObservables; let i = index"
-        [formGroup]="getProjectGroup(i)">
+      <li *ngFor="let project of projects.controls; let i = index">
         <p-accordionTab
-          *ngIf="project$ | async as project"
-          [header]="project.name"
+          [header]="project.controls.name.value"
           contentStyleClass="flex flex-column gap-4 align-items-end">
-          <app-project-info [forCv]="true" [project]="project">
-            <app-stack-input
-              controlName="responsibilities"
-              class="field col-7"></app-stack-input>
-          </app-project-info>
+          <div class="inputs formgrid grid" [formGroupName]="i">
+            <app-labelled-input
+              controlName="name"
+              class="field col-4"
+              [errors]="project.controls.name.errors"
+              [showError]="
+                project.controls.name.invalid && project.controls.name.touched
+              ">
+              <input pInputText type="text" formControlName="name" />
+            </app-labelled-input>
+
+            <app-labelled-input
+              controlName="dates"
+              class="field col-8"
+              [showLabel]="false"
+              [errors]="project.controls.dates.errors"
+              [showError]="
+                project.controls.dates.invalid && project.controls.dates.touched
+              "
+              [translationParams]="['INFO.startDate', 'INFO.endDate']">
+              <app-double-date
+                [startDate]="project.controls.dates.value.start"
+                [endDate]="project.controls.dates.value.end"
+                formControlName="dates">
+              </app-double-date>
+            </app-labelled-input>
+
+            <app-labelled-input
+              controlName="techStack"
+              [errors]="project.controls.techStack.errors"
+              class="field col-7"
+              [showError]="
+                project.controls.techStack.invalid &&
+                project.controls.techStack.touched
+              ">
+              <p-autoComplete
+                formControlName="techStack"
+                [suggestions]="(optionsFiltered$ | async) || []"
+                (completeMethod)="filterOptions($event.query)"
+                [multiple]="true"
+                [dropdown]="true"></p-autoComplete>
+            </app-labelled-input>
+
+            <!-- responsibilities -->
+
+            <app-labelled-input
+              controlName="domain"
+              class="field col-7"
+              [errors]="project.controls.domain.errors"
+              [showError]="
+                project.controls.domain.invalid &&
+                project.controls.domain.touched
+              ">
+              <input pInputText type="text" formControlName="domain" />
+            </app-labelled-input>
+
+            <app-labelled-input
+              controlName="description"
+              class="field col-12"
+              [errors]="project.controls.description.errors"
+              [showError]="
+                project.controls.description.invalid &&
+                project.controls.description.touched
+              ">
+              <textarea
+                rows="5"
+                cols="30"
+                pInputTextarea
+                formControlName="description"></textarea>
+            </app-labelled-input>
+          </div>
         </p-accordionTab>
       </li>
     </ul>

@@ -23,10 +23,10 @@ import { EmployeeFormComponent } from './components/employee-form/employee-form.
     EmployeesComponent,
     EmployeeTableComponent,
     EmployeeDetailsComponent,
-    EmployeeInfoComponent,
-    PersonalInfoComponent,
+    EmployeeInfoComponent, //remove
+    PersonalInfoComponent, //remove
     LevelInputComponent,
-    SkillsComponent,
+    SkillsComponent, //remove
     CvsComponent,
     CvListComponent,
     CvInfoComponent,
