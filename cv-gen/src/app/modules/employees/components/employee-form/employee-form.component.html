@@ -5,17 +5,16 @@
   <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2]">
     <p-accordionTab [header]="'EMPLOYEES.tabs.info.panelInfo' | translate">
       <div class="inputs formgrid grid">
-        <app-labelled-input
-          *ngFor="let controlName of personalInfoControlNames"
-          [controlName]="controlName"
-          class="field col-6"
-          [errors]="infoForm.get(controlName)?.errors || null"
-          [showError]="
-            (infoForm.get(controlName)?.invalid || false) &&
-            (infoForm.get(controlName)?.touched || false)
-          ">
-          <input pInputText type="text" [formControlName]="controlName" />
-        </app-labelled-input>
+        <ng-container *ngFor="let controlName of personalInfoControlNames">
+          <app-labelled-input
+            *ngIf="infoForm.get(controlName); let control"
+            [controlName]="controlName"
+            class="field col-6"
+            [errors]="control.errors || null"
+            [showError]="control.invalid && control.touched">
+            <input pInputText type="text" [formControlName]="controlName" />
+          </app-labelled-input>
+        </ng-container>
       </div>
     </p-accordionTab>
 

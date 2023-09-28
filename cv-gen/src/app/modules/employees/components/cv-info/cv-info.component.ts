@@ -3,8 +3,6 @@ import {
   Component,
   Input,
   OnInit,
-  ViewChildren,
-  QueryList,
 } from '@angular/core';
 import {
   FormArray,
@@ -15,7 +13,6 @@ import {
 } from '@angular/forms';
 import { EntitiesService } from '../../../core/services/entities.service';
 import { CvFormInterface, CvInterface } from '../../../core/models/cv.models';
-import { SkillsComponent } from '../skills/skills.component';
 import { ProjectsService } from '../../../core/services/projects.service';
 import { BehaviorSubject, Observable, take } from 'rxjs';
 import {
@@ -36,7 +33,7 @@ export class CvInfoComponent implements OnInit {
   @Input() cv!: CvInterface;
   @Input() cvProjects!: (ProjectInterface | null)[] | null;
 
-  public infoForm!: FormGroup<CvFormInterface>; //create on Init
+  public infoForm!: FormGroup<CvFormInterface>;
 
   public skillsControl!: {
     name: string;
