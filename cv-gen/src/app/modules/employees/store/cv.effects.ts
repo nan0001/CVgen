@@ -5,7 +5,7 @@ import { ProjectsService } from '../../core/services/projects.service';
 import { CvActions } from './cv.actions';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProjectsActions } from '../../projects/store/projects.actions';
+import { ProjectsActions } from '../../core/store/projects.actions';
 
 @Injectable()
 export class CvEffects {
