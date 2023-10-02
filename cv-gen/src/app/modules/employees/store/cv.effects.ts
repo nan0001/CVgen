@@ -51,6 +51,15 @@ export class CvEffects {
     );
   });
 
+  public updateCvProjects = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProjectsActions.successLoading),
+      map(action => {
+        return CvActions.updateProjects({ data: action.data });
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private cvService: CvService,

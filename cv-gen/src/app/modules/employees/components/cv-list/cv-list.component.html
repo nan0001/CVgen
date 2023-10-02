@@ -10,15 +10,15 @@
     </span>
   </div>
   <ul class="list flex flex-column">
-    <li *ngFor="let item of filteredItems">
+    <li *ngFor="let item of filteredItems$ | async">
       <button
         class="cv-item flex justify-content-between align-items-center w-full"
-        (click)="setPickedId(item)">
-        <span class="line-height-1">{{ item }}</span>
+        (click)="setPickedId(item.id)">
+        <span class="line-height-1">{{ item.name }}</span>
         <p-button
           icon="pi pi-trash"
           styleClass="p-button-text p-button-rounded"
-          (onClick)="removeCv($event, item)"></p-button>
+          (onClick)="removeCv($event, item.id)"></p-button>
       </button>
     </li>
   </ul>

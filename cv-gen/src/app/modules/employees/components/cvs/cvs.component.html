@@ -1,9 +1,6 @@
 <div class="flex gap-3 w-full">
   <app-cv-list
-    [cvsList]="employee.cvsId"
-    (setCvId)="setPickedCv($event)"></app-cv-list>
-  <app-cv-info
-    *ngIf="pickedCv$ | async as cv"
-    [cv]="cv"
-    [cvProjects]="projectsObservable$ | async"></app-cv-info>
+    (setCvId)="setPickedCv($event)"
+    [cvIds]="employee.cvsId"></app-cv-list>
+  <app-cv-info *ngIf="pickedCv$ | async as cv" [cv]="cv"></app-cv-info>
 </div>

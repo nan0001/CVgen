@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { cvFeatureKey } from '.';
 import { CvState } from './cv.reducer';
-import { CvInterface } from '../../core/models/cv.models';
+import { CvInterface, CvWithProjects } from '../../core/models/cv.models';
 
 export const selectCvs = createFeatureSelector<CvState>(cvFeatureKey);
 
@@ -13,6 +13,19 @@ export const selectCvsCollection = createSelector(
 export const selectCvById = (props: { id: string }) =>
   createSelector(selectCvs, (state: CvState) => {
     const cv: CvInterface | undefined = state.cvs.find(
+      elem => elem.id === props.id
+    );
+
+    if (cv) {
+      return cv;
+    }
+
+    return null;
+  });
+
+export const selectCvWithProjectsById = (props: { id: string }) =>
+  createSelector(selectCvs, (state: CvState) => {
+    const cv: CvWithProjects | undefined = state.cvsWithProjects.find(
       elem => elem.id === props.id
     );
 

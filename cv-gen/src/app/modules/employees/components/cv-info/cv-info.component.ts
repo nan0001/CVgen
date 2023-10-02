@@ -12,13 +12,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { EntitiesService } from '../../../core/services/entities.service';
-import { CvFormInterface, CvInterface } from '../../../core/models/cv.models';
-import { ProjectsService } from '../../../core/services/projects.service';
-import { BehaviorSubject, Observable, take } from 'rxjs';
 import {
-  CvProjectFormInterface,
-  ProjectInterface,
-} from '../../../core/models/project.model';
+  CvFormInterface,
+  CvWithProjects,
+} from '../../../core/models/cv.models';
+import { BehaviorSubject, Observable, take } from 'rxjs';
+import { CvProjectFormInterface } from '../../../core/models/project.model';
 import { SkillsInterface } from '../../../core/models/skills.model';
 import { bothFieldsRequired } from '../../../core/utils/skill.validator';
 import { noConflictDates } from '../../../core/utils/date.validator';
@@ -30,8 +29,7 @@ import { noConflictDates } from '../../../core/utils/date.validator';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CvInfoComponent implements OnInit {
-  @Input() cv!: CvInterface;
-  @Input() cvProjects!: (ProjectInterface | null)[] | null;
+  @Input() cv!: CvWithProjects;
 
   public infoForm!: FormGroup<CvFormInterface>;
 
@@ -48,8 +46,7 @@ export class CvInfoComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private entitiesService: EntitiesService,
-    private projectService: ProjectsService
+    private entitiesService: EntitiesService
   ) {}
 
   public ngOnInit(): void {
@@ -127,6 +124,7 @@ export class CvInfoComponent implements OnInit {
     this.infoForm.reset();
     this.resetArray(this.skills, this.cv.skills);
     this.resetArray(this.langs, this.cv.langs);
+    this.resetProjects();
   }
 
   private resetArray(
@@ -171,36 +169,32 @@ export class CvInfoComponent implements OnInit {
   }
 
   private getProjectsControlArray(): FormGroup<CvProjectFormInterface>[] {
-    if (this.cvProjects) {
-      return this.cvProjects.map(val => {
-        const projectForm = this.fb.nonNullable.group({
-          name: [
-            val ? val.name : '',
-            [Validators.required, Validators.minLength(2)],
-          ],
-          dates: [
-            val
-              ? { start: val.start, end: val.end }
-              : { start: new Date(), end: new Date() },
-            [Validators.required, noConflictDates()],
-          ],
-          techStack: [val ? val.techStack : [], [Validators.required]],
-          responsibilities: [''],
-          domain: [
-            val ? val.domain : '',
-            [Validators.required, Validators.minLength(2)],
-          ],
-          description: [
-            val ? val.description : '',
-            [Validators.required, Validators.minLength(2)],
-          ],
-        });
-
-        return projectForm as FormGroup<CvProjectFormInterface>;
+    return this.cv.projects.map(val => {
+      const projectForm = this.fb.nonNullable.group({
+        name: [
+          val ? val.name : '',
+          [Validators.required, Validators.minLength(2)],
+        ],
+        dates: [
+          val
+            ? { start: val.start, end: val.end }
+            : { start: new Date(), end: new Date() },
+          [Validators.required, noConflictDates()],
+        ],
+        techStack: [val ? val.techStack : [], [Validators.required]],
+        responsibilities: [''],
+        domain: [
+          val ? val.domain : '',
+          [Validators.required, Validators.minLength(2)],
+        ],
+        description: [
+          val ? val.description : '',
+          [Validators.required, Validators.minLength(2)],
+        ],
       });
-    }
 
-    return [];
+      return projectForm as FormGroup<CvProjectFormInterface>;
+    });
   }
 
   private getNewSkillControl(
