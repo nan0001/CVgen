@@ -11,7 +11,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ProjectFormComponent } from './components/project-form/project-form.component';
 
-
 @NgModule({
   declarations: [
     ProjectsComponent,
@@ -25,7 +24,7 @@ import { ProjectFormComponent } from './components/project-form/project-form.com
     TranslateModule,
     PrimeDesignModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class ProjectsModule { }
