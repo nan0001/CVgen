@@ -14,13 +14,15 @@ import {
 import { EntitiesService } from '../../../core/services/entities.service';
 import {
   CvFormInterface,
+  CvProjectType,
   CvWithProjects,
 } from '../../../core/models/cv.models';
-import { BehaviorSubject, Observable, take } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CvProjectFormInterface } from '../../../core/models/project.model';
 import { SkillsInterface } from '../../../core/models/skills.model';
 import { bothFieldsRequired } from '../../../core/utils/skill.validator';
 import { noConflictDates } from '../../../core/utils/date.validator';
+import { filterOptions } from '../../../core/utils/filter-options.util';
 
 @Component({
   selector: 'app-cv-info',
@@ -39,8 +41,12 @@ export class CvInfoComponent implements OnInit {
     itemName: string;
     options: Observable<string[] | null>;
   }[];
-  private options$ = this.entitiesService.getEntityList('skills');
-  public optionsFiltered$: BehaviorSubject<string[]> = new BehaviorSubject<
+  private techOptions$ = this.entitiesService.getEntityList('skills');
+  private respOptions$ = this.entitiesService.getEntityList('responsibilities');
+  public techOptionsFiltered$: BehaviorSubject<string[]> = new BehaviorSubject<
+    string[]
+  >([]);
+  public respOptionsFiltered$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
   >([]);
 
@@ -51,7 +57,8 @@ export class CvInfoComponent implements OnInit {
 
   public ngOnInit(): void {
     this.createControls();
-    this.filterOptions('');
+    this.filterTechStack('');
+    this.filterResponsibilities('');
     this.skillsControl = [
       {
         name: 'skills',
@@ -99,17 +106,12 @@ export class CvInfoComponent implements OnInit {
     array.removeAt(index);
   }
 
-  public filterOptions(query: string): void {
-    this.options$.pipe(take(1)).subscribe(val => {
-      if (val) {
-        const filteredArray = val.filter(elem =>
-          elem.toLowerCase().includes(query.toLowerCase())
-        );
-        this.optionsFiltered$.next(filteredArray);
-        return;
-      }
-      this.optionsFiltered$.next([]);
-    });
+  public filterResponsibilities(query: string): void {
+    filterOptions(query, this.respOptions$, this.respOptionsFiltered$);
+  }
+
+  public filterTechStack(query: string): void {
+    filterOptions(query, this.techOptions$, this.techOptionsFiltered$);
   }
 
   public addItem(array: FormArray<FormControl<SkillsInterface | null>>): void {
@@ -170,31 +172,40 @@ export class CvInfoComponent implements OnInit {
 
   private getProjectsControlArray(): FormGroup<CvProjectFormInterface>[] {
     return this.cv.projects.map(val => {
-      const projectForm = this.fb.nonNullable.group({
-        name: [
-          val ? val.name : '',
-          [Validators.required, Validators.minLength(2)],
-        ],
-        dates: [
-          val
-            ? { start: val.start, end: val.end }
-            : { start: new Date(), end: new Date() },
-          [Validators.required, noConflictDates()],
-        ],
-        techStack: [val ? val.techStack : [], [Validators.required]],
-        responsibilities: [''],
-        domain: [
-          val ? val.domain : '',
-          [Validators.required, Validators.minLength(2)],
-        ],
-        description: [
-          val ? val.description : '',
-          [Validators.required, Validators.minLength(2)],
-        ],
-      });
-
-      return projectForm as FormGroup<CvProjectFormInterface>;
+      return this.createProjectGroup(val);
     });
+  }
+
+  private createProjectGroup(
+    val: CvProjectType | null
+  ): FormGroup<CvProjectFormInterface> {
+    const projectForm = this.fb.nonNullable.group({
+      name: [
+        val ? val.name : '',
+        [Validators.required, Validators.minLength(2)],
+      ],
+      dates: [
+        val
+          ? { start: val.start, end: val.end }
+          : { start: new Date(), end: new Date() },
+        [Validators.required, noConflictDates()],
+      ],
+      techStack: [val ? val.techStack : [], [Validators.required]],
+      responsibilities: [
+        val ? val.responsibilities : [],
+        [Validators.required],
+      ],
+      domain: [
+        val ? val.domain : '',
+        [Validators.required, Validators.minLength(2)],
+      ],
+      description: [
+        val ? val.description : '',
+        [Validators.required, Validators.minLength(2)],
+      ],
+    });
+
+    return projectForm as FormGroup<CvProjectFormInterface>;
   }
 
   private getNewSkillControl(

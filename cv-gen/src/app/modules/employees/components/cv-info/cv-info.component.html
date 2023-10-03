@@ -109,13 +109,27 @@
               ">
               <p-autoComplete
                 formControlName="techStack"
-                [suggestions]="(optionsFiltered$ | async) || []"
-                (completeMethod)="filterOptions($event.query)"
+                [suggestions]="(techOptionsFiltered$ | async) || []"
+                (completeMethod)="filterTechStack($event.query)"
                 [multiple]="true"
                 [dropdown]="true"></p-autoComplete>
             </app-labelled-input>
 
-            <!-- responsibilities -->
+            <app-labelled-input
+              controlName="responsibilities"
+              [errors]="project.controls.responsibilities.errors"
+              class="field col-7"
+              [showError]="
+                project.controls.responsibilities.invalid &&
+                project.controls.responsibilities.touched
+              ">
+              <p-autoComplete
+                formControlName="responsibilities"
+                [suggestions]="(respOptionsFiltered$ | async) || []"
+                (completeMethod)="filterResponsibilities($event.query)"
+                [multiple]="true"
+                [dropdown]="true"></p-autoComplete>
+            </app-labelled-input>
 
             <app-labelled-input
               controlName="domain"

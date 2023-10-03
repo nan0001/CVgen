@@ -55,7 +55,8 @@
     "internalName": "Внутреннее название",
     "domain": "Домен",
     "description": "Описание",
-    "techStack": "Стек технологий"
+    "techStack": "Стек технологий",
+    "responsibilities": "Обязанности"
   },
   "LANGS":{
     "ru":  "Русский",

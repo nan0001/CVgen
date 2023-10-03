@@ -32,5 +32,5 @@ export interface ProjectFormInterface {
 
 export interface CvProjectFormInterface
   extends Omit<ProjectFormInterface, 'internalName'> {
-  responsibilities: FormControl<string>;
+  responsibilities: FormControl<string[]>;
 }

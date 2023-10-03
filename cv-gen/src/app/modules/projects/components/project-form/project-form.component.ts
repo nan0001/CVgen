@@ -4,6 +4,7 @@ import { BehaviorSubject, take } from 'rxjs';
 import { ProjectFormInterface, ProjectInterface } from '../../../core/models/project.model';
 import { noConflictDates } from '../../../core/utils/date.validator';
 import { EntitiesService } from '../../../core/services/entities.service';
+import { filterOptions } from '../../../core/utils/filter-options.util';
 
 @Component({
   selector: 'app-project-form',
@@ -26,7 +27,7 @@ export class ProjectFormComponent implements OnInit{
 
   public ngOnInit(): void {
     this.createControls();
-    this.filterOptions('');
+    this.filterTechStack('');
   }
 
   public get internalName() {
@@ -53,17 +54,8 @@ export class ProjectFormComponent implements OnInit{
     return this.infoForm.controls.description;
   }
 
-  public filterOptions(query: string): void {
-    this.options$.pipe(take(1)).subscribe(val => {
-      if (val) {
-        const filteredArray = val.filter(elem =>
-          elem.toLowerCase().includes(query.toLowerCase())
-        );
-        this.optionsFiltered$.next(filteredArray);
-        return;
-      }
-      this.optionsFiltered$.next([]);
-    });
+  public filterTechStack(query: string): void {
+    filterOptions(query, this.options$, this.optionsFiltered$)
   }
 
   public onCancel(): void {

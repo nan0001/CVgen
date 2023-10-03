@@ -55,7 +55,8 @@
     "internalName": "Internal Name",
     "domain": "Domain",
     "description": "Description",
-    "techStack": "Tech Stack"
+    "techStack": "Tech Stack",
+    "responsibilities": "Responsibilities"
   },
   "LANGS":{
     "ru":  "Russian",
