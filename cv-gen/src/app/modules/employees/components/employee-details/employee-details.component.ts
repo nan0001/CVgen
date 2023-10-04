@@ -7,8 +7,10 @@ import {
 } from '@angular/core';
 import { EmployeeInterface } from '../../../core/models/employee.model';
 import { Observable } from 'rxjs';
-import { EmployeesService } from '../../../core/services/employees.service';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { EmployeeActions } from '../../store/actions/employee.actions';
+import { selectEmployeeById } from '../../store/selectors/employee.selectors';
 
 @Component({
   selector: 'app-employee-details',
@@ -23,26 +25,21 @@ export class EmployeeDetailsComponent implements OnInit {
   public showSaveMessage = false;
 
   constructor(
-    private employeeService: EmployeesService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 
   public ngOnInit(): void {
-    this.employee$ = this.employeeService.getEmployeeById(this.id);
+    this.store.dispatch(EmployeeActions.loadEmployees({ update: false }));
+    this.employee$ = this.store.select(selectEmployeeById({ id: this.id }));
   }
 
   public navigateToList() {
     this.router.navigateByUrl('employees');
   }
 
-  public submitData(formValue: Omit<EmployeeInterface, 'id' | 'cvsId'>): void {
-    this.employeeService.updateEmployee(formValue, this.id);
-    this.showMessage();
-    this.employee$ = this.employeeService.getEmployeeById(this.id);
-  }
-
-  private showMessage(): void {
+  public showMessage(): void {
     this.showSaveMessage = true;
 
     setTimeout(() => {

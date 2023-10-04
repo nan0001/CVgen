@@ -1,10 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-import { CvActions } from './cv.actions';
+import { CvActions } from '../actions/cv.actions';
 import {
   CvInterface,
   CvProjectType,
   CvWithProjects,
-} from '../../core/models/cv.models';
+} from '../../../core/models/cv.models';
 
 export interface CvState {
   cvs: CvInterface[];

@@ -53,14 +53,16 @@ export class EmployeesService {
   public updateEmployee(
     employee: Omit<EmployeeInterface, 'id' | 'cvsId'>,
     id: string
-  ): void {
-    updateDoc(
-      doc(this.employeesRef, id),
-      employee as UpdateData<Omit<EmployeeInterface, 'id' | 'cvsId'>>
+  ): Observable<void> {
+    return from(
+      updateDoc(
+        doc(this.employeesRef, id),
+        employee as UpdateData<Omit<EmployeeInterface, 'id' | 'cvsId'>>
+      )
     );
   }
 
-  public deleteEmployee(employeeId: string): void {
-    deleteDoc(doc(this.employeesRef, employeeId));
+  public deleteEmployee(employeeId: string): Observable<void> {
+    return from(deleteDoc(doc(this.employeesRef, employeeId)));
   }
 }

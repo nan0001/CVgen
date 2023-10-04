@@ -1,9 +1,15 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { cvFeatureKey } from '.';
-import { CvState } from './cv.reducer';
-import { CvInterface, CvWithProjects } from '../../core/models/cv.models';
+import { EmployeeModuleState, cvFeatureKey } from '..';
+import { CvState } from '../reducers/cv.reducer';
+import { CvInterface, CvWithProjects } from '../../../core/models/cv.models';
 
-export const selectCvs = createFeatureSelector<CvState>(cvFeatureKey);
+export const selectModule =
+  createFeatureSelector<EmployeeModuleState>('employeeModule');
+
+export const selectCvs = createSelector(
+  selectModule,
+  (state: EmployeeModuleState) => state[cvFeatureKey]
+);
 
 export const selectCvsCollection = createSelector(
   selectCvs,

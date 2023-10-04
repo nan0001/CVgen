@@ -10,7 +10,7 @@ import {
 import { CvInterface } from '../../../core/models/cv.models';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectCvsArrayById } from '../../store/cv.selectors';
+import { selectCvsArrayById } from '../../store/selectors/cv.selectors';
 
 @Component({
   selector: 'app-cv-list',

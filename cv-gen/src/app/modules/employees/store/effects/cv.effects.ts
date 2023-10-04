@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { CvService } from '../../core/services/cv.service';
-import { ProjectsService } from '../../core/services/projects.service';
-import { CvActions } from './cv.actions';
+import { CvService } from '../../../core/services/cv.service';
+import { ProjectsService } from '../../../core/services/projects.service';
+import { CvActions } from '../actions/cv.actions';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProjectsActions } from '../../core/store/projects.actions';
+import { ProjectsActions } from '../../../core/store/projects.actions';
 
 @Injectable()
 export class CvEffects {

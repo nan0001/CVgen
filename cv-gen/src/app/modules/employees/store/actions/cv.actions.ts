@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { CvInterface } from '../../core/models/cv.models';
-import { ProjectInterface } from '../../core/models/project.model';
+import { CvInterface } from '../../../core/models/cv.models';
+import { ProjectInterface } from '../../../core/models/project.model';
 
 export const CvActions = createActionGroup({
   source: 'Cv',

@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { EmployeeActions } from './store/actions/employee.actions';
 
 @Component({
   selector: 'app-employees',
@@ -6,4 +8,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./employees.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmployeesComponent {}
+export class EmployeesComponent implements OnInit {
+  constructor(private store: Store) {}
+
+  public ngOnInit(): void {
+    this.store.dispatch(EmployeeActions.loadEmployees({ update: false }));
+  }
+}

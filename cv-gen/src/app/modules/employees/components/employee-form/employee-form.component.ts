@@ -21,6 +21,8 @@ import { EntitiesService } from '../../../core/services/entities.service';
 import { SkillsInterface } from '../../../core/models/skills.model';
 import { bothFieldsRequired } from '../../../core/utils/skill.validator';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { EmployeeActions } from '../../store/actions/employee.actions';
 
 @Component({
   selector: 'app-employee-form',
@@ -30,9 +32,7 @@ import { Observable } from 'rxjs';
 })
 export class EmployeeFormComponent implements OnInit {
   @Input() employee!: EmployeeInterface;
-  @Output() sendFormData = new EventEmitter<
-    Omit<EmployeeInterface, 'id' | 'cvsId'>
-  >();
+  @Output() sendFormData = new EventEmitter();
 
   public infoForm!: FormGroup<EmployeeFormInterface>;
   public personalInfoControlNames = [
@@ -52,7 +52,8 @@ export class EmployeeFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private entitiesService: EntitiesService
+    private entitiesService: EntitiesService,
+    private store: Store
   ) {}
 
   public ngOnInit(): void {
@@ -100,7 +101,12 @@ export class EmployeeFormComponent implements OnInit {
         skills: formValue.skills.filter(val => val !== null),
         langs: formValue.langs.filter(val => val !== null),
       } as Omit<EmployeeInterface, 'id' | 'cvsId'>;
-      this.sendFormData.emit(newValue);
+
+      this.store.dispatch(
+        EmployeeActions.updateEmployee({ newValue, id: this.employee.id })
+      );
+      this.sendFormData.emit();
+
       return;
     }
 
@@ -108,7 +114,13 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   public onCancel(): void {
-    this.infoForm.reset();
+    this.infoForm.reset({
+      firstName: this.employee.firstName,
+      lastName: this.employee.lastName,
+      email: this.employee.email,
+      department: this.employee.department,
+      line: this.employee.line,
+    });
     this.resetArray(this.skills, this.employee.skills);
     this.resetArray(this.langs, this.employee.langs);
   }
