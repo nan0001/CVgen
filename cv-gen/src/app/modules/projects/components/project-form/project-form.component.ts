@@ -5,6 +5,8 @@ import { ProjectFormInterface, ProjectInterface } from '../../../core/models/pro
 import { noConflictDates } from '../../../core/utils/date.validator';
 import { EntitiesService } from '../../../core/services/entities.service';
 import { filterOptions } from '../../../core/utils/filter-options.util';
+import { Store } from '@ngrx/store';
+import { selectSkills } from '../../../core/store/selectors/entities.selectors';
 
 @Component({
   selector: 'app-project-form',
@@ -17,13 +19,15 @@ export class ProjectFormComponent implements OnInit{
   @Output() sendFormData = new EventEmitter<Omit<ProjectInterface, "id">>;
 
   public infoForm!: FormGroup<ProjectFormInterface>;
-  private options$ = this.entitiesService.getEntityList('skills');
+  private options$ = this.store.select(selectSkills);
   public optionsFiltered$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
   >([]);
 
-  constructor(private fb: FormBuilder,
-    private entitiesService: EntitiesService){}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store
+    ){}
 
   public ngOnInit(): void {
     this.createControls();
@@ -59,7 +63,17 @@ export class ProjectFormComponent implements OnInit{
   }
 
   public onCancel(): void {
-    this.infoForm.reset();
+    this.infoForm.reset({
+      internalName: this.project.internalName,
+      name: this.project.name,
+      dates: {
+        start: this.project.start,
+        end: this.project.end
+      },
+      domain: this.project.domain,
+      description: this.project.description,
+      techStack: this.project.techStack
+    });
     this.infoForm.markAsUntouched();
     this.infoForm.markAsPristine();
   }

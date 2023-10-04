@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ProjectInterface } from '../../../core/models/project.model';
-import { ProjectsService } from '../../../core/services/projects.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { selectProjectsCollection } from '../../../core/store/selectors/projects.selectors';
+import { ProjectsActions } from '../../../core/store/actions/projects.actions';
 
 @Component({
   selector: 'app-projects-table',
@@ -11,17 +11,13 @@ import { ActivatedRoute, Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectsTableComponent {
-  public projects$!: Observable<ProjectInterface[]>;
+  public projects$ = this.store.select(selectProjectsCollection);
 
   constructor(
-    private projectService: ProjectsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store
   ) {}
-
-  public ngOnInit(): void {
-    this.projects$ = this.projectService.getProjects();
-  }
 
   public navigateToInfo(id: string): void {
     this.router.navigate([id], {
@@ -31,7 +27,7 @@ export class ProjectsTableComponent {
 
   public removeProject(event: Event, id: string): void {
     event.stopPropagation();
-    this.projectService.deleteProject(id);
+    this.store.dispatch(ProjectsActions.deleteProject({id}))
   }
 
 }

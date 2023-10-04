@@ -3,12 +3,12 @@ import { ProjectsActions } from '../actions/projects.actions';
 import { ProjectInterface } from '../../models/project.model';
 
 export interface ProjectsState {
-  projects: ProjectInterface[];
+  projects: ProjectInterface[] | null;
   isLoading: boolean;
 }
 
 export const initialState: ProjectsState = {
-  projects: [],
+  projects: null,
   isLoading: false,
 };
 
@@ -28,6 +28,6 @@ export const reducer = createReducer(
   ),
   on(
     ProjectsActions.loadingFailure,
-    (state): ProjectsState => ({ ...state, projects: [], isLoading: false })
+    (state): ProjectsState => ({ ...state, projects: null, isLoading: false })
   )
 );

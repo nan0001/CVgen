@@ -6,19 +6,19 @@ import { ProjectInterface } from '../../models/project.model';
 export const selectModule =
   createFeatureSelector<CoreModuleState>(moduleFeatureKey);
 
-export const selectProjects = createSelector(
+export const selectProjectsFeature = createSelector(
   selectModule,
   (state: CoreModuleState) => state[projectsFeatureKey]
 );
 
 export const selectProjectsCollection = createSelector(
-  selectProjects,
+  selectProjectsFeature,
   (state: ProjectsState) => state.projects
 );
 
 export const selectProjectById = (props: { id: string }) =>
-  createSelector(selectProjects, (state: ProjectsState) => {
-    const project: ProjectInterface | undefined = state.projects.find(
+  createSelector(selectProjectsFeature, (state: ProjectsState) => {
+    const project: ProjectInterface | undefined = state.projects?.find(
       elem => elem.id === props.id
     );
 

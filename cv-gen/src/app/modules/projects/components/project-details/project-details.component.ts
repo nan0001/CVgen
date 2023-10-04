@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { BehaviorSubject, Observable, take } from 'rxjs';
 import { ProjectInterface } from '../../../core/models/project.model';
-import { ProjectsService } from '../../../core/services/projects.service';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { ProjectsActions } from '../../../core/store/actions/projects.actions';
+import { selectProjectById } from '../../../core/store/selectors/projects.selectors';
 
 @Component({
   selector: 'app-project-details',
@@ -27,19 +29,21 @@ export class ProjectDetailsComponent {
   public showSaveMessage = false;
 
   constructor(
-    private projectsService: ProjectsService,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private store: Store
   ) {}
 
   public ngOnInit(): void {
+    this.store.dispatch(ProjectsActions.loadProjects({update: false}));
+
     this.project$ = this.id === 'new-project'
     ? this.emptyProject$.asObservable()
-    : this.projectsService.getProjectById(this.id);
+    : this.store.select(selectProjectById({id: this.id}))
   }
 
   public deleteProject(): void {
-    this.projectsService.deleteProject(this.id);
+    this.store.dispatch(ProjectsActions.deleteProject({id: this.id}))
     this.navigateToList();
   }
 
@@ -53,15 +57,11 @@ export class ProjectDetailsComponent {
   }
 
   private sendProjectData(formValue: Omit<ProjectInterface, 'id'>): void {
-    if (this.id === 'new-project'){
-      this.projectsService.addProject(formValue).pipe(take(1)).subscribe((val) => {
-        this.router.navigate(['projects', val])
-      })
-      return;
-    }
+    const actionToDispatch = this.id === 'new-project'
+    ? ProjectsActions.addProject({newValue: formValue})
+    : ProjectsActions.updateProject({newValue: formValue, id: this.id})
 
-    this.projectsService.updateProject(formValue, this.id);
-    this.project$ = this.projectsService.getProjectById(this.id);
+    this.store.dispatch(actionToDispatch)
   }
 
   private showMessage(): void {

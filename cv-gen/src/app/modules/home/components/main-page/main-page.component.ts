@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { EntitiesActions } from '../../../core/store/actions/entities.actions';
 
 @Component({
   selector: 'app-main-page',
@@ -6,4 +8,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./main-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainPageComponent {}
+export class MainPageComponent implements OnInit {
+  constructor(private store: Store) {}
+
+  public ngOnInit(): void {
+    this.store.dispatch(EntitiesActions.loadEntities());
+  }
+}

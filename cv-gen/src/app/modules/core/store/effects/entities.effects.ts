@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, combineLatest } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProjectsActions } from '../../../core/store/actions/projects.actions';
-import { EmployeeActions } from '../../../employees/store/actions/employee.actions';
 import { EntitiesActions } from '../actions/entities.actions';
 import { EntitiesService } from '../../services/entities.service';
 import { Store } from '@ngrx/store';
@@ -13,11 +11,7 @@ import { selectEntities } from '../selectors/entities.selectors';
 export class EntitiesEffects {
   public loadEntities$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(
-        ProjectsActions.loadProjects,
-        EmployeeActions.loadEmployees,
-        EntitiesActions.loadEntities
-      ),
+      ofType(EntitiesActions.loadEntities),
       switchMap(() => {
         const langs$ = this.entitiesService.getEntityList('langs');
         const skills$ = this.entitiesService.getEntityList('skills');
