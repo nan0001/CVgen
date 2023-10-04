@@ -57,7 +57,7 @@ export class EmployeeEffects {
           return employeeAction$;
         }
 
-        return of(EmployeeActions.loadEmployees({ update: false }));
+        return of(EmployeeActions["iDDoesn'tExist"]());
       })
     );
   });
@@ -87,7 +87,7 @@ export class EmployeeEffects {
           return employeeAction$;
         }
 
-        return of(EmployeeActions.loadEmployees({ update: false }));
+        return of(EmployeeActions["iDDoesn'tExist"]());
       })
     );
   });

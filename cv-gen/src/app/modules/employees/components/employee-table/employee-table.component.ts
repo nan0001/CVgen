@@ -1,6 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { EmployeeInterface } from '../../../core/models/employee.model';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectEmployeeCollection } from '../../store/selectors/employee.selectors';
@@ -12,18 +10,14 @@ import { EmployeeActions } from '../../store/actions/employee.actions';
   styleUrls: ['./employee-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmployeeTableComponent implements OnInit {
-  public employees$!: Observable<EmployeeInterface[] | null>;
+export class EmployeeTableComponent {
+  public employees$ = this.store.select(selectEmployeeCollection);
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private store: Store
   ) {}
-
-  public ngOnInit(): void {
-    this.employees$ = this.store.select(selectEmployeeCollection);
-  }
 
   public navigateToInfo(id: string): void {
     this.router.navigate([id], {

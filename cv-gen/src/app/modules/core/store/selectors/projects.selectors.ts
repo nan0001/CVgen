@@ -1,10 +1,15 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { projectsFeatureKey } from '.';
-import { ProjectsState } from './projects.reducer';
-import { ProjectInterface } from '../../core/models/project.model';
+import { CoreModuleState, moduleFeatureKey, projectsFeatureKey } from '..';
+import { ProjectsState } from '../reducers/projects.reducer';
+import { ProjectInterface } from '../../models/project.model';
 
-export const selectProjects =
-  createFeatureSelector<ProjectsState>(projectsFeatureKey);
+export const selectModule =
+  createFeatureSelector<CoreModuleState>(moduleFeatureKey);
+
+export const selectProjects = createSelector(
+  selectModule,
+  (state: CoreModuleState) => state[projectsFeatureKey]
+);
 
 export const selectProjectsCollection = createSelector(
   selectProjects,

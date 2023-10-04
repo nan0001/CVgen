@@ -1,15 +1,13 @@
-<app-entity-list
-  *ngIf="itemsList$ | async as items"
-  [itemsList]="items"
-  [id]="id"
-  (removeItem)="updateList()"></app-entity-list>
+<app-entity-list [id]="id"></app-entity-list>
 
-<div class="flex flex-column gap-3 flex-grow-1 align-items-end">
+<form
+  class="flex flex-column gap-3 flex-grow-1 align-items-end"
+  (ngSubmit)="addItem()">
   <p-button
     [label]="'ENTITIES.addItem' | translate"
     styleClass="p-button-raised p-button-text"
-    (onClick)="addItem()"
-    [disabled]="!newValueControl.value"></p-button>
+    [disabled]="!newValueControl.value"
+    type="submit"></p-button>
   <div class="flex flex-column gap-1 w-full">
     <label htmlFor="newItem">{{ 'INFO.name' | translate }}</label>
     <input
@@ -19,4 +17,4 @@
       name="newItem"
       [formControl]="newValueControl" />
   </div>
-</div>
+</form>

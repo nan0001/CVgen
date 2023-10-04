@@ -1,10 +1,10 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { EmployeeModuleState, employeeFeatureKey } from '../';
+import { EmployeeModuleState, employeeFeatureKey, moduleFeatureKey } from '../';
 import { EmployeeState } from '../reducers/employee.reducer';
 import { EmployeeInterface } from '../../../core/models/employee.model';
 
 export const selectModule =
-  createFeatureSelector<EmployeeModuleState>('employeeModule');
+  createFeatureSelector<EmployeeModuleState>(moduleFeatureKey);
 
 export const selectEmployees = createSelector(
   selectModule,

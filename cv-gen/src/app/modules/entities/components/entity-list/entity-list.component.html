@@ -9,7 +9,7 @@
   </span>
   <ul class="list flex flex-column">
     <li
-      *ngFor="let item of filteredItems"
+      *ngFor="let item of filteredItems$ | async"
       class="flex justify-content-between align-items-center">
       <span class="line-height-1">{{ item }}</span>
       <p-button

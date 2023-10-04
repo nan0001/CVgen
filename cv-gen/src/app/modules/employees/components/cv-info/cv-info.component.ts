@@ -11,7 +11,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { EntitiesService } from '../../../core/services/entities.service';
 import {
   CvFormInterface,
   CvProjectType,
@@ -23,6 +22,12 @@ import { SkillsInterface } from '../../../core/models/skills.model';
 import { bothFieldsRequired } from '../../../core/utils/skill.validator';
 import { noConflictDates } from '../../../core/utils/date.validator';
 import { filterOptions } from '../../../core/utils/filter-options.util';
+import { Store } from '@ngrx/store';
+import {
+  selectLangs,
+  selectResponsibilities,
+  selectSkills,
+} from '../../../core/store/selectors/entities.selectors';
 
 @Component({
   selector: 'app-cv-info',
@@ -41,8 +46,9 @@ export class CvInfoComponent implements OnInit {
     itemName: string;
     options: Observable<string[] | null>;
   }[];
-  private techOptions$ = this.entitiesService.getEntityList('skills');
-  private respOptions$ = this.entitiesService.getEntityList('responsibilities');
+  private techOptions$ = this.store.select(selectSkills);
+  private respOptions$ = this.store.select(selectResponsibilities);
+  private langOptions$ = this.store.select(selectLangs);
   public techOptionsFiltered$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
   >([]);
@@ -52,7 +58,7 @@ export class CvInfoComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private entitiesService: EntitiesService
+    private store: Store
   ) {}
 
   public ngOnInit(): void {
@@ -64,13 +70,13 @@ export class CvInfoComponent implements OnInit {
         name: 'skills',
         control: this.skills,
         itemName: 'skill',
-        options: this.entitiesService.getEntityList('skills'),
+        options: this.techOptions$,
       },
       {
         name: 'langs',
         control: this.langs,
         itemName: 'lang',
-        options: this.entitiesService.getEntityList('langs'),
+        options: this.langOptions$,
       },
     ];
   }

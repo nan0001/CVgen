@@ -2,12 +2,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  Output,
-  EventEmitter,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
-import { EntitiesService } from '../../../core/services/entities.service';
 import { EntitiesListsType } from '../../../core/models/entities.model';
+import { Store } from '@ngrx/store';
+import { EntitiesActions } from '../../../core/store/actions/entities.actions';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { selectEntitytList } from '../../../core/store/selectors/entities.selectors';
 
 @Component({
   selector: 'app-entity-list',
@@ -15,33 +17,47 @@ import { EntitiesListsType } from '../../../core/models/entities.model';
   styleUrls: ['./entity-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EntityListComponent implements OnInit {
+export class EntityListComponent implements OnInit, OnDestroy {
   @Input() id: EntitiesListsType | '' = '';
-  @Input() itemsList: string[] | null = [];
 
-  @Output() removeItem = new EventEmitter();
-
-  public filteredItems: string[] = [];
   public filterString = '';
+  public subscription!: Subscription;
+  public itemsList$!: Observable<string[] | null>;
+  private itemsList: string[] | null = [];
+  public filteredItems$ = new BehaviorSubject<string[]>([]);
 
-  constructor(private entitiesService: EntitiesService) {}
+  constructor(private store: Store) {}
 
   public ngOnInit(): void {
-    this.filterItems();
+    if (this.id) {
+      this.itemsList$ = this.store.select(selectEntitytList({ id: this.id }));
+
+      this.subscription = this.itemsList$.subscribe(val => {
+        this.itemsList = val;
+        this.filterItems();
+      });
+    }
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public removeEntity(item: string): void {
     if (this.id) {
-      this.entitiesService.deleteEntity(item, this.id);
-      this.removeItem.emit();
+      this.store.dispatch(
+        EntitiesActions.deleteItem({ list: this.id, item: item })
+      );
     }
   }
 
   public filterItems(): void {
     if (this.itemsList) {
-      this.filteredItems = this.itemsList.filter(val => {
+      const newArray = this.itemsList.filter(val => {
         return val.toLowerCase().includes(this.filterString.toLowerCase());
       });
+
+      this.filteredItems$.next(newArray);
     }
   }
 }

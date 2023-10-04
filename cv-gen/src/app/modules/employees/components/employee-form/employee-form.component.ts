@@ -17,12 +17,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { EntitiesService } from '../../../core/services/entities.service';
 import { SkillsInterface } from '../../../core/models/skills.model';
 import { bothFieldsRequired } from '../../../core/utils/skill.validator';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { EmployeeActions } from '../../store/actions/employee.actions';
+import {
+  selectLangs,
+  selectSkills,
+} from '../../../core/store/selectors/entities.selectors';
 
 @Component({
   selector: 'app-employee-form',
@@ -50,9 +53,11 @@ export class EmployeeFormComponent implements OnInit {
     options: Observable<string[] | null>;
   }[];
 
+  private techOptions$ = this.store.select(selectSkills);
+  private langOptions$ = this.store.select(selectLangs);
+
   constructor(
     private fb: FormBuilder,
-    private entitiesService: EntitiesService,
     private store: Store
   ) {}
 
@@ -63,13 +68,13 @@ export class EmployeeFormComponent implements OnInit {
         name: 'skills',
         control: this.skills,
         itemName: 'skill',
-        options: this.entitiesService.getEntityList('skills'),
+        options: this.techOptions$,
       },
       {
         name: 'langs',
         control: this.langs,
         itemName: 'lang',
-        options: this.entitiesService.getEntityList('langs'),
+        options: this.langOptions$,
       },
     ];
   }

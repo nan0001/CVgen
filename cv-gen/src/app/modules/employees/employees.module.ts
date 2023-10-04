@@ -39,7 +39,10 @@ import { EmployeeEffects } from './store/effects/employee.effects';
     TranslateModule,
     ReactiveFormsModule,
     FormsModule,
-    StoreModule.forFeature('employeeModule', fromEmployeeModule.reducers),
+    StoreModule.forFeature(
+      fromEmployeeModule.moduleFeatureKey,
+      fromEmployeeModule.reducers
+    ),
     EffectsModule.forFeature([CvEffects, EmployeeEffects]),
   ],
 })

@@ -12,5 +12,6 @@ export const EmployeeActions = createActionGroup({
       newValue: Omit<EmployeeInterface, 'id' | 'cvsId'>;
       id: string;
     }>(),
+    "ID doesn't exist": emptyProps(),
   },
 });

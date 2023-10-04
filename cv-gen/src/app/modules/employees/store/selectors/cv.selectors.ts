@@ -1,10 +1,10 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { EmployeeModuleState, cvFeatureKey } from '..';
+import { EmployeeModuleState, cvFeatureKey, moduleFeatureKey } from '..';
 import { CvState } from '../reducers/cv.reducer';
 import { CvInterface, CvWithProjects } from '../../../core/models/cv.models';
 
 export const selectModule =
-  createFeatureSelector<EmployeeModuleState>('employeeModule');
+  createFeatureSelector<EmployeeModuleState>(moduleFeatureKey);
 
 export const selectCvs = createSelector(
   selectModule,

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { ProjectsActions } from './projects.actions';
-import { ProjectInterface } from '../../core/models/project.model';
+import { ProjectsActions } from '../actions/projects.actions';
+import { ProjectInterface } from '../../models/project.model';
 
 export interface ProjectsState {
   projects: ProjectInterface[];
