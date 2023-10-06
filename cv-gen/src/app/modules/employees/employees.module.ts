@@ -19,6 +19,7 @@ import * as fromEmployeeModule from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { CvEffects } from './store/effects/cv.effects';
 import { EmployeeEffects } from './store/effects/employee.effects';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -45,5 +46,6 @@ import { EmployeeEffects } from './store/effects/employee.effects';
     ),
     EffectsModule.forFeature([CvEffects, EmployeeEffects]),
   ],
+  providers: [ConfirmationService],
 })
 export class EmployeesModule {}

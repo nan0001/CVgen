@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { EmployeeInterface } from '../../../core/models/employee.model';
-import { Observable, of, from, BehaviorSubject } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CvActions } from '../../store/actions/cv.actions';
 import { CvInterface } from '../../../core/models/cv.models';
@@ -30,9 +30,9 @@ export class CvsComponent implements OnInit {
     this.store.dispatch(CvActions.loadCvs());
   }
 
-  public setPickedCv(id: string): void {
+  public setPickedCv(props: { id: string; name: string }): void {
     const emptyCv: Omit<CvInterface, 'id'> = {
-      name: '',
+      name: props.name,
       firstName: this.employee.firstName,
       lastName: this.employee.lastName,
       description: '',
@@ -42,6 +42,8 @@ export class CvsComponent implements OnInit {
       langs: this.employee.langs,
     };
     this.pickedCv$ =
-      id !== 'new' ? this.store.select(selectCvById({ id })) : of(emptyCv);
+      props.id !== 'new'
+        ? this.store.select(selectCvById({ id: props.id }))
+        : of(emptyCv);
   }
 }

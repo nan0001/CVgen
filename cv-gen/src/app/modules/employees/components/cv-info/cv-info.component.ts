@@ -3,6 +3,8 @@ import {
   Component,
   Input,
   OnInit,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import {
   FormArray,
@@ -36,7 +38,7 @@ import { CvActions } from '../../store/actions/cv.actions';
   styleUrls: ['./cv-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CvInfoComponent implements OnInit {
+export class CvInfoComponent implements OnInit, OnChanges {
   @Input() cv!: CvInterface | Omit<CvInterface, 'id'>;
 
   public infoForm!: FormGroup<CvFormInterface>;
@@ -63,7 +65,6 @@ export class CvInfoComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    console.log('form init');
     this.createControls();
     this.filterTechStack('');
     this.filterResponsibilities('');
@@ -81,6 +82,12 @@ export class CvInfoComponent implements OnInit {
         options: this.langOptions$,
       },
     ];
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['cv']) {
+      this.createControls();
+    }
   }
 
   public get firstName(): FormControl<string> {
@@ -144,7 +151,7 @@ export class CvInfoComponent implements OnInit {
           : CvActions.addCv({
               newValue: {
                 ...newValue,
-                name: 'newName', //Think how to ask name
+                name: this.cv.name,
                 employeeId: this.cv.employeeId,
               },
             });
@@ -168,6 +175,11 @@ export class CvInfoComponent implements OnInit {
 
   public addProject(): void {
     this.projects.push(this.createProjectGroup(null));
+  }
+
+  public deleteProject(event: Event, index: number): void {
+    event.stopPropagation();
+    this.projects.removeAt(index);
   }
 
   private resetArray(
