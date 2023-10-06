@@ -13,5 +13,6 @@ export const EmployeeActions = createActionGroup({
       id: string;
     }>(),
     "ID doesn't exist": emptyProps(),
+    'Update cv': props<{ cvId: string; employeeId: string; addCv: boolean }>(),
   },
 });

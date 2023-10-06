@@ -56,7 +56,8 @@
     "domain": "Домен",
     "description": "Описание",
     "techStack": "Стек технологий",
-    "responsibilities": "Обязанности"
+    "responsibilities": "Обязанности",
+    "addProject": "Добавить проект"
   },
   "LANGS":{
     "ru":  "Русский",

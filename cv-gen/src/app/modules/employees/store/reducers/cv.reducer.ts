@@ -1,20 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 import { CvActions } from '../actions/cv.actions';
-import {
-  CvInterface,
-  CvProjectType,
-  CvWithProjects,
-} from '../../../core/models/cv.models';
+import { CvInterface } from '../../../core/models/cv.models';
 
 export interface CvState {
   cvs: CvInterface[];
-  cvsWithProjects: CvWithProjects[];
   isLoading: boolean;
 }
 
 export const initialState: CvState = {
   cvs: [],
-  cvsWithProjects: [],
   isLoading: false,
 };
 
@@ -32,31 +26,5 @@ export const reducer = createReducer(
   on(
     CvActions.loadingFailure,
     (state): CvState => ({ ...state, cvs: [], isLoading: false })
-  ),
-  on(CvActions.updateProjects, (state, action): CvState => {
-    const stateCvsWithProjects = state.cvs.map(cv => {
-      const projectsArray: CvProjectType[] = [];
-      cv.projects.forEach(proj => {
-        const foundProj = action.data.find(val => val.id === proj.id);
-        if (foundProj) {
-          const fullProj = {
-            ...proj,
-            ...foundProj,
-          };
-          projectsArray.push(fullProj);
-        }
-      });
-
-      const updatedCv = {
-        ...cv,
-        projects: projectsArray,
-      };
-      return updatedCv;
-    });
-
-    return {
-      ...state,
-      cvsWithProjects: stateCvsWithProjects,
-    };
-  })
+  )
 );

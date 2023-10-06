@@ -13,11 +13,11 @@ import {
 } from '@angular/forms';
 import {
   CvFormInterface,
-  CvProjectType,
-  CvWithProjects,
+  CvInterface,
+  CvProjectFormInterface,
+  CvProjectInterface,
 } from '../../../core/models/cv.models';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CvProjectFormInterface } from '../../../core/models/project.model';
 import { SkillsInterface } from '../../../core/models/skills.model';
 import { bothFieldsRequired } from '../../../core/utils/skill.validator';
 import { noConflictDates } from '../../../core/utils/date.validator';
@@ -28,6 +28,7 @@ import {
   selectResponsibilities,
   selectSkills,
 } from '../../../core/store/selectors/entities.selectors';
+import { CvActions } from '../../store/actions/cv.actions';
 
 @Component({
   selector: 'app-cv-info',
@@ -36,7 +37,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CvInfoComponent implements OnInit {
-  @Input() cv!: CvWithProjects;
+  @Input() cv!: CvInterface | Omit<CvInterface, 'id'>;
 
   public infoForm!: FormGroup<CvFormInterface>;
 
@@ -62,6 +63,7 @@ export class CvInfoComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    console.log('form init');
     this.createControls();
     this.filterTechStack('');
     this.filterResponsibilities('');
@@ -125,14 +127,47 @@ export class CvInfoComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    console.log(this.infoForm);
+    if (this.infoForm.valid) {
+      const formValue = this.infoForm.getRawValue();
+      const newValue = {
+        ...formValue,
+        skills: formValue.skills.filter(val => val !== null),
+        langs: formValue.langs.filter(val => val !== null),
+      } as Omit<CvInterface, 'id' | 'employeeId' | 'name'>;
+
+      const actionToDispatch =
+        'id' in this.cv
+          ? CvActions.updateCv({
+              data: newValue,
+              id: this.cv.id,
+            })
+          : CvActions.addCv({
+              newValue: {
+                ...newValue,
+                name: 'newName', //Think how to ask name
+                employeeId: this.cv.employeeId,
+              },
+            });
+
+      this.store.dispatch(actionToDispatch);
+    }
+
+    this.infoForm.markAllAsTouched();
   }
 
   public onCancel(): void {
-    this.infoForm.reset();
+    this.infoForm.reset({
+      firstName: this.cv.firstName,
+      lastName: this.cv.lastName,
+      description: this.cv.description,
+    });
     this.resetArray(this.skills, this.cv.skills);
     this.resetArray(this.langs, this.cv.langs);
     this.resetProjects();
+  }
+
+  public addProject(): void {
+    this.projects.push(this.createProjectGroup(null));
   }
 
   private resetArray(
@@ -183,7 +218,7 @@ export class CvInfoComponent implements OnInit {
   }
 
   private createProjectGroup(
-    val: CvProjectType | null
+    val: CvProjectInterface | null
   ): FormGroup<CvProjectFormInterface> {
     const projectForm = this.fb.nonNullable.group({
       name: [
@@ -192,7 +227,7 @@ export class CvInfoComponent implements OnInit {
       ],
       dates: [
         val
-          ? { start: val.start, end: val.end }
+          ? { start: val.dates.start, end: val.dates.end }
           : { start: new Date(), end: new Date() },
         [Validators.required, noConflictDates()],
       ],

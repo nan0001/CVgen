@@ -62,6 +62,17 @@ export class EmployeesService {
     );
   }
 
+  public updateEmployeeCv(
+    cvsId: EmployeeInterface['cvsId'],
+    employeeId: string
+  ): Observable<void> {
+    return from(
+      updateDoc(doc(this.employeesRef, employeeId), { cvsId } as UpdateData<
+        Pick<EmployeeInterface, 'cvsId'>
+      >)
+    );
+  }
+
   public deleteEmployee(employeeId: string): Observable<void> {
     return from(deleteDoc(doc(this.employeesRef, employeeId)));
   }

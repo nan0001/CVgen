@@ -10,7 +10,8 @@ import {
 import { CvInterface } from '../../../core/models/cv.models';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectCvsArrayById } from '../../store/selectors/cv.selectors';
+import { selectCvsArrayByEmployeeId } from '../../store/selectors/cv.selectors';
+import { CvActions } from '../../store/actions/cv.actions';
 
 @Component({
   selector: 'app-cv-list',
@@ -19,7 +20,7 @@ import { selectCvsArrayById } from '../../store/selectors/cv.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CvListComponent implements OnInit, OnDestroy {
-  @Input() cvIds: string[] = [];
+  @Input() employeeId = '';
   @Output() setCvId = new EventEmitter<string>();
 
   public cvsObservable$!: Observable<CvInterface[]>;
@@ -32,7 +33,7 @@ export class CvListComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.cvsObservable$ = this.store.select(
-      selectCvsArrayById({ ids: this.cvIds })
+      selectCvsArrayByEmployeeId({ employeeId: this.employeeId })
     );
 
     this.subscription = this.cvsObservable$.subscribe(val => {
@@ -45,9 +46,9 @@ export class CvListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  public removeCv(event: Event, item: string): void {
+  public removeCv(event: Event, id: string): void {
     event.stopPropagation();
-    // remove cv via service
+    this.store.dispatch(CvActions.deleteCv({ id }));
   }
 
   public filterItems(): void {
@@ -59,5 +60,9 @@ export class CvListComponent implements OnInit, OnDestroy {
 
   public setPickedId(cvId: string): void {
     this.setCvId.emit(cvId);
+  }
+
+  public addCv(): void {
+    this.setCvId.emit('new');
   }
 }

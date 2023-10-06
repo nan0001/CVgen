@@ -4,7 +4,6 @@ import { ProjectsService } from '../../../core/services/projects.service';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProjectsActions } from '../../../core/store/actions/projects.actions';
-import { CvActions } from '../../../employees/store/actions/cv.actions';
 import { Store } from '@ngrx/store';
 import { selectProjectsCollection } from '../selectors/projects.selectors';
 import { Router } from '@angular/router';
@@ -13,7 +12,7 @@ import { Router } from '@angular/router';
 export class ProjectEffects {
   public loadProjects$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(CvActions.successLoading, ProjectsActions.loadProjects),
+      ofType(ProjectsActions.loadProjects),
       concatLatestFrom(() => this.store.select(selectProjectsCollection)),
       switchMap(([action, projects]) => {
         if (

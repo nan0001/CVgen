@@ -6,6 +6,7 @@ import { EmployeesService } from '../../../core/services/employees.service';
 import { EmployeeActions } from '../actions/employee.actions';
 import { Store } from '@ngrx/store';
 import { selectEmployeeCollection } from '../selectors/employee.selectors';
+import { CvActions } from '../actions/cv.actions';
 
 @Injectable()
 export class EmployeeEffects {
@@ -73,6 +74,40 @@ export class EmployeeEffects {
           const update$ = this.employeeService.updateEmployee(
             action.newValue,
             action.id
+          );
+          const employeeAction$ = update$.pipe(
+            map(() => {
+              return EmployeeActions.loadEmployees({ update: true });
+            }),
+            catchError((errorResponse: HttpErrorResponse) => {
+              console.warn(errorResponse);
+              return of(EmployeeActions.loadingFailure());
+            })
+          );
+
+          return employeeAction$;
+        }
+
+        return of(EmployeeActions["iDDoesn'tExist"]());
+      })
+    );
+  });
+
+  public updateEmplyeeCv$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(EmployeeActions.updateCv),
+      concatLatestFrom(() => this.store.select(selectEmployeeCollection)),
+      switchMap(([action, employees]) => {
+        const employee = employees?.find(val => val.id === action.employeeId);
+
+        if (employee) {
+          const newCvArray = action.addCv
+            ? [...employee.cvsId, action.cvId]
+            : employee.cvsId.filter(val => val !== action.cvId);
+
+          const update$ = this.employeeService.updateEmployeeCv(
+            newCvArray,
+            action.employeeId
           );
           const employeeAction$ = update$.pipe(
             map(() => {

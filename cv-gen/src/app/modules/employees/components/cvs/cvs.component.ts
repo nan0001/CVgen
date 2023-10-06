@@ -5,11 +5,11 @@ import {
   OnInit,
 } from '@angular/core';
 import { EmployeeInterface } from '../../../core/models/employee.model';
-import { CvWithProjects } from '../../../core/models/cv.models';
-import { Observable, of } from 'rxjs';
+import { Observable, of, from, BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CvActions } from '../../store/actions/cv.actions';
-import { selectCvWithProjectsById } from '../../store/selectors/cv.selectors';
+import { CvInterface } from '../../../core/models/cv.models';
+import { selectCvById } from '../../store/selectors/cv.selectors';
 
 @Component({
   selector: 'app-cvs',
@@ -20,7 +20,9 @@ import { selectCvWithProjectsById } from '../../store/selectors/cv.selectors';
 export class CvsComponent implements OnInit {
   @Input() employee!: EmployeeInterface;
 
-  public pickedCv$: Observable<CvWithProjects | null> = of(null);
+  public pickedCv$:
+    | Observable<CvInterface | null>
+    | Observable<Omit<CvInterface, 'id'>> = of(null);
 
   constructor(private store: Store) {}
 
@@ -29,6 +31,17 @@ export class CvsComponent implements OnInit {
   }
 
   public setPickedCv(id: string): void {
-    this.pickedCv$ = this.store.select(selectCvWithProjectsById({ id }));
+    const emptyCv: Omit<CvInterface, 'id'> = {
+      name: '',
+      firstName: this.employee.firstName,
+      lastName: this.employee.lastName,
+      description: '',
+      employeeId: this.employee.id,
+      projects: [],
+      skills: this.employee.skills,
+      langs: this.employee.langs,
+    };
+    this.pickedCv$ =
+      id !== 'new' ? this.store.select(selectCvById({ id })) : of(emptyCv);
   }
 }

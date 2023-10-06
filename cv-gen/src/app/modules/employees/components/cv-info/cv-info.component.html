@@ -67,6 +67,12 @@
         [label]="'INFO.add' + array.itemName | translate"></p-button>
     </p-accordionTab>
 
+    <p-button
+      icon="pi pi-plus"
+      styleClass="p-button-text"
+      (onClick)="addProject()"
+      [label]="'INFO.addProject' | translate"></p-button>
+
     <ul formArrayName="projects">
       <li *ngFor="let project of projects.controls; let i = index">
         <p-accordionTab

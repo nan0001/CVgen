@@ -1,22 +1,47 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { SkillsInterface } from './skills.model';
-import { CvProjectFormInterface, ProjectInterface } from './project.model';
+import { Timestamp } from '@angular/fire/firestore';
 
-export interface CvProjectInterface {
-  id: string;
+export interface FirestoreCvProjectInterface {
+  name: string;
+  description: string;
+  domain: string;
+  dates: { start: Timestamp; end: Timestamp };
+  techStack: string[];
   responsibilities: string[];
 }
 
-export interface CvInterface {
+export interface CvProjectInterface
+  extends Omit<FirestoreCvProjectInterface, 'dates'> {
+  dates: { start: Date; end: Date };
+}
+
+export interface FirestoreCvInterface {
   name: string;
   firstName: string;
   lastName: string;
   description: string;
   id: string;
   employeeId: string;
-  projects: CvProjectInterface[];
+  projects: FirestoreCvProjectInterface[];
   skills: SkillsInterface[];
   langs: SkillsInterface[];
+}
+
+export interface CvInterface extends Omit<FirestoreCvInterface, 'projects'> {
+  projects: CvProjectInterface[];
+}
+
+export interface CvProjectFormInterface {
+  name: FormControl<string>;
+  domain: FormControl<string>;
+  description: FormControl<string>;
+  techStack: FormControl<string[]>;
+  responsibilities: FormControl<string[]>;
+  dates: FormControl<{
+    start: Date;
+    end: Date;
+  }>;
 }
 
 export interface CvFormInterface {
@@ -26,10 +51,4 @@ export interface CvFormInterface {
   skills: FormArray<FormControl<SkillsInterface | null>>;
   langs: FormArray<FormControl<SkillsInterface | null>>;
   projects: FormArray<FormGroup<CvProjectFormInterface>>;
-}
-
-export type CvProjectType = ProjectInterface & CvProjectInterface;
-
-export interface CvWithProjects extends Omit<CvInterface, 'projects'> {
-  projects: CvProjectType[];
 }

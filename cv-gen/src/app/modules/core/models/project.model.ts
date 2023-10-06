@@ -29,8 +29,3 @@ export interface ProjectFormInterface {
     end: Date;
   }>;
 }
-
-export interface CvProjectFormInterface
-  extends Omit<ProjectFormInterface, 'internalName'> {
-  responsibilities: FormControl<string[]>;
-}

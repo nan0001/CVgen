@@ -1,6 +1,6 @@
 <div class="flex gap-3 w-full">
   <app-cv-list
     (setCvId)="setPickedCv($event)"
-    [cvIds]="employee.cvsId"></app-cv-list>
+    [employeeId]="employee.id"></app-cv-list>
   <app-cv-info *ngIf="pickedCv$ | async as cv" [cv]="cv"></app-cv-info>
 </div>

@@ -56,7 +56,8 @@
     "domain": "Domain",
     "description": "Description",
     "techStack": "Tech Stack",
-    "responsibilities": "Responsibilities"
+    "responsibilities": "Responsibilities",
+    "addProject": "Add project"
   },
   "LANGS":{
     "ru":  "Russian",
