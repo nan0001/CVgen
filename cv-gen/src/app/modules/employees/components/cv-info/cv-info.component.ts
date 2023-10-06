@@ -31,12 +31,15 @@ import {
   selectSkills,
 } from '../../../core/store/selectors/entities.selectors';
 import { CvActions } from '../../store/actions/cv.actions';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-cv-info',
   templateUrl: './cv-info.component.html',
   styleUrls: ['./cv-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfirmationService],
 })
 export class CvInfoComponent implements OnInit, OnChanges {
   @Input() cv!: CvInterface | Omit<CvInterface, 'id'>;
@@ -61,7 +64,8 @@ export class CvInfoComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store
+    private store: Store,
+    private confirmationService: ConfirmationService
   ) {}
 
   public ngOnInit(): void {
@@ -174,7 +178,19 @@ export class CvInfoComponent implements OnInit, OnChanges {
   }
 
   public addProject(): void {
-    this.projects.push(this.createProjectGroup(null));
+    this.confirmationService.confirm({
+      reject: () => {
+        this.confirmationService.close();
+      },
+    });
+  }
+
+  public acceptProject(
+    cd: ConfirmDialog,
+    project: CvProjectInterface | null
+  ): void {
+    this.projects.push(this.createProjectGroup(project));
+    cd.accept();
   }
 
   public deleteProject(event: Event, index: number): void {

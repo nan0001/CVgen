@@ -19,6 +19,7 @@ import { ConfirmationService } from 'primeng/api';
   templateUrl: './cv-list.component.html',
   styleUrls: ['./cv-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfirmationService],
 })
 export class CvListComponent implements OnInit, OnDestroy {
   @Input() employeeId = '';
@@ -71,6 +72,9 @@ export class CvListComponent implements OnInit, OnDestroy {
     this.confirmationService.confirm({
       accept: () => {
         this.setPickedId('new', this.newCvName);
+      },
+      reject: () => {
+        this.confirmationService.close();
       },
     });
   }

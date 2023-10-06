@@ -19,7 +19,7 @@ import * as fromEmployeeModule from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { CvEffects } from './store/effects/cv.effects';
 import { EmployeeEffects } from './store/effects/employee.effects';
-import { ConfirmationService } from 'primeng/api';
+import { CvProjectsComponent } from './components/cv-projects/cv-projects.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +31,7 @@ import { ConfirmationService } from 'primeng/api';
     CvInfoComponent,
     EmployeeFormComponent,
     GetControlPipe,
+    CvProjectsComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +47,5 @@ import { ConfirmationService } from 'primeng/api';
     ),
     EffectsModule.forFeature([CvEffects, EmployeeEffects]),
   ],
-  providers: [ConfirmationService],
 })
 export class EmployeesModule {}
