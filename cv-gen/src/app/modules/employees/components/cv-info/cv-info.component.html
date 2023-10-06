@@ -216,3 +216,12 @@
     </ng-template>
   </p-confirmDialog>
 </div>
+
+<p-dialog
+  [(visible)]="showSaveMessage"
+  [header]="message"
+  [modal]="true"
+  [style]="{ width: '50vw', backgroundColor: 'var(--surface-a)' }"
+  [draggable]="false"
+  [resizable]="false">
+</p-dialog>

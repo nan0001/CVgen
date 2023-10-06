@@ -42,7 +42,6 @@ export class CvEffects {
           const delete$ = this.cvService.deleteCv(action.id);
           const cvAction$ = delete$.pipe(
             map(() => {
-              // return CvActions.loadCvs();
               return EmployeeActions.updateCv({
                 cvId: action.id,
                 employeeId: cv.employeeId,
@@ -101,8 +100,6 @@ export class CvEffects {
           const add$ = this.cvService.addCv(action.newValue);
           const cvAction$ = add$.pipe(
             map(id => {
-              // this.router.navigate(['projects', id]);
-              // return CvActions.loadCvs();
               return EmployeeActions.updateCv({
                 cvId: id,
                 employeeId: action.newValue.employeeId,

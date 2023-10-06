@@ -5,6 +5,9 @@ import {
   OnInit,
   OnChanges,
   SimpleChanges,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef,
 } from '@angular/core';
 import {
   FormArray,
@@ -43,8 +46,13 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
 })
 export class CvInfoComponent implements OnInit, OnChanges {
   @Input() cv!: CvInterface | Omit<CvInterface, 'id'>;
+  @Output() changePickedCvAfterAdding = new EventEmitter<
+    Omit<CvInterface, 'id'>
+  >();
 
   public infoForm!: FormGroup<CvFormInterface>;
+  public showSaveMessage = false;
+  public message = '';
 
   public skillsControl!: {
     name: string;
@@ -65,7 +73,8 @@ export class CvInfoComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   public ngOnInit(): void {
@@ -86,11 +95,27 @@ export class CvInfoComponent implements OnInit, OnChanges {
         options: this.langOptions$,
       },
     ];
+    this.message =
+      'id' in this.cv ? 'Information has been saved' : 'New CV Added';
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['cv']) {
       this.createControls();
+      this.skillsControl = [
+        {
+          name: 'skills',
+          control: this.skills,
+          itemName: 'skill',
+          options: this.techOptions$,
+        },
+        {
+          name: 'langs',
+          control: this.langs,
+          itemName: 'lang',
+          options: this.langOptions$,
+        },
+      ];
     }
   }
 
@@ -146,21 +171,31 @@ export class CvInfoComponent implements OnInit, OnChanges {
         langs: formValue.langs.filter(val => val !== null),
       } as Omit<CvInterface, 'id' | 'employeeId' | 'name'>;
 
-      const actionToDispatch =
-        'id' in this.cv
-          ? CvActions.updateCv({
-              data: newValue,
-              id: this.cv.id,
-            })
-          : CvActions.addCv({
-              newValue: {
-                ...newValue,
-                name: this.cv.name,
-                employeeId: this.cv.employeeId,
-              },
-            });
+      if ('id' in this.cv) {
+        this.store.dispatch(
+          CvActions.updateCv({
+            data: newValue,
+            id: this.cv.id,
+          })
+        );
+      } else {
+        this.store.dispatch(
+          CvActions.addCv({
+            newValue: {
+              ...newValue,
+              name: this.cv.name,
+              employeeId: this.cv.employeeId,
+            },
+          })
+        );
+        this.changePickedCvAfterAdding.emit({
+          ...newValue,
+          name: this.cv.name,
+          employeeId: this.cv.employeeId,
+        });
+      }
 
-      this.store.dispatch(actionToDispatch);
+      this.showMessage();
     }
 
     this.infoForm.markAllAsTouched();
@@ -196,6 +231,15 @@ export class CvInfoComponent implements OnInit, OnChanges {
   public deleteProject(event: Event, index: number): void {
     event.stopPropagation();
     this.projects.removeAt(index);
+  }
+
+  public showMessage(): void {
+    this.showSaveMessage = true;
+
+    setTimeout(() => {
+      this.showSaveMessage = false;
+      this.cdr.markForCheck();
+    }, 2000);
   }
 
   private resetArray(

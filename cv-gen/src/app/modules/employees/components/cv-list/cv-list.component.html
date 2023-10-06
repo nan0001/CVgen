@@ -1,27 +1,21 @@
 <div class="list-container flex flex-column gap-3 h-full">
-  <div class="search p-3">
-    <span class="p-input-icon-right">
-      <i class="pi pi-search"></i>
-      <input
-        type="text"
-        pInputText
-        (input)="filterItems()"
-        [(ngModel)]="filterString" />
-    </span>
-  </div>
-  <ul class="list flex flex-column">
-    <li *ngFor="let item of filteredItems$ | async">
-      <button
-        class="cv-item flex justify-content-between align-items-center w-full"
-        (click)="setPickedId(item.id, item.name)">
-        <span class="line-height-1">{{ item.name }}</span>
-        <p-button
-          icon="pi pi-trash"
-          styleClass="p-button-text p-button-rounded"
-          (onClick)="removeCv($event, item.id)"></p-button>
-      </button>
-    </li>
-  </ul>
+  <ng-container *ngIf="cvsObservable$ | async as items">
+    <p-listbox [options]="items" optionLabel="name" [filter]="true">
+      <ng-template let-item pTemplate="item">
+        <div class="flex justify-content-between align-items-center w-full">
+          <button
+            class="cv-item flex justify-content-between align-items-center w-full"
+            (click)="setPickedId(item.id, item.name)">
+            <span class="line-height-1">{{ item.name }}</span>
+            <p-button
+              icon="pi pi-trash"
+              styleClass="p-button-text p-button-rounded"
+              (onClick)="removeCv($event, item.id)"></p-button>
+          </button>
+        </div>
+      </ng-template>
+    </p-listbox>
+  </ng-container>
 </div>
 <p-button
   icon="pi pi-plus"

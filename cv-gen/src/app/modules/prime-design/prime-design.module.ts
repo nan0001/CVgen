@@ -14,6 +14,7 @@ import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ListboxModule } from 'primeng/listbox';
 
 @NgModule({
   declarations: [],
@@ -33,6 +34,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     CalendarModule,
     InputTextareaModule,
     ConfirmDialogModule,
+    ListboxModule,
   ],
 })
 export class PrimeDesignModule {}

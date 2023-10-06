@@ -29,24 +29,17 @@ export const selectCvById = (props: { id: string }) =>
     return null;
   });
 
-export const selectCvsArrayById = (props: { ids: string[] }) =>
-  createSelector(selectCvs, (state: CvState) => {
-    const cvsArray: CvInterface[] = [];
-
-    props.ids.forEach(id => {
-      const cv: CvInterface | undefined = state.cvs.find(
-        elem => elem.id === id
-      );
-
-      if (cv) {
-        cvsArray.push(cv);
-      }
-    });
-
-    return cvsArray;
-  });
-
 export const selectCvsArrayByEmployeeId = (props: { employeeId: string }) =>
   createSelector(selectCvs, (state: CvState) => {
     return state.cvs.filter(val => val.employeeId === props.employeeId);
+  });
+
+export const selectNewlyAddedCv = (props: { newCv: Omit<CvInterface, 'id'> }) =>
+  createSelector(selectCvs, (state: CvState) => {
+    const cvWithId = state.cvs.find(
+      val =>
+        val.employeeId === props.newCv.employeeId &&
+        val.name === props.newCv.name
+    );
+    return cvWithId ? cvWithId : null;
   });
