@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { EmployeesService } from '../../../core/services/employees.service';
-import { EmployeeInterface } from '../../../core/models/employee.model';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { selectEmployeeCollection } from '../../store/selectors/employee.selectors';
+import { EmployeeActions } from '../../store/actions/employee.actions';
 
 @Component({
   selector: 'app-employee-table',
@@ -10,18 +10,14 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./employee-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmployeeTableComponent implements OnInit {
-  public employees$!: Observable<EmployeeInterface[]>;
+export class EmployeeTableComponent {
+  public employees$ = this.store.select(selectEmployeeCollection);
 
   constructor(
-    private employeeService: EmployeesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store
   ) {}
-
-  public ngOnInit(): void {
-    this.employees$ = this.employeeService.getEmployees();
-  }
 
   public navigateToInfo(id: string): void {
     this.router.navigate([id], {
@@ -31,6 +27,6 @@ export class EmployeeTableComponent implements OnInit {
 
   public removeEmployee(event: Event, id: string): void {
     event.stopPropagation();
-    this.employeeService.deleteEmployee(id);
+    this.store.dispatch(EmployeeActions.deleteEmployee({ id }));
   }
 }

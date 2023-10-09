@@ -10,7 +10,7 @@ import {
   getDoc,
   updateDoc,
 } from '@angular/fire/firestore';
-import { CvInterface } from '../models/cv.models';
+import { CvInterface, FirestoreCvInterface } from '../models/cv.models';
 import { Observable, from, map } from 'rxjs';
 
 @Injectable({
@@ -22,9 +22,28 @@ export class CvService {
   constructor(private db: Firestore) {}
 
   public getCvs(): Observable<CvInterface[]> {
-    const cvs$ = collectionData(this.cvsRef, {
+    const response$ = collectionData(this.cvsRef, {
       idField: 'id',
-    }) as Observable<CvInterface[]>;
+    }) as Observable<FirestoreCvInterface[]>;
+
+    const cvs$: Observable<CvInterface[]> = response$.pipe(
+      map(val => {
+        return val.map(cv => {
+          return {
+            ...cv,
+            projects: [
+              ...cv.projects.map(project => ({
+                ...project,
+                dates: {
+                  start: project.dates.start.toDate(),
+                  end: project.dates.end.toDate(),
+                },
+              })),
+            ],
+          };
+        });
+      })
+    );
 
     return cvs$;
   }
@@ -52,11 +71,16 @@ export class CvService {
     return id$;
   }
 
-  public updateCv(cv: Omit<CvInterface, 'id'>, id: string): void {
-    updateDoc(doc(this.cvsRef, id), cv as UpdateData<Omit<CvInterface, 'id'>>);
+  public updateCv(
+    cv: Omit<CvInterface, 'id' | 'employeeId' | 'name'>,
+    id: string
+  ): Observable<void> {
+    return from(
+      updateDoc(doc(this.cvsRef, id), cv as UpdateData<Omit<CvInterface, 'id'>>)
+    );
   }
 
-  public deleteCv(cvId: string): void {
-    deleteDoc(doc(this.cvsRef, cvId));
+  public deleteCv(cvId: string): Observable<void> {
+    return from(deleteDoc(doc(this.cvsRef, cvId)));
   }
 }

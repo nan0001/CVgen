@@ -1,13 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
   Input,
+  OnInit,
 } from '@angular/core';
 import { EntitiesListsType } from '../../../core/models/entities.model';
-import { Observable } from 'rxjs';
-import { EntitiesService } from '../../../core/services/entities.service';
 import { FormControl } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { EntitiesActions } from '../../../core/store/actions/entities.actions';
+import { entityExistsValidator } from '../../../core/utils/entitity-exists';
+import { selectEntityList } from '../../../core/store/selectors/entities.selectors';
 
 @Component({
   selector: 'app-entity-details',
@@ -16,27 +18,30 @@ import { FormControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntityDetailsComponent implements OnInit {
-  @Input() id: EntitiesListsType | '' = '';
+  @Input() id: EntitiesListsType = 'skills';
 
-  public itemsList$!: Observable<string[] | null>;
-  public newValueControl = new FormControl('');
+  public newValueControl!: FormControl<string | null>;
 
-  constructor(private entitiesService: EntitiesService) {}
+  constructor(private store: Store) {}
 
   public ngOnInit(): void {
-    this.updateList();
-  }
-
-  public updateList(): void {
-    if (this.id) {
-      this.itemsList$ = this.entitiesService.getEntityList(this.id);
-    }
+    this.newValueControl = new FormControl('', {
+      asyncValidators: [
+        entityExistsValidator(
+          this.store.select(selectEntityList({ id: this.id }))
+        ),
+      ],
+    });
   }
 
   public addItem(): void {
     if (this.newValueControl.value && this.id) {
-      this.entitiesService.addEntity(this.newValueControl.value, this.id);
-      this.itemsList$ = this.entitiesService.getEntityList(this.id);
+      this.store.dispatch(
+        EntitiesActions.addItem({
+          list: this.id,
+          item: this.newValueControl.value,
+        })
+      );
       this.newValueControl.reset();
     }
   }

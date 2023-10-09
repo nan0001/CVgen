@@ -13,6 +13,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ListboxModule } from 'primeng/listbox';
 
 @NgModule({
   declarations: [],
@@ -31,6 +33,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     DialogModule,
     CalendarModule,
     InputTextareaModule,
+    ConfirmDialogModule,
+    ListboxModule,
   ],
 })
 export class PrimeDesignModule {}

@@ -85,15 +85,17 @@ export class ProjectsService {
   public updateProject(
     project: Omit<ProjectInterface, 'id'>,
     id: string
-  ): void {
-    updateDoc(doc(this.projectsRef, id), {
-      ...project,
-      start: Timestamp.fromDate(project.start),
-      end: Timestamp.fromDate(project.end),
-    } as UpdateData<Omit<FirestoreProjectInterface, 'id'>>);
+  ): Observable<void> {
+    return from(
+      updateDoc(doc(this.projectsRef, id), {
+        ...project,
+        start: Timestamp.fromDate(project.start),
+        end: Timestamp.fromDate(project.end),
+      } as UpdateData<Omit<FirestoreProjectInterface, 'id'>>)
+    );
   }
 
-  public deleteProject(projectId: string): void {
-    deleteDoc(doc(this.projectsRef, projectId));
+  public deleteProject(projectId: string): Observable<void> {
+    return from(deleteDoc(doc(this.projectsRef, projectId)));
   }
 }

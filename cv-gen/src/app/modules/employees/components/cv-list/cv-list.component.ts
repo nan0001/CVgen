@@ -6,40 +6,77 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+import { CvInterface } from '../../../core/models/cv.models';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectCvsArrayByEmployeeId } from '../../store/selectors/cv.selectors';
+import { CvActions } from '../../store/actions/cv.actions';
+import { ConfirmationService } from 'primeng/api';
+import { FormControl, Validators } from '@angular/forms';
+import { nameExistsValidator } from '../../../core/utils/name-exists.async-validator';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-cv-list',
   templateUrl: './cv-list.component.html',
   styleUrls: ['./cv-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfirmationService],
 })
 export class CvListComponent implements OnInit {
-  @Input() cvsList: string[] | null = [];
-  @Output() setCvId = new EventEmitter<string>();
+  @Input() employeeId = '';
+  @Output() setCvId = new EventEmitter<{ id: string; name: string }>();
 
-  public filteredItems: string[] = [];
-  public filterString = '';
+  public cvsObservable$!: Observable<CvInterface[]>;
+  public cvsArray: CvInterface[] = [];
+  public newCvNameControl!: FormControl<string | null>;
 
-  constructor() {}
+  constructor(
+    private store: Store,
+    private confirmationService: ConfirmationService
+  ) {}
 
   public ngOnInit(): void {
-    this.filterItems();
+    this.cvsObservable$ = this.store.select(
+      selectCvsArrayByEmployeeId({ employeeId: this.employeeId })
+    );
+
+    this.newCvNameControl = new FormControl('', {
+      validators: [Validators.required],
+      asyncValidators: [nameExistsValidator(this.cvsObservable$)],
+      updateOn: 'change',
+    });
   }
 
-  public removeCv(event: Event, item: string): void {
+  public removeCv(event: Event, id: string): void {
     event.stopPropagation();
-    // remove cv via service
+    this.store.dispatch(CvActions.deleteCv({ id }));
   }
 
-  public filterItems(): void {
-    if (this.cvsList) {
-      this.filteredItems = this.cvsList.filter(val => {
-        return val.toLowerCase().includes(this.filterString.toLowerCase());
-      });
+  public setPickedId(cvId: string, cvName: string): void {
+    this.setCvId.emit({ id: cvId, name: cvName });
+  }
+
+  public checkFormValidity(cd: ConfirmDialog): void {
+    this.newCvNameControl.updateValueAndValidity();
+    if (this.newCvNameControl.valid) {
+      cd.accept();
+    } else {
+      this.newCvNameControl.markAsTouched();
     }
   }
 
-  public setPickedId(cvId: string): void {
-    this.setCvId.emit(cvId);
+  public addCv(): void {
+    this.confirmationService.confirm({
+      accept: () => {
+        this.setPickedId(
+          'new',
+          this.newCvNameControl.value ? this.newCvNameControl.value : ''
+        );
+      },
+      reject: () => {
+        this.confirmationService.close();
+      },
+    });
   }
 }

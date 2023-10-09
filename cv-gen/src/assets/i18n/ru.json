@@ -15,7 +15,8 @@
     "bothRequired": "Заполните оба поля {{name}}а",
     "noConflictDates": "Дата начала проекта не может быть позже даты даты завершения",
     "noStartDate": "Введите {{name}}",
-    "noEndDate": "Введите {{secondName}}"
+    "noEndDate": "Введите {{secondName}}",
+    "nameExists": "Такое название уже существует"
   },
   "NAV": {
     "employees": "Сотрудники",
@@ -55,7 +56,11 @@
     "internalName": "Внутреннее название",
     "domain": "Домен",
     "description": "Описание",
-    "techStack": "Стек технологий"
+    "techStack": "Стек технологий",
+    "responsibilities": "Обязанности",
+    "addProject": "Добавить проект",
+    "newCvNameControl": "название резюме",
+    "entityExists": "Такая сущность уже существует"
   },
   "LANGS":{
     "ru":  "Русский",

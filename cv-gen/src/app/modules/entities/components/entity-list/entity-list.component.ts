@@ -2,12 +2,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  Output,
-  EventEmitter,
   OnInit,
 } from '@angular/core';
-import { EntitiesService } from '../../../core/services/entities.service';
 import { EntitiesListsType } from '../../../core/models/entities.model';
+import { Store } from '@ngrx/store';
+import { EntitiesActions } from '../../../core/store/actions/entities.actions';
+import { Observable } from 'rxjs';
+import { selectEntityList } from '../../../core/store/selectors/entities.selectors';
 
 @Component({
   selector: 'app-entity-list',
@@ -17,31 +18,22 @@ import { EntitiesListsType } from '../../../core/models/entities.model';
 })
 export class EntityListComponent implements OnInit {
   @Input() id: EntitiesListsType | '' = '';
-  @Input() itemsList: string[] | null = [];
 
-  @Output() removeItem = new EventEmitter();
+  public itemsList$!: Observable<string[] | null>;
 
-  public filteredItems: string[] = [];
-  public filterString = '';
-
-  constructor(private entitiesService: EntitiesService) {}
+  constructor(private store: Store) {}
 
   public ngOnInit(): void {
-    this.filterItems();
+    if (this.id) {
+      this.itemsList$ = this.store.select(selectEntityList({ id: this.id }));
+    }
   }
 
   public removeEntity(item: string): void {
     if (this.id) {
-      this.entitiesService.deleteEntity(item, this.id);
-      this.removeItem.emit();
-    }
-  }
-
-  public filterItems(): void {
-    if (this.itemsList) {
-      this.filteredItems = this.itemsList.filter(val => {
-        return val.toLowerCase().includes(this.filterString.toLowerCase());
-      });
+      this.store.dispatch(
+        EntitiesActions.deleteItem({ list: this.id, item: item })
+      );
     }
   }
 }

@@ -2,9 +2,7 @@
   <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
   <p-tabView>
     <p-tabPanel [header]="'EMPLOYEES.tabs.info.title' | translate">
-      <app-employee-form
-        [employee]="employee"
-        (sendFormData)="submitData($event)">
+      <app-employee-form [employee]="employee" (sendFormData)="showMessage()">
         <p-button
           [label]="'BUTTONS.back' | translate"
           styleClass="p-button-raised p-button-text"

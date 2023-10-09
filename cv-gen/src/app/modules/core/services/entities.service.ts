@@ -34,15 +34,22 @@ export class EntitiesService {
     return entity$;
   }
 
-  public addEntity(newValue: string, id: EntitiesListsType): void {
-    updateDoc(doc(this.entitiesRef, id), {
-      values: arrayUnion(newValue),
-    } as UpdateData<EntitiesInterface>);
+  public addEntity(newValue: string, id: EntitiesListsType): Observable<void> {
+    return from(
+      updateDoc(doc(this.entitiesRef, id), {
+        values: arrayUnion(newValue),
+      } as UpdateData<EntitiesInterface>)
+    );
   }
 
-  public deleteEntity(removeValue: string, id: EntitiesListsType): void {
-    updateDoc(doc(this.entitiesRef, id), {
-      values: arrayRemove(removeValue),
-    } as UpdateData<EntitiesInterface>);
+  public deleteEntity(
+    removeValue: string,
+    id: EntitiesListsType
+  ): Observable<void> {
+    return from(
+      updateDoc(doc(this.entitiesRef, id), {
+        values: arrayRemove(removeValue),
+      } as UpdateData<EntitiesInterface>)
+    );
   }
 }

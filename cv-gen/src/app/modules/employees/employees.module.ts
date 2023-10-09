@@ -14,6 +14,12 @@ import { CvListComponent } from './components/cv-list/cv-list.component';
 import { CvInfoComponent } from './components/cv-info/cv-info.component';
 import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
 import { GetControlPipe } from './pipes/get-control.pipe';
+import { StoreModule } from '@ngrx/store';
+import * as fromEmployeeModule from './store';
+import { EffectsModule } from '@ngrx/effects';
+import { CvEffects } from './store/effects/cv.effects';
+import { EmployeeEffects } from './store/effects/employee.effects';
+import { CvProjectsComponent } from './components/cv-projects/cv-projects.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +31,7 @@ import { GetControlPipe } from './pipes/get-control.pipe';
     CvInfoComponent,
     EmployeeFormComponent,
     GetControlPipe,
+    CvProjectsComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +41,11 @@ import { GetControlPipe } from './pipes/get-control.pipe';
     TranslateModule,
     ReactiveFormsModule,
     FormsModule,
+    StoreModule.forFeature(
+      fromEmployeeModule.moduleFeatureKey,
+      fromEmployeeModule.reducers
+    ),
+    EffectsModule.forFeature([CvEffects, EmployeeEffects]),
   ],
 })
 export class EmployeesModule {}

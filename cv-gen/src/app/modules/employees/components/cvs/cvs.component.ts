@@ -1,10 +1,18 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { EmployeeInterface } from '../../../core/models/employee.model';
-import { CvInterface } from '../../../core/models/cv.models';
-import { CvService } from '../../../core/services/cv.service';
 import { Observable, of } from 'rxjs';
-import { ProjectsService } from '../../../core/services/projects.service';
-import { ProjectInterface } from '../../../core/models/project.model';
+import { Store } from '@ngrx/store';
+import { CvActions } from '../../store/actions/cv.actions';
+import { CvInterface } from '../../../core/models/cv.models';
+import {
+  selectCvById,
+  selectNewlyAddedCv,
+} from '../../store/selectors/cv.selectors';
 
 @Component({
   selector: 'app-cvs',
@@ -12,26 +20,37 @@ import { ProjectInterface } from '../../../core/models/project.model';
   styleUrls: ['./cvs.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CvsComponent {
+export class CvsComponent implements OnInit {
   @Input() employee!: EmployeeInterface;
 
-  public pickedCv$: Observable<CvInterface | null> = of(null);
-  public projectsObservable$: Observable<(ProjectInterface | null)[]> = of([]);
+  public pickedCv$:
+    | Observable<CvInterface | null>
+    | Observable<Omit<CvInterface, 'id'>> = of(null);
 
-  constructor(
-    private cvService: CvService,
-    private projectService: ProjectsService
-  ) {}
+  constructor(private store: Store) {}
 
-  public setPickedCv(id: string): void {
-    //TODO: load projects via store side effects and add responsibilities to interface
-    this.pickedCv$ = this.cvService.getCvById(id);
-    this.pickedCv$.subscribe(val => {
-      if (val) {
-        const projectIds = val.projects.map(proj => proj.id);
-        this.projectsObservable$ =
-          this.projectService.getArrayOfProjects(projectIds);
-      }
-    });
+  public ngOnInit(): void {
+    this.store.dispatch(CvActions.loadCvs());
+  }
+
+  public setPickedCv(props: { id: string; name: string }): void {
+    const emptyCv: Omit<CvInterface, 'id'> = {
+      name: props.name,
+      firstName: this.employee.firstName,
+      lastName: this.employee.lastName,
+      description: '',
+      employeeId: this.employee.id,
+      projects: [],
+      skills: this.employee.skills,
+      langs: this.employee.langs,
+    };
+    this.pickedCv$ =
+      props.id !== 'new'
+        ? this.store.select(selectCvById({ id: props.id }))
+        : of(emptyCv);
+  }
+
+  public changePicked(addedCv: Omit<CvInterface, 'id'>): void {
+    this.pickedCv$ = this.store.select(selectNewlyAddedCv({ newCv: addedCv }));
   }
 }

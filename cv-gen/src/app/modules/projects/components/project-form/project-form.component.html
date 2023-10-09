@@ -44,7 +44,7 @@
       <p-autoComplete
         formControlName="techStack"
         [suggestions]="(optionsFiltered$ | async) || []"
-        (completeMethod)="filterOptions($event.query)"
+        (completeMethod)="filterTechStack($event.query)"
         [multiple]="true"
         [dropdown]="true"></p-autoComplete>
     </app-labelled-input>

@@ -1,30 +1,56 @@
 <div class="list-container flex flex-column gap-3 h-full">
-  <div class="search p-3">
-    <span class="p-input-icon-right">
-      <i class="pi pi-search"></i>
-      <input
-        type="text"
-        pInputText
-        (input)="filterItems()"
-        [(ngModel)]="filterString" />
-    </span>
-  </div>
-  <ul class="list flex flex-column">
-    <li *ngFor="let item of filteredItems">
-      <button
-        class="cv-item flex justify-content-between align-items-center w-full"
-        (click)="setPickedId(item)">
-        <span class="line-height-1">{{ item }}</span>
-        <p-button
-          icon="pi pi-trash"
-          styleClass="p-button-text p-button-rounded"
-          (onClick)="removeCv($event, item)"></p-button>
-      </button>
-    </li>
-  </ul>
+  <ng-container *ngIf="cvsObservable$ | async as items">
+    <p-listbox [options]="items" optionLabel="name" [filter]="true">
+      <ng-template let-item pTemplate="item">
+        <div class="flex justify-content-between align-items-center w-full">
+          <button
+            class="cv-item flex justify-content-between align-items-center w-full"
+            (click)="setPickedId(item.id, item.name)">
+            <span class="line-height-1">{{ item.name }}</span>
+            <p-button
+              icon="pi pi-trash"
+              styleClass="p-button-text p-button-rounded"
+              (onClick)="removeCv($event, item.id)"></p-button>
+          </button>
+        </div>
+      </ng-template>
+    </p-listbox>
+  </ng-container>
 </div>
 <p-button
   icon="pi pi-plus"
   [label]="'CV.addCv' | translate"
   styleClass="p-button-raised"
-  type="submit"></p-button>
+  type="submit"
+  (onClick)="addCv()"></p-button>
+
+<div class="card flex justify-content-center gap-2">
+  <p-confirmDialog
+    #cd
+    [style]="{ width: '50vw', backgroundColor: 'var(--surface-a)' }">
+    <ng-template pTemplate="header">
+      <div class="flex flex-column gap-2 w-full align-items-start">
+        <h3>Enter CV name</h3>
+        <app-labelled-input
+          controlName="newCvNameControl"
+          [errors]="newCvNameControl.errors"
+          [showError]="newCvNameControl.invalid && newCvNameControl.touched"
+          [showLabel]="false">
+          <input type="text" pInputText [formControl]="newCvNameControl" />
+        </app-labelled-input>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <p-button
+        type="button"
+        icon="pi pi-times"
+        label="Cancel"
+        (click)="cd.reject()"></p-button>
+      <p-button
+        type="button"
+        icon="pi pi-check"
+        label="Save"
+        (click)="checkFormValidity(cd)"></p-button>
+    </ng-template>
+  </p-confirmDialog>
+</div>

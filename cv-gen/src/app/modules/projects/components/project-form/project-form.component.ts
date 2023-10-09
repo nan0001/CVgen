@@ -4,6 +4,11 @@ import { BehaviorSubject, take } from 'rxjs';
 import { ProjectFormInterface, ProjectInterface } from '../../../core/models/project.model';
 import { noConflictDates } from '../../../core/utils/date.validator';
 import { EntitiesService } from '../../../core/services/entities.service';
+import { filterOptions } from '../../../core/utils/filter-options.util';
+import { Store } from '@ngrx/store';
+import { selectSkills } from '../../../core/store/selectors/entities.selectors';
+import { nameExistsValidator } from '../../../core/utils/name-exists.async-validator';
+import { selectProjectsCollection } from '../../../core/store/selectors/projects.selectors';
 
 @Component({
   selector: 'app-project-form',
@@ -16,17 +21,19 @@ export class ProjectFormComponent implements OnInit{
   @Output() sendFormData = new EventEmitter<Omit<ProjectInterface, "id">>;
 
   public infoForm!: FormGroup<ProjectFormInterface>;
-  private options$ = this.entitiesService.getEntityList('skills');
+  private options$ = this.store.select(selectSkills);
   public optionsFiltered$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
   >([]);
 
-  constructor(private fb: FormBuilder,
-    private entitiesService: EntitiesService){}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store
+    ){}
 
   public ngOnInit(): void {
     this.createControls();
-    this.filterOptions('');
+    this.filterTechStack('');
   }
 
   public get internalName() {
@@ -53,21 +60,22 @@ export class ProjectFormComponent implements OnInit{
     return this.infoForm.controls.description;
   }
 
-  public filterOptions(query: string): void {
-    this.options$.pipe(take(1)).subscribe(val => {
-      if (val) {
-        const filteredArray = val.filter(elem =>
-          elem.toLowerCase().includes(query.toLowerCase())
-        );
-        this.optionsFiltered$.next(filteredArray);
-        return;
-      }
-      this.optionsFiltered$.next([]);
-    });
+  public filterTechStack(query: string): void {
+    filterOptions(query, this.options$, this.optionsFiltered$)
   }
 
   public onCancel(): void {
-    this.infoForm.reset();
+    this.infoForm.reset({
+      internalName: this.project.internalName,
+      name: this.project.name,
+      dates: {
+        start: this.project.start,
+        end: this.project.end
+      },
+      domain: this.project.domain,
+      description: this.project.description,
+      techStack: this.project.techStack
+    });
     this.infoForm.markAsUntouched();
     this.infoForm.markAsPristine();
   }
@@ -87,10 +95,13 @@ export class ProjectFormComponent implements OnInit{
         Validators.required,
         Validators.minLength(2),
       ]],
-      name: [this.project.name, [
-        Validators.required,
-        Validators.minLength(2)
-      ]],
+      name: [this.project.name, {
+        validators: [
+          Validators.required,
+          Validators.minLength(2)
+        ],
+        asyncValidators: [nameExistsValidator(this.store.select(selectProjectsCollection))]
+    }],
       dates: [{ start: this.project.start, end: this.project.end },
         [Validators.required, noConflictDates()]
       ],

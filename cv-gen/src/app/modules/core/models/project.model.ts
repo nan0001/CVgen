@@ -1,9 +1,9 @@
 import { Timestamp } from '@angular/fire/firestore';
 import { FormControl } from '@angular/forms';
+import { HasNameInterface } from './has-name.model';
 
-export interface FirestoreProjectInterface {
+export interface FirestoreProjectInterface extends HasNameInterface {
   id: string;
-  name: string;
   internalName: string;
   start: Timestamp;
   end: Timestamp;
@@ -28,9 +28,4 @@ export interface ProjectFormInterface {
     start: Date;
     end: Date;
   }>;
-}
-
-export interface CvProjectFormInterface
-  extends Omit<ProjectFormInterface, 'internalName'> {
-  responsibilities: FormControl<string>;
 }

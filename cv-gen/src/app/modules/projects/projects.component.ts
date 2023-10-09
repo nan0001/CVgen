@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { ProjectsActions } from '../core/store/actions/projects.actions';
 
 @Component({
   selector: 'app-projects',
@@ -7,9 +9,16 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./projects.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProjectsComponent {
-  constructor(private router: Router,
-    private route: ActivatedRoute){}
+export class ProjectsComponent implements OnInit{
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private store: Store,
+  ){}
+
+  public ngOnInit(): void {
+    this.store.dispatch(ProjectsActions.loadProjects({update: false}))
+  }
 
   public addProject(): void {
     this.router.navigate(['new-project'], {
