@@ -12,6 +12,9 @@ import { Store } from '@ngrx/store';
 import { selectCvsArrayByEmployeeId } from '../../store/selectors/cv.selectors';
 import { CvActions } from '../../store/actions/cv.actions';
 import { ConfirmationService } from 'primeng/api';
+import { FormControl, Validators } from '@angular/forms';
+import { nameExistsValidator } from '../../../core/utils/name-exists.async-validator';
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-cv-list',
@@ -26,7 +29,7 @@ export class CvListComponent implements OnInit {
 
   public cvsObservable$!: Observable<CvInterface[]>;
   public cvsArray: CvInterface[] = [];
-  public newCvName = '';
+  public newCvNameControl!: FormControl<string | null>;
 
   constructor(
     private store: Store,
@@ -37,6 +40,12 @@ export class CvListComponent implements OnInit {
     this.cvsObservable$ = this.store.select(
       selectCvsArrayByEmployeeId({ employeeId: this.employeeId })
     );
+
+    this.newCvNameControl = new FormControl('', {
+      validators: [Validators.required],
+      asyncValidators: [nameExistsValidator(this.cvsObservable$)],
+      updateOn: 'change',
+    });
   }
 
   public removeCv(event: Event, id: string): void {
@@ -48,10 +57,22 @@ export class CvListComponent implements OnInit {
     this.setCvId.emit({ id: cvId, name: cvName });
   }
 
+  public checkFormValidity(cd: ConfirmDialog): void {
+    this.newCvNameControl.updateValueAndValidity();
+    if (this.newCvNameControl.valid) {
+      cd.accept();
+    } else {
+      this.newCvNameControl.markAsTouched();
+    }
+  }
+
   public addCv(): void {
     this.confirmationService.confirm({
       accept: () => {
-        this.setPickedId('new', this.newCvName);
+        this.setPickedId(
+          'new',
+          this.newCvNameControl.value ? this.newCvNameControl.value : ''
+        );
       },
       reject: () => {
         this.confirmationService.close();

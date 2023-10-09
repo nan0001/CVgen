@@ -1,6 +1,7 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { SkillsInterface } from './skills.model';
 import { Timestamp } from '@angular/fire/firestore';
+import { HasNameInterface } from './has-name.model';
 
 export interface FirestoreCvProjectInterface {
   name: string;
@@ -16,8 +17,7 @@ export interface CvProjectInterface
   dates: { start: Date; end: Date };
 }
 
-export interface FirestoreCvInterface {
-  name: string;
+export interface FirestoreCvInterface extends HasNameInterface {
   firstName: string;
   lastName: string;
   description: string;

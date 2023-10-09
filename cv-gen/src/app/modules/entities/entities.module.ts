@@ -8,6 +8,7 @@ import { PrimeDesignModule } from '../prime-design/prime-design.module';
 import { EntityListComponent } from './components/entity-list/entity-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EntityDetailsComponent } from './components/entity-details/entity-details.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { EntityDetailsComponent } from './components/entity-details/entity-detai
     PrimeDesignModule,
     ReactiveFormsModule,
     FormsModule,
+    SharedModule,
   ],
 })
 export class EntitiesModule {}

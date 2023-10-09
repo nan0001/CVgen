@@ -9,12 +9,16 @@
     [disabled]="!newValueControl.value"
     type="submit"></p-button>
   <div class="flex flex-column gap-1 w-full">
-    <label htmlFor="newItem">{{ 'INFO.name' | translate }}</label>
-    <input
-      class="w-full"
-      type="text"
-      pInputText
-      name="newItem"
-      [formControl]="newValueControl" />
+    <app-labelled-input
+      controlName="name"
+      [errors]="newValueControl.errors"
+      [showError]="newValueControl.invalid && newValueControl.touched">
+      <input
+        class="w-full"
+        type="text"
+        pInputText
+        name="newItem"
+        [formControl]="newValueControl" />
+    </app-labelled-input>
   </div>
 </form>

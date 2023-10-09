@@ -7,6 +7,8 @@ import { EntitiesService } from '../../../core/services/entities.service';
 import { filterOptions } from '../../../core/utils/filter-options.util';
 import { Store } from '@ngrx/store';
 import { selectSkills } from '../../../core/store/selectors/entities.selectors';
+import { nameExistsValidator } from '../../../core/utils/name-exists.async-validator';
+import { selectProjectsCollection } from '../../../core/store/selectors/projects.selectors';
 
 @Component({
   selector: 'app-project-form',
@@ -93,10 +95,13 @@ export class ProjectFormComponent implements OnInit{
         Validators.required,
         Validators.minLength(2),
       ]],
-      name: [this.project.name, [
-        Validators.required,
-        Validators.minLength(2)
-      ]],
+      name: [this.project.name, {
+        validators: [
+          Validators.required,
+          Validators.minLength(2)
+        ],
+        asyncValidators: [nameExistsValidator(this.store.select(selectProjectsCollection))]
+    }],
       dates: [{ start: this.project.start, end: this.project.end },
         [Validators.required, noConflictDates()]
       ],

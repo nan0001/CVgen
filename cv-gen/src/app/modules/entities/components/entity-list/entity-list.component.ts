@@ -8,7 +8,7 @@ import { EntitiesListsType } from '../../../core/models/entities.model';
 import { Store } from '@ngrx/store';
 import { EntitiesActions } from '../../../core/store/actions/entities.actions';
 import { Observable } from 'rxjs';
-import { selectEntitytList } from '../../../core/store/selectors/entities.selectors';
+import { selectEntityList } from '../../../core/store/selectors/entities.selectors';
 
 @Component({
   selector: 'app-entity-list',
@@ -25,7 +25,7 @@ export class EntityListComponent implements OnInit {
 
   public ngOnInit(): void {
     if (this.id) {
-      this.itemsList$ = this.store.select(selectEntitytList({ id: this.id }));
+      this.itemsList$ = this.store.select(selectEntityList({ id: this.id }));
     }
   }
 

@@ -16,7 +16,7 @@ export const selectLangs = createSelector(
   (state: EntitiesState) => state.langs
 );
 
-export const selectEntitytList = (props: { id: EntitiesListsType }) =>
+export const selectEntityList = (props: { id: EntitiesListsType }) =>
   createSelector(selectEntities, (state: EntitiesState) => state[props.id]);
 
 export const selectSkills = createSelector(

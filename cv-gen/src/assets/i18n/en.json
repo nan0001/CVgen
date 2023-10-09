@@ -15,7 +15,9 @@
     "bothRequired": "Fill in both {{name}} fields",
     "noConflictDates": "End date can't be less than start date",
     "noStartDate": "Enter {{name}}",
-    "noEndDate": "Enter {{secondName}}"
+    "noEndDate": "Enter {{secondName}}",
+    "nameExists": "Such name already exists",
+    "entityExists": "Such name already exists"
   },
   "NAV": {
     "employees": "Employees",
@@ -57,7 +59,8 @@
     "description": "Description",
     "techStack": "Tech Stack",
     "responsibilities": "Responsibilities",
-    "addProject": "Add project"
+    "addProject": "Add project",
+    "newCvNameControl": "CV name"
   },
   "LANGS":{
     "ru":  "Russian",

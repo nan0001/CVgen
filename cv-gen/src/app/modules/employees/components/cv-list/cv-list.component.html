@@ -31,7 +31,13 @@
     <ng-template pTemplate="header">
       <div class="flex flex-column gap-2 w-full align-items-start">
         <h3>Enter CV name</h3>
-        <input type="text" pInputText [(ngModel)]="newCvName" />
+        <app-labelled-input
+          controlName="newCvNameControl"
+          [errors]="newCvNameControl.errors"
+          [showError]="newCvNameControl.invalid && newCvNameControl.touched"
+          [showLabel]="false">
+          <input type="text" pInputText [formControl]="newCvNameControl" />
+        </app-labelled-input>
       </div>
     </ng-template>
     <ng-template pTemplate="footer">
@@ -44,7 +50,7 @@
         type="button"
         icon="pi pi-check"
         label="Save"
-        (click)="cd.accept()"></p-button>
+        (click)="checkFormValidity(cd)"></p-button>
     </ng-template>
   </p-confirmDialog>
 </div>

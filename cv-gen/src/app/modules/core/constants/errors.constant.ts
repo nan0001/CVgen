@@ -47,4 +47,12 @@ export const ERRORS = [
     error: 'noEndDate',
     numerical: false,
   },
+  {
+    error: 'nameExists',
+    numerical: false,
+  },
+  {
+    error: 'entityExists',
+    numerical: false,
+  },
 ];
