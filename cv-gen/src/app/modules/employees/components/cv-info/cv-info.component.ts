@@ -53,6 +53,8 @@ export class CvInfoComponent implements OnInit, OnChanges {
   public infoForm!: FormGroup<CvFormInterface>;
   public showSaveMessage = false;
   public message = '';
+  public previewMode = false;
+  public previewDisabled = false;
 
   public skillsControl!: {
     name: string;
@@ -81,6 +83,7 @@ export class CvInfoComponent implements OnInit, OnChanges {
     this.createControls();
     this.filterTechStack('');
     this.filterResponsibilities('');
+    this.previewDisabled = !('id' in this.cv);
     this.skillsControl = [
       {
         name: 'skills',
@@ -240,6 +243,10 @@ export class CvInfoComponent implements OnInit, OnChanges {
       this.showSaveMessage = false;
       this.cdr.markForCheck();
     }, 2000);
+  }
+
+  public togglePreviewMode(): void {
+    this.previewMode = !this.previewMode;
   }
 
   private resetArray(

@@ -60,7 +60,9 @@
     "techStack": "Tech Stack",
     "responsibilities": "Responsibilities",
     "addProject": "Add project",
-    "newCvNameControl": "CV name"
+    "newCvNameControl": "CV name",
+    "preview": "Preview",
+    "download": "Download"
   },
   "LANGS":{
     "ru":  "Russian",
