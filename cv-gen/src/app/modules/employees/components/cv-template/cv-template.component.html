@@ -1,0 +1,75 @@
+<p-button
+  styleClass="p-button-raised p-button-text"
+  [label]="'INFO.download' | translate"
+  (onClick)="exportPDF(forExport)">
+</p-button>
+<div class="container flex flex-column w-full mt-3">
+  <h2 class="name">{{ cv.firstName }} {{ cv.lastName }}</h2>
+  <p class="description">{{ cv.description }}</p>
+  <ng-container *ngTemplateOutlet="template"></ng-container>
+</div>
+
+<div #forExport class="export">
+  <div class="container flex flex-column w-full mt-3">
+    <h2 class="name">
+      {{ cv.firstName }}<span class="transparent">a</span>{{ cv.lastName }}
+    </h2>
+    <p class="description">{{ cv.description }}</p>
+    <ng-container *ngTemplateOutlet="template"></ng-container>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="columns flex w-full gap-2">
+    <div class="left-col flex flex-column w-3 min-w-min">
+      <div>
+        <h2>Skills</h2>
+        <ul>
+          <li
+            *ngFor="let skill of cv.skills"
+            class="flex flex-column align-items-start">
+            <p>{{ skill.name }}</p>
+            <app-skill-level [level]="skill.level"></app-skill-level>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2>Languages</h2>
+        <ul>
+          <li
+            *ngFor="let lang of cv.langs"
+            class="flex flex-column align-items-start">
+            <p>{{ lang.name }}</p>
+            <app-skill-level [level]="lang.level"></app-skill-level>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="right-col flex flex-column flex-grow-1">
+      <ul>
+        <li
+          *ngFor="let project of cv.projects"
+          class="flex flex-column align-items-start">
+          <h2>{{ project.name }}</h2>
+          <small class="w-full text-right"
+            >{{ project.dates.start | date }} -
+            {{ project.dates.end | date }}</small
+          >
+          <p>{{ project.description }}</p>
+          <h3>Responsibilities</h3>
+          <ul>
+            <li *ngFor="let resp of project.responsibilities">
+              {{ resp }}
+            </li>
+          </ul>
+          <h3>Technologies</h3>
+          <ul>
+            <li *ngFor="let tech of project.techStack">
+              {{ tech }}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-template>

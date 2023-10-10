@@ -1,0 +1,28 @@
+.name,
+.description{
+  width: 100%;
+  border-radius: var(--border-radius);
+  text-align: end;
+  padding: var(--content-padding);
+}
+
+.name{
+  margin: 0;
+  background-color: var(--surface-300);
+  color: var(--primary-color-text);
+}
+
+.description{
+  margin: .5rem 0;
+  background-color: var(--surface-100);
+}
+
+.export{
+  position: absolute;
+  width: 575pt;
+  top: -1000%;
+}
+
+.transparent{
+  color: transparent;
+}

@@ -60,7 +60,9 @@
     "responsibilities": "Обязанности",
     "addProject": "Добавить проект",
     "newCvNameControl": "название резюме",
-    "entityExists": "Такая сущность уже существует"
+    "entityExists": "Такая сущность уже существует",
+    "preview": "Просмотр",
+    "download": "Скачать"
   },
   "LANGS":{
     "ru":  "Русский",

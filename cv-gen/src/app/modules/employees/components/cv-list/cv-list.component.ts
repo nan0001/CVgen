@@ -10,11 +10,11 @@ import { CvInterface } from '../../../core/models/cv.models';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectCvsArrayByEmployeeId } from '../../store/selectors/cv.selectors';
-import { CvActions } from '../../store/actions/cv.actions';
 import { ConfirmationService } from 'primeng/api';
 import { FormControl, Validators } from '@angular/forms';
-import { nameExistsValidator } from '../../../core/utils/name-exists.async-validator';
 import { ConfirmDialog } from 'primeng/confirmdialog';
+import { nameExistsValidator } from '../../../core/utils/name-exists.async-validator';
+import { CvActions } from '../../store/actions/cv.actions';
 
 @Component({
   selector: 'app-cv-list',

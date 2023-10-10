@@ -1,7 +1,15 @@
+<p-button
+  styleClass="p-button-raised p-button-text"
+  [label]="'INFO.preview' | translate"
+  (onClick)="togglePreviewMode()"
+  *ngIf="!previewDisabled">
+</p-button>
+<app-cv-template *ngIf="previewMode" [cv]="cv"></app-cv-template>
 <form
   [formGroup]="infoForm"
   (submit)="onSubmit()"
-  class="flex flex-column gap-2">
+  class="flex flex-column gap-2"
+  *ngIf="!previewMode">
   <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2]">
     <p-accordionTab [header]="'EMPLOYEES.tabs.info.panelInfo' | translate">
       <div class="inputs formgrid grid">

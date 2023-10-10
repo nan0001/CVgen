@@ -20,6 +20,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { CvEffects } from './store/effects/cv.effects';
 import { EmployeeEffects } from './store/effects/employee.effects';
 import { CvProjectsComponent } from './components/cv-projects/cv-projects.component';
+import { CvTemplateComponent } from './components/cv-template/cv-template.component';
+import { SkillLevelComponent } from './components/skill-level/skill-level.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { CvProjectsComponent } from './components/cv-projects/cv-projects.compon
     EmployeeFormComponent,
     GetControlPipe,
     CvProjectsComponent,
+    CvTemplateComponent,
+    SkillLevelComponent,
   ],
   imports: [
     CommonModule,
