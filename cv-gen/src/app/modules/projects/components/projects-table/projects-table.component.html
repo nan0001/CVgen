@@ -12,7 +12,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-project>
-    <tr class="table-row" (click)="navigateToInfo(project.id)">
+    <tr class="table-row" (click)="navigateToInfo(project.id, project.name)">
       <td>{{ project.name }}</td>
       <td>{{ project.start | date}}</td>
       <td>{{ project.end | date}}</td>

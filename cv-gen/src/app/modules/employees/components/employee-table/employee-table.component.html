@@ -12,7 +12,14 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-employee>
-    <tr class="table-row" (click)="navigateToInfo(employee.id)">
+    <tr
+      class="table-row"
+      (click)="
+        navigateToInfo(
+          employee.id,
+          employee.firstName + ' ' + employee.lastName
+        )
+      ">
       <td>{{ employee.firstName }}</td>
       <td>{{ employee.lastName }}</td>
       <td>{{ employee.email }}</td>

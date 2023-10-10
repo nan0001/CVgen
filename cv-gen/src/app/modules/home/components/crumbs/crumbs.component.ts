@@ -5,9 +5,16 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
-import { BehaviorSubject } from 'rxjs';
+import {
+  BehaviorSubject,
+  map,
+  of,
+  Observable,
+  combineLatest,
+  switchMap,
+} from 'rxjs';
+import { LanguageService } from '../../../core/services/language.service';
 
 @Component({
   selector: 'app-crumbs',
@@ -16,19 +23,25 @@ import { BehaviorSubject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CrumbsComponent implements OnInit, OnDestroy {
-  public pathSegments$ = new BehaviorSubject<MenuItem[]>([]);
+  public path$!: Observable<MenuItem[]>;
+  public locationChange$ = new BehaviorSubject<string>('');
   public home = { icon: 'pi pi-home', routerLink: '/' };
   private unsubscribeLocation!: () => void;
 
   constructor(
     private location: Location,
-    private translateService: TranslateService
+    private langService: LanguageService
   ) {}
 
   public ngOnInit(): void {
-    this.pathSegments$.next(this.getPathArr());
-    this.unsubscribeLocation = this.location.onUrlChange(() => {
-      this.pathSegments$.next(this.getPathArr());
+    this.path$ = this.locationChange$.pipe(
+      switchMap(() => {
+        return this.getPathArr();
+      })
+    );
+
+    this.unsubscribeLocation = this.location.onUrlChange(url => {
+      this.locationChange$.next(url);
     });
   }
 
@@ -36,17 +49,38 @@ export class CrumbsComponent implements OnInit, OnDestroy {
     this.unsubscribeLocation();
   }
 
-  public getPathArr(): MenuItem[] {
+  public getPathArr(): Observable<MenuItem[]> {
     const arr = this.location.path().split('/').slice(1);
+    const state = this.location.getState() as {
+      [key: string]: string | number;
+    };
+
+    const name = state['name'] ? (state['name'] as string) : '';
     const pathArr = arr.map((val, ind) => {
-      return {
-        label: val[0].toUpperCase() + val.slice(1),
-        routerLink: '/' + arr.slice(0, ind + 1).join('/'),
-      };
+      if (ind === arr.length - 1 && name) {
+        return of({
+          label: name,
+          routerLink: '/' + arr.slice(0, ind + 1).join('/'),
+        });
+      }
+
+      const translation$ = this.langService.getTranslationObservable(
+        (arr[0] === 'entities' && ind === arr.length - 1 && ind !== 0
+          ? 'ENTITIES.'
+          : 'NAV.') + val
+      );
+
+      const translatedLabel$ = translation$.pipe(
+        map(translated => {
+          return {
+            label: translated,
+            routerLink: '/' + arr.slice(0, ind + 1).join('/'),
+          };
+        })
+      );
+      return translatedLabel$;
     });
 
-    // console.log(this.translateService.get(`${arr[0].toUpperCase()}.title`));
-
-    return pathArr;
+    return combineLatest(pathArr);
   }
 }
