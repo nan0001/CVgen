@@ -19,9 +19,12 @@ export class ProjectsTableComponent {
     private store: Store
   ) {}
 
-  public navigateToInfo(id: string): void {
+  public navigateToInfo(id: string, name: string): void {
     this.router.navigate([id], {
       relativeTo: this.route,
+      state: {
+        name,
+      },
     });
   }
 

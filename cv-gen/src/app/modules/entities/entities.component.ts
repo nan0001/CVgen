@@ -14,9 +14,15 @@ export class EntitiesComponent {
     private route: ActivatedRoute
   ) {}
 
-  public navigateToEntitiesList(listName: EntitiesListsType): void {
+  public navigateToEntitiesList(
+    listName: EntitiesListsType,
+    name: string
+  ): void {
     this.router.navigate([listName], {
       relativeTo: this.route,
+      state: {
+        name,
+      },
     });
   }
 }
