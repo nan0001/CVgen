@@ -6,7 +6,7 @@
     styleClass="p-button-raised p-button-text"
     (onClick)="deleteProject()"></p-button>
   </div>
-  <app-project-form [project]="project" (sendFormData)="submitData($event)">
+  <app-project-form [project]="project" [id]="id" (sendFormData)="submitData($event)">
     <p-button
     [label]="'BUTTONS.back' | translate"
     styleClass="p-button-raised p-button-text"

@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, take } from 'rxjs';
 import { ProjectFormInterface, ProjectInterface } from '../../../core/models/project.model';
 import { noConflictDates } from '../../../core/utils/date.validator';
-import { EntitiesService } from '../../../core/services/entities.service';
 import { filterOptions } from '../../../core/utils/filter-options.util';
 import { Store } from '@ngrx/store';
 import { selectSkills } from '../../../core/store/selectors/entities.selectors';
@@ -18,6 +17,7 @@ import { selectProjectsCollection } from '../../../core/store/selectors/projects
 })
 export class ProjectFormComponent implements OnInit{
   @Input() project!:Omit<ProjectInterface, "id">;
+  @Input() id = '';
   @Output() sendFormData = new EventEmitter<Omit<ProjectInterface, "id">>;
 
   public infoForm!: FormGroup<ProjectFormInterface>;
@@ -90,6 +90,10 @@ export class ProjectFormComponent implements OnInit{
   }
 
   private createControls(): void {
+    const asyncNameValidator = this.id === 'new-project'
+    ? [nameExistsValidator(this.store.select(selectProjectsCollection))]
+    : [];
+
     this.infoForm = this.fb.nonNullable.group({
       internalName:[this.project.internalName, [
         Validators.required,
@@ -100,7 +104,7 @@ export class ProjectFormComponent implements OnInit{
           Validators.required,
           Validators.minLength(2)
         ],
-        asyncValidators: [nameExistsValidator(this.store.select(selectProjectsCollection))]
+        asyncValidators: asyncNameValidator,
     }],
       dates: [{ start: this.project.start, end: this.project.end },
         [Validators.required, noConflictDates()]

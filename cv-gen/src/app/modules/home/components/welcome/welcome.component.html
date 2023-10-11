@@ -1,0 +1,6 @@
+<p-image
+  [src]="'assets/images/welcome-' + (currentTheme$ | async) + '.png'"
+  alt="Welcome"
+  width="200px"
+  id="welcome-image"></p-image>
+<h1>{{ 'WELCOME.text' | translate }}</h1>

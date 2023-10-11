@@ -1,0 +1,18 @@
+<div class="flex align-items-center">
+  <div class="flex flex-column align-items-center">
+    <h1 class="m-0 text-6xl">404</h1>
+    <h3>{{ 'NOT_FOUND.text' | translate }}</h3>
+  </div>
+  <p-image
+    class="img"
+    [src]="'assets/images/404-' + (currentTheme$ | async) + '.png'"
+    alt="404 Error"
+    width="300px"
+    id="not-found-image"></p-image>
+</div>
+
+<p-button
+  [label]="'NOT_FOUND.goHome' | translate"
+  styleClass="p-button-raised p-button-text"
+  type="button"
+  (onClick)="goHome()"></p-button>
