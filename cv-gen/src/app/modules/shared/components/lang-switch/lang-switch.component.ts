@@ -9,7 +9,7 @@ import { LANGUAGE } from '../../../core/constants/language.constant';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LangSwitchComponent {
-  currentLang = LANGUAGE.En;
+  public currentLang = this.langService.currentLang;
 
   constructor(private langService: LanguageService) {}
 

@@ -1,5 +1,5 @@
 <p-button (click)="switchTheme()" styleClass="p-button-text">
-  <div [@moveLeft]="theme" class="icons flex gap-3">
+  <div [@moveLeft]="theme | async" class="icons flex gap-3">
     <i class="pi pi-moon"></i>
     <i class="pi pi-sun"></i>
   </div>
