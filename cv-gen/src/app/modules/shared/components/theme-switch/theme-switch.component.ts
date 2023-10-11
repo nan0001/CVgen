@@ -1,10 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import {
   animate,
   state,
@@ -38,23 +33,10 @@ import { ThemeService } from '../../../core/services/theme.service';
     ]),
   ],
 })
-export class ThemeSwitchComponent implements OnInit, OnDestroy {
-  public theme: THEMES = THEMES.Light;
-  public light = THEMES.Light;
-  public dark = THEMES.Dark;
-  private subscription!: Subscription;
+export class ThemeSwitchComponent {
+  public theme: BehaviorSubject<THEMES> = this.themeService.currentTheme$;
 
   constructor(private themeService: ThemeService) {}
-
-  public ngOnInit(): void {
-    this.subscription = this.themeService.currentTheme$.subscribe(val => {
-      this.theme = val;
-    });
-  }
-
-  public ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
 
   public switchTheme(): void {
     this.themeService.switchTheme();

@@ -2,21 +2,29 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LANGUAGE } from '../constants/language.constant';
 import { Observable, combineLatest } from 'rxjs';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LanguageService {
-  constructor(private translate: TranslateService) {}
+  private storageKey = 'lang';
+  private storedLang = this.localStorageService.getItem(this.storageKey);
+  public currentLang = this.storedLang ? this.storedLang : LANGUAGE.En;
 
-  //TODO: get previously selected lang, store lang
+  constructor(
+    private translate: TranslateService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   public setInitLang(): void {
-    this.translate.setDefaultLang(LANGUAGE.En);
+    this.translate.setDefaultLang(this.currentLang);
   }
 
   public setLang(lang: LANGUAGE): void {
     this.translate.use(lang);
+    this.currentLang = lang;
+    this.localStorageService.setStorage(this.storageKey, lang);
   }
 
   public getTranslationObservable(
