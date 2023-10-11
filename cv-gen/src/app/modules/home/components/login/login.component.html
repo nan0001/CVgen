@@ -1,0 +1,15 @@
+<ng-container *ngIf="user$ | async as user; else loginTempl">
+  <div class="flex gap-2 align-items-center">
+    <span>{{ user }}</span>
+    <p-button
+      icon="pi pi-sign-out"
+      styleClass="p-button-text"
+      (click)="logout()"></p-button>
+  </div>
+</ng-container>
+<ng-template #loginTempl>
+  <p-button
+    icon="pi pi-sign-in"
+    styleClass="p-button-text"
+    (click)="login()"></p-button>
+</ng-template>

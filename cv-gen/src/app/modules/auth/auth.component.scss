@@ -11,11 +11,6 @@
 
 .error-msg{
   color: var(--red-500);
-  visibility: hidden;
-
-  &.visible{
-    visibility: visible;
-  }
 }
 
 .switchers{

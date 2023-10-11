@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { CrumbsComponent } from './components/crumbs/crumbs.component';
 import { SharedModule } from '../shared/shared.module';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SharedModule } from '../shared/shared.module';
     HeaderComponent,
     NavigationComponent,
     CrumbsComponent,
+    LoginComponent,
   ],
   imports: [
     CommonModule,

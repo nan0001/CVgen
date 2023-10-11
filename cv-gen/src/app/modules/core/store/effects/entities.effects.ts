@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, combineLatest } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { EntitiesActions } from '../actions/entities.actions';
 import { EntitiesService } from '../../services/entities.service';
 import { Store } from '@ngrx/store';
 import { selectEntities } from '../selectors/entities.selectors';
+import { FirestoreError } from '@angular/fire/firestore';
 
 @Injectable()
 export class EntitiesEffects {
@@ -28,7 +28,7 @@ export class EntitiesEffects {
             };
             return EntitiesActions.successLoading({ ...data });
           }),
-          catchError((errorResponse: HttpErrorResponse) => {
+          catchError((errorResponse: FirestoreError) => {
             console.warn(errorResponse);
             return of(EntitiesActions.loadingFailure());
           })
@@ -55,7 +55,7 @@ export class EntitiesEffects {
             map(() => {
               return EntitiesActions.loadEntities();
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(EntitiesActions.loadingFailure());
             })
@@ -85,7 +85,7 @@ export class EntitiesEffects {
             map(() => {
               return EntitiesActions.loadEntities();
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(EntitiesActions.loadingFailure());
             })

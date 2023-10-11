@@ -9,6 +9,9 @@ import {
 } from '@angular/forms';
 import { ValidatorType } from './models/validator.model';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AuthActions } from '../core/store/actions/auth.actions';
+import { selectAuthError } from '../core/store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-auth',
@@ -17,7 +20,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthComponent {
-  public authForm = this.fb.group({
+  public authForm = this.fb.nonNullable.group({
     username: [
       '',
       [
@@ -41,22 +44,30 @@ export class AuthComponent {
     ],
   });
 
+  public loginError$ = this.store.select(selectAuthError);
+
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 
-  public get username(): FormControl<string | null> {
+  public get username(): FormControl<string> {
     return this.authForm.controls.username;
   }
 
-  public get password(): FormControl<string | null> {
+  public get password(): FormControl<string> {
     return this.authForm.controls.password;
   }
 
   public onSubmit(): void {
     if (this.authForm.valid) {
-      this.router.navigate(['']);
+      this.store.dispatch(
+        AuthActions.signIn({
+          email: this.username.value,
+          password: this.password.value,
+        })
+      );
     }
 
     this.authForm.markAllAsTouched();

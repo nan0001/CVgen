@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainPageComponent } from './modules/home/components/main-page/main-page.component';
+import { authGuard } from './modules/core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
     children: [
       {
         path: 'employees',
+        canMatch: [authGuard],
         loadChildren: () =>
           import('./modules/employees/employees.module').then(
             m => m.EmployeesModule
@@ -21,6 +23,7 @@ const routes: Routes = [
       },
       {
         path: 'projects',
+        canMatch: [authGuard],
         loadChildren: () =>
           import('./modules/projects/projects.module').then(
             m => m.ProjectsModule
@@ -28,6 +31,7 @@ const routes: Routes = [
       },
       {
         path: 'entities',
+        canMatch: [authGuard],
         loadChildren: () =>
           import('./modules/entities/entities.module').then(
             m => m.EntitiesModule
