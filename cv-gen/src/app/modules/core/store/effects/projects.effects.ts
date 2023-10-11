@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { ProjectsService } from '../../../core/services/projects.service';
 import { catchError, map, of, switchMap } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ProjectsActions } from '../../../core/store/actions/projects.actions';
 import { Store } from '@ngrx/store';
 import { selectProjectsCollection } from '../selectors/projects.selectors';
 import { Router } from '@angular/router';
+import { FirestoreError } from '@angular/fire/firestore';
 
 @Injectable()
 export class ProjectEffects {
@@ -25,7 +25,7 @@ export class ProjectEffects {
             map(response => {
               return ProjectsActions.successLoading({ data: response });
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(ProjectsActions.loadingFailure());
             })
@@ -51,7 +51,7 @@ export class ProjectEffects {
             map(() => {
               return ProjectsActions.loadProjects({ update: true });
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(ProjectsActions.loadingFailure());
             })
@@ -81,7 +81,7 @@ export class ProjectEffects {
             map(() => {
               return ProjectsActions.loadProjects({ update: true });
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(ProjectsActions.loadingFailure());
             })
@@ -111,7 +111,7 @@ export class ProjectEffects {
               this.router.navigate(['projects', id]);
               return ProjectsActions.loadProjects({ update: true });
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(ProjectsActions.loadingFailure());
             })

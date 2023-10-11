@@ -3,10 +3,10 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { CvService } from '../../../core/services/cv.service';
 import { CvActions } from '../actions/cv.actions';
 import { catchError, map, of, switchMap } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { selectCvsCollection } from '../selectors/cv.selectors';
 import { EmployeeActions } from '../actions/employee.actions';
+import { FirestoreError } from '@angular/fire/firestore';
 
 @Injectable()
 export class CvEffects {
@@ -20,7 +20,7 @@ export class CvEffects {
           map(response => {
             return CvActions.successLoading({ data: response });
           }),
-          catchError((errorResponse: HttpErrorResponse) => {
+          catchError((errorResponse: FirestoreError) => {
             console.warn(errorResponse);
             return of(CvActions.loadingFailure());
           })
@@ -48,7 +48,7 @@ export class CvEffects {
                 addCv: false,
               });
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(CvActions.loadingFailure());
             })
@@ -75,7 +75,7 @@ export class CvEffects {
             map(() => {
               return CvActions.loadCvs();
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(CvActions.loadingFailure());
             })
@@ -106,7 +106,7 @@ export class CvEffects {
                 addCv: true,
               });
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(CvActions.loadingFailure());
             })

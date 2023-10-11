@@ -8,6 +8,7 @@ import * as fromCoreModule from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { ProjectEffects } from './store/effects/projects.effects';
 import { EntitiesEffects } from './store/effects/entities.effects';
+import { AuthEffects } from './store/effects/auth.effects';
 
 @NgModule({
   declarations: [FooterComponent],
@@ -19,7 +20,7 @@ import { EntitiesEffects } from './store/effects/entities.effects';
       fromCoreModule.moduleFeatureKey,
       fromCoreModule.reducers
     ),
-    EffectsModule.forFeature([ProjectEffects, EntitiesEffects]),
+    EffectsModule.forFeature([ProjectEffects, EntitiesEffects, AuthEffects]),
   ],
   exports: [FooterComponent],
 })

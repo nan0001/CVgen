@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { EmployeesService } from '../../../core/services/employees.service';
 import { EmployeeActions } from '../actions/employee.actions';
 import { Store } from '@ngrx/store';
 import { selectEmployeeCollection } from '../selectors/employee.selectors';
-import { CvActions } from '../actions/cv.actions';
+import { FirestoreError } from '@angular/fire/firestore';
 
 @Injectable()
 export class EmployeeEffects {
@@ -22,7 +21,7 @@ export class EmployeeEffects {
             map(response => {
               return EmployeeActions.successLoading({ data: response });
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(EmployeeActions.loadingFailure());
             })
@@ -49,7 +48,7 @@ export class EmployeeEffects {
             map(() => {
               return EmployeeActions.loadEmployees({ update: true });
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(EmployeeActions.loadingFailure());
             })
@@ -79,7 +78,7 @@ export class EmployeeEffects {
             map(() => {
               return EmployeeActions.loadEmployees({ update: true });
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(EmployeeActions.loadingFailure());
             })
@@ -113,7 +112,7 @@ export class EmployeeEffects {
             map(() => {
               return EmployeeActions.loadEmployees({ update: true });
             }),
-            catchError((errorResponse: HttpErrorResponse) => {
+            catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
               return of(EmployeeActions.loadingFailure());
             })
