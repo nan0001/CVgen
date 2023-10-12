@@ -10,6 +10,7 @@ import { DoubleDateComponent } from './components/double-date/double-date.compon
 import { LabelledInputComponent } from './components/labelled-input/labelled-input.component';
 import { ErrorMessageDirective } from './directives/error-message.directive';
 import { LevelInputComponent } from './components/level-input/level-input.component';
+import { FileNotExistComponent } from './components/file-not-exist/file-not-exist.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { LevelInputComponent } from './components/level-input/level-input.compon
     LabelledInputComponent,
     ErrorMessageDirective,
     LevelInputComponent,
+    FileNotExistComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +38,7 @@ import { LevelInputComponent } from './components/level-input/level-input.compon
     LabelledInputComponent,
     ErrorMessageDirective,
     LevelInputComponent,
+    FileNotExistComponent,
   ],
 })
 export class SharedModule {}

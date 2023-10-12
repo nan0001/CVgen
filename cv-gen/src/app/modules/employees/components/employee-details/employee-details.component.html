@@ -1,4 +1,4 @@
-<div class="info" *ngIf="employee$ | async as employee">
+<div class="info" *ngIf="employee$ | async as employee; else fileAbsent">
   <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
   <p-tabView>
     <p-tabPanel [header]="'EMPLOYEES.tabs.info.title' | translate">
@@ -16,6 +16,10 @@
     </p-tabPanel>
   </p-tabView>
 </div>
+
+<ng-template #fileAbsent>
+  <app-file-not-exist [buttonRoute]="'employees'"></app-file-not-exist>
+</ng-template>
 
 <p-dialog
   [(visible)]="showSaveMessage"

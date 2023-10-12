@@ -102,7 +102,9 @@
   },
   "NOT_FOUND":{
     "text": "Such page doesn't exist",
-    "goHome": "Go to home page"
+    "goHome": "Go to home page",
+    "backToList": "Go back to list",
+    "fileNotExist": "Such file doesn't exist"
   },
   "WELCOME": {
     "text": "Welcome to CV Gen!"

@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { EntitiesActions } from '../../../core/store/actions/entities.actions';
 import { entityExistsValidator } from '../../../core/utils/entitity-exists';
 import { selectEntityList } from '../../../core/store/selectors/entities.selectors';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-entity-details',
@@ -21,16 +22,14 @@ export class EntityDetailsComponent implements OnInit {
   @Input() id: EntitiesListsType = 'skills';
 
   public newValueControl!: FormControl<string | null>;
+  public entityList$!: Observable<string[]>;
 
   constructor(private store: Store) {}
 
   public ngOnInit(): void {
+    this.entityList$ = this.store.select(selectEntityList({ id: this.id }));
     this.newValueControl = new FormControl('', {
-      asyncValidators: [
-        entityExistsValidator(
-          this.store.select(selectEntityList({ id: this.id }))
-        ),
-      ],
+      asyncValidators: [entityExistsValidator(this.entityList$)],
     });
   }
 
