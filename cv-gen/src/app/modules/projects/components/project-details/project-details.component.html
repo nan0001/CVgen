@@ -1,4 +1,4 @@
-<div *ngIf="project$ | async as project" class="flex flex-column">
+<div *ngIf="project$ | async as project; else fileAbsent" class="flex flex-column">
   <div class="flex justify-content-between align-items-center w-full">
     <h2>{{ project.name }}</h2>
     <p-button
@@ -6,7 +6,7 @@
     styleClass="p-button-raised p-button-text"
     (onClick)="deleteProject()"></p-button>
   </div>
-  <app-project-form [project]="project" (sendFormData)="submitData($event)">
+  <app-project-form [project]="project" [id]="id" (sendFormData)="submitData($event)">
     <p-button
     [label]="'BUTTONS.back' | translate"
     styleClass="p-button-raised p-button-text"
@@ -15,6 +15,10 @@
     (onClick)="navigateToList()"></p-button>
   </app-project-form>
 </div>
+
+<ng-template #fileAbsent>
+  <app-file-not-exist [buttonRoute]="'projects'"></app-file-not-exist>
+</ng-template>
 
 <p-dialog
 [(visible)]="showSaveMessage"

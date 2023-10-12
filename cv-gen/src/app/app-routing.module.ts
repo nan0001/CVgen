@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainPageComponent } from './modules/home/components/main-page/main-page.component';
 import { authGuard } from './modules/core/guards/auth.guard';
+import { NotFoundComponent } from './modules/home/components/not-found/not-found.component';
+import { WelcomeComponent } from './modules/home/components/welcome/welcome.component';
 
 const routes: Routes = [
   {
@@ -13,6 +15,7 @@ const routes: Routes = [
     path: '',
     component: MainPageComponent,
     children: [
+      { path: '', pathMatch: 'full', component: WelcomeComponent },
       {
         path: 'employees',
         canMatch: [authGuard],
@@ -36,6 +39,11 @@ const routes: Routes = [
           import('./modules/entities/entities.module').then(
             m => m.EntitiesModule
           ),
+      },
+      { path: 'not-found', component: NotFoundComponent },
+      {
+        path: '**',
+        redirectTo: 'not-found',
       },
     ],
   },

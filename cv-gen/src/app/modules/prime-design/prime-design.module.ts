@@ -16,6 +16,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ListboxModule } from 'primeng/listbox';
 import { ChipModule } from 'primeng/chip';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [],
@@ -37,6 +38,7 @@ import { ChipModule } from 'primeng/chip';
     ConfirmDialogModule,
     ListboxModule,
     ChipModule,
+    ImageModule,
   ],
 })
 export class PrimeDesignModule {}

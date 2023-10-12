@@ -22,7 +22,8 @@
     "employees": "Сотрудники",
     "projects": "Проекты",
     "cvs": "Резюме",
-    "entities": "Сущности"
+    "entities": "Сущности",
+    "new-project": "Новый проект"
   },
   "EMPLOYEES":{
     "title": "Сотрудники",
@@ -98,5 +99,14 @@
   "FIREBASE_ERRORS": {
     "Firebase: Error (auth/invalid-login-credentials).": "Неверные данные пользователя",
     "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).": "Слишком много неудачных попыток входа, попробуйте зайти позже"
+  },
+  "NOT_FOUND":{
+    "text": "Такой страницы не существует",
+    "goHome": "Вернуться на главную",
+    "backToList": "Вернуться к списку",
+    "fileNotExist": "Такого файла не существует"
+  },
+  "WELCOME": {
+    "text": "Добро пожаловать в CV Gen!"
   }
 }

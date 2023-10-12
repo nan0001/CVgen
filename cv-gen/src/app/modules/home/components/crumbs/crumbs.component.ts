@@ -23,7 +23,7 @@ import { LanguageService } from '../../../core/services/language.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CrumbsComponent implements OnInit, OnDestroy {
-  public path$!: Observable<MenuItem[]>;
+  public path$!: Observable<MenuItem[] | null>;
   public locationChange$ = new BehaviorSubject<string>('');
   public home = { icon: 'pi pi-home', routerLink: '/' };
   private unsubscribeLocation!: () => void;
@@ -49,8 +49,17 @@ export class CrumbsComponent implements OnInit, OnDestroy {
     this.unsubscribeLocation();
   }
 
-  public getPathArr(): Observable<MenuItem[]> {
+  public getPathArr(): Observable<MenuItem[] | null> {
     const arr = this.location.path().split('/').slice(1);
+
+    if (arr.length === 0) {
+      return of(null);
+    }
+
+    if (arr[0] === 'not-found') {
+      return of([]);
+    }
+
     const state = this.location.getState() as {
       [key: string]: string | number;
     };

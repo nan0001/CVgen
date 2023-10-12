@@ -19,7 +19,6 @@ export class FirestoreInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    console.log(request.url);
     const requestWithHeader = request.clone({
       headers: request.headers.set('App-name', 'Cv Gen'),
     });
