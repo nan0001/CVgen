@@ -1,29 +1,35 @@
-<ng-container *ngIf="entityList$ | async; else fileAbsent">
-  <app-entity-list [id]="id"></app-entity-list>
-  <form
-    class="flex flex-column gap-3 flex-grow-1 align-items-end"
-    (ngSubmit)="addItem()">
-    <p-button
-      [label]="'ENTITIES.addItem' | translate"
-      styleClass="p-button-raised p-button-text"
-      [disabled]="!newValueControl.value"
-      type="submit"></p-button>
-    <div class="flex flex-column gap-1 w-full">
-      <app-labelled-input
-        controlName="name"
-        [errors]="newValueControl.errors"
-        [showError]="newValueControl.invalid && newValueControl.touched">
-        <input
-          class="w-full"
-          type="text"
-          pInputText
-          name="newItem"
-          [formControl]="newValueControl" />
-      </app-labelled-input>
-    </div>
-  </form>
+<ng-container *ngIf="(loading$ | async) === false; else spinner">
+  <ng-container *ngIf="entityList$ | async; else fileAbsent">
+    <app-entity-list [id]="id"></app-entity-list>
+    <form
+      class="flex flex-column gap-3 flex-grow-1 align-items-end"
+      (ngSubmit)="addItem()">
+      <p-button
+        [label]="'ENTITIES.addItem' | translate"
+        styleClass="p-button-raised p-button-text"
+        [disabled]="!newValueControl.value"
+        type="submit"></p-button>
+      <div class="flex flex-column gap-1 w-full">
+        <app-labelled-input
+          controlName="name"
+          [errors]="newValueControl.errors"
+          [showError]="newValueControl.invalid && newValueControl.touched">
+          <input
+            class="w-full"
+            type="text"
+            pInputText
+            name="newItem"
+            [formControl]="newValueControl" />
+        </app-labelled-input>
+      </div>
+    </form>
+  </ng-container>
 </ng-container>
 
 <ng-template #fileAbsent>
   <app-file-not-exist [buttonRoute]="'entities'"></app-file-not-exist>
+</ng-template>
+
+<ng-template #spinner>
+  <app-spinner></app-spinner>
 </ng-template>

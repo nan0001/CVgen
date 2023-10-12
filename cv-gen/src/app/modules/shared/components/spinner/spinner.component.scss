@@ -1,0 +1,19 @@
+:host{
+  display: block;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+}
+
+.img{
+  animation: 2s linear rotate infinite;
+}
+
+@keyframes rotate{
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}

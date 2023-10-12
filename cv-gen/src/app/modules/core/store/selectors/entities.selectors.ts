@@ -16,6 +16,11 @@ export const selectLangs = createSelector(
   (state: EntitiesState) => state.langs
 );
 
+export const selectEntitiesLoading = createSelector(
+  selectEntities,
+  (state: EntitiesState) => state.isLoading
+);
+
 export const selectEntityList = (props: { id: EntitiesListsType }) =>
   createSelector(selectEntities, (state: EntitiesState) => state[props.id]);
 

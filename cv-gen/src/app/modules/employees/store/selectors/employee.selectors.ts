@@ -16,6 +16,11 @@ export const selectEmployeeCollection = createSelector(
   (state: EmployeeState) => state.employees
 );
 
+export const selectEmployeeLoading = createSelector(
+  selectEmployees,
+  (state: EmployeeState) => state.isLoading
+);
+
 export const selectEmployeeById = (props: { id: string }) =>
   createSelector(selectEmployees, (state: EmployeeState) => {
     const employee: EmployeeInterface | undefined = state.employees?.find(

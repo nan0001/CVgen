@@ -9,7 +9,10 @@ import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { EntitiesActions } from '../../../core/store/actions/entities.actions';
 import { entityExistsValidator } from '../../../core/utils/entitity-exists';
-import { selectEntityList } from '../../../core/store/selectors/entities.selectors';
+import {
+  selectEntitiesLoading,
+  selectEntityList,
+} from '../../../core/store/selectors/entities.selectors';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -23,6 +26,7 @@ export class EntityDetailsComponent implements OnInit {
 
   public newValueControl!: FormControl<string | null>;
   public entityList$!: Observable<string[]>;
+  public loading$ = this.store.select(selectEntitiesLoading);
 
   constructor(private store: Store) {}
 

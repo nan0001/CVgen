@@ -16,6 +16,11 @@ export const selectProjectsCollection = createSelector(
   (state: ProjectsState) => state.projects
 );
 
+export const selectProjectsLoading = createSelector(
+  selectProjectsFeature,
+  (state: ProjectsState) => state.isLoading
+);
+
 export const selectProjectById = (props: { id: string }) =>
   createSelector(selectProjectsFeature, (state: ProjectsState) => {
     const project: ProjectInterface | undefined = state.projects?.find(
