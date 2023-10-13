@@ -4,6 +4,7 @@
   @include m.host-flex;
   flex-direction: column;
   justify-content: flex-start;
+  overflow: hidden;
 }
 
 .vertical-content{
