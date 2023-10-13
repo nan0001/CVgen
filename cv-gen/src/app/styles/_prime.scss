@@ -222,3 +222,35 @@ app-cv-list{
 .p-menu{
   width: fit-content;
 }
+
+app-entities{
+  .p-carousel{
+    & > *{
+      box-sizing: border-box;
+    }
+  }
+
+  .p-carousel-items-container {
+    height: 10rem;
+    min-width: 9rem;
+  }
+
+  .p-carousel-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .p-carousel .p-carousel-content .p-carousel-prev, .p-carousel .p-carousel-content .p-carousel-next{
+    @include m.mobile{
+      margin: 0;
+    }
+  }
+
+  .p-button{
+    @include m.mobile{
+      padding: 0.55rem;
+    }
+  }
+}
+

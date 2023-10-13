@@ -25,20 +25,6 @@
   }
 }
 
-.menu-btn{
-  display: none;
-
-  @include m.small{
-    display: block;
-  }
-}
-
-.nav-list{
-  @include m.small{
-    display: none;
-  }
-}
-
 .nav-link{
   padding: 0 var(--content-padding);
   line-height: 250%;

@@ -1,4 +1,6 @@
-<nav class="nav-list">
+<nav
+  class="nav-list"
+  *ngIf="(widowSizeSmall$ | async) === false; else smallNav">
   <ul class="flex flex-column">
     <li *ngFor="let link of links | async">
       <a
@@ -11,9 +13,12 @@
     </li>
   </ul>
 </nav>
-<p-button
-  class="menu-btn"
-  icon="pi pi-bars"
-  styleClass="p-button-text"
-  (click)="menu.toggle($event)"></p-button>
-<p-menu #menu [model]="(links | async) || []" [popup]="true"></p-menu>
+
+<ng-template #smallNav>
+  <p-button
+    class="menu-btn"
+    icon="pi pi-bars"
+    styleClass="p-button-text"
+    (click)="menu.toggle($event)"></p-button>
+  <p-menu #menu [model]="(links | async) || []" [popup]="true"></p-menu>
+</ng-template>

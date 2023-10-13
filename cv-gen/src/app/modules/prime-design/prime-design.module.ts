@@ -19,6 +19,7 @@ import { ChipModule } from 'primeng/chip';
 import { ImageModule } from 'primeng/image';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [],
@@ -43,6 +44,7 @@ import { AvatarModule } from 'primeng/avatar';
     ImageModule,
     MenuModule,
     AvatarModule,
+    CarouselModule,
   ],
 })
 export class PrimeDesignModule {}

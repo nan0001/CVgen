@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { LanguageService } from '../../../core/services/language.service';
 import { MenuItem } from 'primeng/api';
 import { Observable, combineLatest, map } from 'rxjs';
+import { ResizeService } from '../../../core/services/resize.service';
 
 @Component({
   selector: 'app-navigation',
@@ -11,8 +12,12 @@ import { Observable, combineLatest, map } from 'rxjs';
 })
 export class NavigationComponent implements OnInit {
   public links!: Observable<MenuItem[]>;
+  public widowSizeSmall$ = this.resizeService.widowSizeSmall$;
 
-  constructor(private langService: LanguageService) {}
+  constructor(
+    private langService: LanguageService,
+    private resizeService: ResizeService
+  ) {}
 
   public ngOnInit(): void {
     this.setMenuItems();
