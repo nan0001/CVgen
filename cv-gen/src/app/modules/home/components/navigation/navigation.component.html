@@ -1,13 +1,19 @@
-<nav>
+<nav class="nav-list">
   <ul class="flex flex-column">
-    <li *ngFor="let link of links">
+    <li *ngFor="let link of links | async">
       <a
-        [routerLink]="[link.name]"
+        [routerLink]="[link.routerLink]"
         routerLinkActive="active"
         class="flex gap-2 align-items-center nav-link">
-        <i [class]="'pi ' + link.icon"></i>
-        {{ 'NAV.' + link.name | translate }}
+        <i [class]="link.icon"></i>
+        {{ link.label }}
       </a>
     </li>
   </ul>
 </nav>
+<p-button
+  class="menu-btn"
+  icon="pi pi-bars"
+  styleClass="p-button-text"
+  (click)="menu.toggle($event)"></p-button>
+<p-menu #menu [model]="(links | async) || []" [popup]="true"></p-menu>

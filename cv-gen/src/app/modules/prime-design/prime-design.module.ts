@@ -17,6 +17,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ListboxModule } from 'primeng/listbox';
 import { ChipModule } from 'primeng/chip';
 import { ImageModule } from 'primeng/image';
+import { MenuModule } from 'primeng/menu';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   declarations: [],
@@ -39,6 +41,8 @@ import { ImageModule } from 'primeng/image';
     ListboxModule,
     ChipModule,
     ImageModule,
+    MenuModule,
+    AvatarModule,
   ],
 })
 export class PrimeDesignModule {}

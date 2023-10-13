@@ -1,3 +1,5 @@
+@use './mixins' as m;
+
 .p-input-icon-right{
   position: relative;
 
@@ -20,19 +22,22 @@
 
 .p-button{
   cursor: pointer;
+  padding: 0.55rem 1.25rem;
 }
 
 app-theme-switch,
 app-lang-switch,
 app-employee-table,
 app-projects-table,
-app-login {
+app-login,
+app-navigation,
+app-header {
   .p-button{
     display: flex;
     padding: var(--inline-spacing);
     background-color: var(--surface-0);
     border-radius: calc(var(--border-radius) * 4);
-    width: 35px;
+    width: 2rem;
     overflow: hidden;
     cursor: pointer;
 
@@ -49,7 +54,8 @@ app-login {
     }
 
     &.p-button-icon-only{
-      width: 35px;
+      width: 2.1rem;
+      height: 2.1rem;
       padding: var(--inline-spacing);
     }
   }
@@ -63,13 +69,22 @@ app-projects-table {
   }
 }
 
-.p-card .p-card-content{
-  padding: var(--content-padding);
+.p-card {
+  position: relative;
+  z-index: 2;
+
+  &.p-card-content{
+    padding: var(--content-padding);
+  }
 }
 
 app-auth{
   .p-card .p-card-content{
     padding: var(--content-padding) var(--content-padding) 0;
+
+    @include m.small{
+      padding: 0.75rem 0.75rem 0;
+    }
   }
 }
 
@@ -170,4 +185,8 @@ app-cv-list{
 
 .p-listbox .p-listbox-list .p-listbox-item{
   padding: 0;
+}
+
+.p-menu{
+  width: fit-content;
 }

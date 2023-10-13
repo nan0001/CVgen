@@ -14,8 +14,52 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
 
-  // &:hover{
-  //   background-color: var(--surface-c);
-  // }
+@mixin large {
+  @media (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin medium {
+  @media (max-width: 992px) {
+    @content;
+  }
+}
+
+@mixin small {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin mobile{
+  @media (max-width: 576px){
+    @content;
+  }
+}
+
+@mixin mobile-vertical {
+  @media (max-width: 576px) and (min-height: 650px) {
+    @content;
+  }
+}
+
+@mixin mobile-vertical-l {
+  @media (max-width: 576px) and (min-height: 800px) {
+    @content;
+  }
+}
+
+@mixin mobile-horizontal {
+  @media (min-width: 650px) and (max-height: 576px) {
+    @content;
+  }
+}
+
+@mixin mobile-horizontal-l {
+  @media (min-width: 800px) and (max-height: 576px) {
+    @content;
+  }
 }

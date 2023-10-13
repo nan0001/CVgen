@@ -1,6 +1,35 @@
+@use './app/styles/mixins' as m;
 @import 'primeicons/primeicons.css';
 @import 'primeflex/primeflex.scss';
 @import './app/styles/prime.scss';
+
+html{
+  font-size: 20px;
+
+  @include m.large{
+    font-size: 16px;
+  }
+
+  @include m.small{
+    font-size: 14px;
+  }
+
+  @include m.mobile{
+    font-size: 12px;
+  }
+
+  @include m.mobile-vertical{
+    font-size: 16px;
+  }
+
+  @include m.mobile-vertical-l{
+    font-size: 20px;
+  }
+
+  @include m.mobile-horizontal-l{
+    font-size: 14px;
+  }
+}
 
 html,
 body {
@@ -30,4 +59,14 @@ ul{
 
 li{
   list-style: none;
+}
+
+h1{
+  font-size: 2rem;
+  margin-block-start: 0.67rem;
+  margin-block-end: 0.67rem;
+}
+
+:focus-visible{
+  outline: none;
 }

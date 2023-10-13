@@ -1,10 +1,11 @@
 <ng-container *ngIf="user$ | async as user; else loginTempl">
-  <div class="flex gap-2 align-items-center">
-    <span>{{ user }}</span>
-    <p-button
-      icon="pi pi-sign-out"
-      styleClass="p-button-text"
-      (click)="logout()"></p-button>
+  <div>
+    <p-avatar
+      [label]="user[0].toUpperCase()"
+      styleClass="avatar"
+      shape="circle"
+      (click)="menu.toggle($event)"></p-avatar>
+    <p-menu #menu [model]="(menuItems$ | async) || []" [popup]="true"></p-menu>
   </div>
 </ng-container>
 <ng-template #loginTempl>

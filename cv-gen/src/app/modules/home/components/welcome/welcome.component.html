@@ -1,6 +1,6 @@
 <p-image
   [src]="'assets/images/welcome-' + (currentTheme$ | async) + '.png'"
   alt="Welcome"
-  width="200px"
+  imageClass="png-welcome"
   id="welcome-image"></p-image>
-<h1>{{ 'WELCOME.text' | translate }}</h1>
+<h1 class="text-center">{{ 'WELCOME.text' | translate }}</h1>

@@ -1,4 +1,5 @@
 @use '../../../../styles/variables' as v;
+@use '../../../../styles/mixins' as m;
 
 :host{
   width: 100%;
@@ -7,6 +8,6 @@
 .header{
   width: 100%;
   padding: v.$padding-vertical v.$padding-horizontal;
-  background-color: var(--surface-a);
+  background-color: var(--surface-b);
   border-bottom: 1px solid var(--surface-d);
 }

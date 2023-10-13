@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '../core/store/actions/auth.actions';
 import { selectAuthError } from '../core/store/selectors/auth.selectors';
+import { ThemeService } from '../core/services/theme.service';
 
 @Component({
   selector: 'app-auth',
@@ -43,13 +44,14 @@ export class AuthComponent {
       ],
     ],
   });
-
+  public currentTheme$ = this.themeService.currentTheme$;
   public loginError$ = this.store.select(selectAuthError);
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private themeService: ThemeService
   ) {}
 
   public get username(): FormControl<string> {
