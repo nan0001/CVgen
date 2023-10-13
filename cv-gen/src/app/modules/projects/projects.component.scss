@@ -8,3 +8,15 @@
   justify-content: flex-start;
   align-items: flex-start;
 }
+
+.wrapper{
+  @include m.mobile{
+    flex-direction: column;
+  }
+}
+
+.titles{
+  @include m.mobile{
+    width: 100%;
+  }
+}

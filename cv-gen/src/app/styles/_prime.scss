@@ -67,6 +67,38 @@ app-projects-table {
     background: rgba(0, 0, 0, 0.1);
     color: var(--primary-color);
   }
+
+  .p-datatable .p-datatable-tbody > tr > td,
+  .p-datatable .p-datatable-thead > tr > th {
+    @include m.small{
+      padding: 0.5rem 0.5rem;
+    }
+
+    @include m.mobile-vertical{
+      max-width: 3.8rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+    }
+  }
+
+  .p-datatable .p-datatable-tbody > tr{
+    background: transparent;
+  }
+
+  .p-paginator {
+    background: none;
+    border: none;
+
+    .p-paginator-pages .p-paginator-page{
+      border-radius: 50%;
+
+      @include m.small{
+        min-width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
 }
 
 .p-card {
