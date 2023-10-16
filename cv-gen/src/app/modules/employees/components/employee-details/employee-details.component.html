@@ -27,11 +27,4 @@
   <app-spinner></app-spinner>
 </ng-template>
 
-<p-dialog
-  [(visible)]="showSaveMessage"
-  header="Information has been saved"
-  [modal]="true"
-  [style]="{ width: '50vw', backgroundColor: 'var(--surface-a)' }"
-  [draggable]="false"
-  [resizable]="false">
-</p-dialog>
+<app-dialog [isShown]="showSaveMessage"></app-dialog>

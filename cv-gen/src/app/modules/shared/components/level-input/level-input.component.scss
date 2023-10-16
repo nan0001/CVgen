@@ -1,4 +1,31 @@
+@use '../../../../styles/mixins' as m;
+
 :host{
   display: flex;
   flex-grow: 1;
+}
+
+:host ::ng-deep{
+  .p-autocomplete{
+    width: 100%;
+  }
+}
+
+.container{
+  @include m.small{
+    flex-direction: column;
+  }
+}
+
+.wrapper{
+  @include m.small{
+    flex-direction: column-reverse;
+    gap: 0 !important;
+  }
+}
+
+.input{
+  @include m.small{
+    width: 100% !important;
+  }
 }

@@ -63,7 +63,8 @@
     "addProject": "Add project",
     "newCvNameControl": "CV name",
     "preview": "Preview",
-    "download": "Download"
+    "download": "Download",
+    "infoSaved": "Information has been saved"
   },
   "LANGS":{
     "ru":  "Russian",

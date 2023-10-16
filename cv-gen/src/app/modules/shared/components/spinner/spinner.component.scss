@@ -1,3 +1,5 @@
+@use '../../../../styles/mixins' as m;
+
 :host{
   display: block;
   width: fit-content;
@@ -15,5 +17,27 @@
   }
   to{
     transform: rotate(360deg);
+  }
+}
+
+::ng-deep{
+  .spinner{
+    width: 100px;
+
+    @include m.medium{
+      width: 75px;
+    }
+
+    @include m.small{
+      width: 75px;
+    }
+
+    @include m.mobile{
+      width: 50px;
+    }
+
+    @include m.mobile-horizontal{
+      width: 50px;
+    }
   }
 }

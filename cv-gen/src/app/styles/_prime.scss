@@ -148,15 +148,16 @@ app-crumbs{
 app-employee-details{
   .p-dialog-header{
     border-radius: var(--border-radius);
+    padding: .5rem .5rem 0 !important;
+  }
+
+  .p-dialog-content{
+    padding: 0 1rem 1rem !important;
   }
 
   .p-dialog-title{
     flex-grow: 1;
     text-align: center;
-  }
-
-  .p-dialog-content{
-    padding: 0 !important;
   }
 
   .p-tabview .p-tabview-panels{
@@ -253,4 +254,3 @@ app-entities{
     }
   }
 }
-
