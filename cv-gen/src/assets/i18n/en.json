@@ -105,7 +105,8 @@
     "text": "Such page doesn't exist",
     "goHome": "Go to home page",
     "backToList": "Go back to list",
-    "fileNotExist": "Such file doesn't exist"
+    "fileNotExist": "Such file doesn't exist",
+    "noResult":"No results found"
   },
   "WELCOME": {
     "text": "Welcome to CV Gen!"

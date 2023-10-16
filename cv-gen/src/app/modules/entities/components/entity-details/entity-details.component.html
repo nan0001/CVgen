@@ -2,12 +2,16 @@
   <ng-container *ngIf="entityList$ | async; else fileAbsent">
     <app-entity-list [id]="id"></app-entity-list>
     <form
-      class="flex flex-column gap-3 flex-grow-1 align-items-end"
+      class="form flex flex-column gap-3 flex-grow-1 align-items-end"
       (ngSubmit)="addItem()">
       <p-button
         [label]="'ENTITIES.addItem' | translate"
         styleClass="p-button-raised p-button-text"
-        [disabled]="!newValueControl.value"
+        [disabled]="
+          !newValueControl.value ||
+          newValueControl.pending ||
+          newValueControl.invalid
+        "
         type="submit"></p-button>
       <div class="flex flex-column gap-1 w-full">
         <app-labelled-input

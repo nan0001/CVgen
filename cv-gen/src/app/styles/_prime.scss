@@ -162,6 +162,7 @@ app-employee-details{
 
   .p-tabview .p-tabview-panels{
     padding: var(--content-padding) 0;
+    background: transparent;
   }
 }
 
@@ -253,4 +254,8 @@ app-entities{
       padding: 0.55rem;
     }
   }
+}
+
+.p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link{
+  background: var(--surface-c);
 }
