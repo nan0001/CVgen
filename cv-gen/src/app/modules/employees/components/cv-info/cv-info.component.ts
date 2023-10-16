@@ -98,8 +98,7 @@ export class CvInfoComponent implements OnInit, OnChanges {
         options: this.langOptions$,
       },
     ];
-    this.message =
-      'id' in this.cv ? 'Information has been saved' : 'New CV Added';
+    this.message = 'id' in this.cv ? 'INFO.infoSaved' : 'INFO.newAdded';
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

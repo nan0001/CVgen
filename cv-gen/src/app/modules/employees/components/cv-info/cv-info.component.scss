@@ -1,16 +1,21 @@
+@use '../../../../styles/mixins' as m;
+
 :host{
   flex-grow: 1;
+
+  & ::ng-deep{
+    .p-accordion{
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  @include m.medium{
+    margin-bottom: 1.5rem;
+  }
 }
 
-.save-msg{
-  position: fixed;
-  display: flex;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 10;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--maskbg);
+.add-btn{
+  align-self: flex-end;
 }
+

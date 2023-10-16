@@ -1,28 +1,51 @@
-<div class="list-container flex flex-column gap-3 h-full">
+<ng-container
+  *ngIf="(widowSizeMedium$ | async) === false || !selectedCv; else sidebar">
+  <ng-container *ngTemplateOutlet="cvList"></ng-container>
+</ng-container>
+
+<ng-template #sidebar>
+  <p-button
+    (click)="sidebarVisible = true"
+    icon="pi pi-bars"
+    class="sidebar-btn"></p-button>
+  <p-sidebar [(visible)]="sidebarVisible" position="right">
+    <ng-container *ngTemplateOutlet="cvList"></ng-container>
+  </p-sidebar>
+</ng-template>
+
+<ng-template #cvList>
   <ng-container *ngIf="cvsObservable$ | async as items">
-    <p-listbox [options]="items" optionLabel="name" [filter]="true">
-      <ng-template let-item pTemplate="item">
-        <div class="flex justify-content-between align-items-center w-full">
-          <button
-            class="cv-item flex justify-content-between align-items-center w-full"
-            (click)="setPickedId(item.id, item.name)">
-            <span class="line-height-1">{{ item.name }}</span>
-            <p-button
-              icon="pi pi-trash"
-              styleClass="p-button-text p-button-rounded"
-              (onClick)="removeCv($event, item.id)"></p-button>
-          </button>
-        </div>
-      </ng-template>
-    </p-listbox>
+    <div class="flex flex-column gap-3 content-wrapper">
+      <p-listbox
+        [options]="items"
+        optionLabel="name"
+        [filter]="true"
+        [(ngModel)]="selectedCv"
+        [style]="{ width: '15rem' }">
+        <ng-template let-item pTemplate="item">
+          <div class="flex justify-content-between align-items-center w-full">
+            <button
+              class="cv-item flex justify-content-between align-items-center w-full"
+              (click)="setPickedId(item.id, item.name)">
+              <span class="span line-height-1">{{ item.name }}</span>
+              <p-button
+                icon="pi pi-trash"
+                styleClass="p-button-text p-button-rounded"
+                (onClick)="removeCv($event, item.id)"></p-button>
+            </button>
+          </div>
+        </ng-template>
+      </p-listbox>
+      <p-button
+        class="add-btn"
+        icon="pi pi-plus"
+        [label]="'CV.addCv' | translate"
+        styleClass="p-button-raised"
+        type="submit"
+        (onClick)="addCv()"></p-button>
+    </div>
   </ng-container>
-</div>
-<p-button
-  icon="pi pi-plus"
-  [label]="'CV.addCv' | translate"
-  styleClass="p-button-raised"
-  type="submit"
-  (onClick)="addCv()"></p-button>
+</ng-template>
 
 <div class="card flex justify-content-center gap-2">
   <p-confirmDialog

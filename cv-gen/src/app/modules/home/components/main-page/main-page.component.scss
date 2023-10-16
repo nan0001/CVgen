@@ -15,6 +15,7 @@
 }
 
 .content-container{
+  position: relative;
   height: calc(100vh - v.$header-height - v.$footer-height);
   flex-grow: 1;
   display: flex;

@@ -12,20 +12,20 @@
 }
 
 .container{
-  @include m.small{
+  @include m.mobile{
     flex-direction: column;
   }
 }
 
 .wrapper{
-  @include m.small{
+  @include m.mobile{
     flex-direction: column-reverse;
     gap: 0 !important;
   }
 }
 
 .input{
-  @include m.small{
+  @include m.mobile{
     width: 100% !important;
   }
 }

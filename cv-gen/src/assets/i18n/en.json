@@ -64,7 +64,8 @@
     "newCvNameControl": "CV name",
     "preview": "Preview",
     "download": "Download",
-    "infoSaved": "Information has been saved"
+    "infoSaved": "Information has been saved",
+    "newAdded": "New item added"
   },
   "LANGS":{
     "ru":  "Russian",

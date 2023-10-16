@@ -21,6 +21,7 @@ import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
 import { CarouselModule } from 'primeng/carousel';
 import { ToastModule } from 'primeng/toast';
+import { SidebarModule } from 'primeng/sidebar';
 
 @NgModule({
   declarations: [],
@@ -47,6 +48,7 @@ import { ToastModule } from 'primeng/toast';
     AvatarModule,
     CarouselModule,
     ToastModule,
+    SidebarModule,
   ],
 })
 export class PrimeDesignModule {}

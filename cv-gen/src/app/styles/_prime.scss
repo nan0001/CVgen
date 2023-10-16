@@ -164,6 +164,11 @@ app-employee-details{
     padding: var(--content-padding) 0;
     background: transparent;
   }
+
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link,
+  .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background: transparent;
+  }
 }
 
 .p-link{
@@ -217,8 +222,10 @@ app-cv-list{
   padding: 0.35rem var(--content-padding) !important;
 }
 
-.p-listbox .p-listbox-list .p-listbox-item{
-  padding: 0;
+.p-listbox {
+  .p-listbox-list .p-listbox-item {
+    padding: 0;
+  }
 }
 
 .p-menu{
@@ -258,4 +265,28 @@ app-entities{
 
 .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link{
   background: var(--surface-c);
+}
+
+p-menu{
+  z-index: 1001;
+}
+
+.p-component-overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.p-listbox{
+  background-color: transparent;
+}
+
+.p-autocomplete-dd .p-autocomplete-input, .p-autocomplete-dd .p-autocomplete-multiple-container{
+  flex-grow: 1;
+}
+
+.p-autocomplete{
+  width: 100%;
 }
