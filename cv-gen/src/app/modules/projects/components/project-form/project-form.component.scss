@@ -1,0 +1,16 @@
+@use '../../../../styles/mixins' as m;
+
+.save-btns{
+  @include m.mobile{
+    flex-direction: column-reverse;
+    align-items: flex-end;
+
+    .btn{
+      width: 100%;
+
+      & ::ng-deep .p-button.p-button-raised{
+        width: 100%;
+      }
+    }
+  }
+}
