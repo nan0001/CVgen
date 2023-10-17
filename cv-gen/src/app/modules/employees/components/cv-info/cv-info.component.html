@@ -1,7 +1,7 @@
 <p-button
   styleClass="p-button-raised p-button-text"
   [label]="'INFO.preview' | translate"
-  (onClick)="togglePreviewMode()"
+  (onClick)="previewMode = !previewMode"
   *ngIf="!previewDisabled">
 </p-button>
 <app-cv-template *ngIf="previewMode" [cv]="cv"></app-cv-template>
@@ -79,7 +79,7 @@
       class="add-btn my-2"
       icon="pi pi-plus"
       styleClass="p-button-text"
-      (onClick)="addProject()"
+      (onClick)="openAddProjects$.next(true)"
       [label]="'INFO.addProject' | translate"></p-button>
 
     <ul formArrayName="projects">
@@ -200,30 +200,9 @@
   </div>
 </form>
 
-<div class="card flex justify-content-center gap-2">
-  <p-confirmDialog
-    #cd
-    [style]="{ width: '50vw', backgroundColor: 'var(--surface-a)' }">
-    <ng-template pTemplate="header">
-      <div class="flex flex-column gap-2 w-full align-items-start">
-        <h3>Add new empty project or choose an existing</h3>
-        <app-cv-projects
-          (pickProject)="acceptProject(cd, $event)"></app-cv-projects>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <p-button
-        type="button"
-        label="Add empty project"
-        (click)="acceptProject(cd, null)"></p-button>
-      <p-button
-        type="button"
-        icon="pi pi-times"
-        label="Cancel"
-        (click)="cd.reject()"></p-button>
-    </ng-template>
-  </p-confirmDialog>
-</div>
+<app-cv-projects
+  [openTable]="openAddProjects$"
+  (pickProject)="acceptProject($event)"></app-cv-projects>
 
 <app-dialog
   [isShown]="showSaveMessage"

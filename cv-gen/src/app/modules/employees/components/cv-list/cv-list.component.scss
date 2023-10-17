@@ -38,6 +38,35 @@
         justify-content: space-between;
       }
     }
+
+    .confirm{
+      width: 50vw;
+      background-color: var(--surface-a);
+
+      .p-dialog-header{
+        padding: var(--content-padding) !important;
+      }
+
+      .p-dialog-footer{
+        padding: 0 var(--content-padding) var(--content-padding);
+      }
+
+      @include m.mobile{
+        width: 80vw;
+      }
+
+      @include m.mobile-vertical-l{
+        width: 90vw;
+
+        .p-dialog-header{
+          padding: 1rem !important;
+        }
+
+        .p-dialog-footer{
+          padding: 0 1rem 1rem;
+        }
+      }
+    }
   }
 }
 

@@ -1,5 +1,4 @@
-<ng-container
-  *ngIf="(widowSizeMedium$ | async) === false || !selectedCv; else sidebar">
+<ng-container *ngIf="(widowSizeMedium$ | async) === false; else sidebar">
   <ng-container *ngTemplateOutlet="cvList"></ng-container>
 </ng-container>
 
@@ -48,13 +47,12 @@
 </ng-template>
 
 <div class="card flex justify-content-center gap-2">
-  <p-confirmDialog
-    #cd
-    [style]="{ width: '50vw', backgroundColor: 'var(--surface-a)' }">
+  <p-confirmDialog #cd styleClass="confirm">
     <ng-template pTemplate="header">
       <div class="flex flex-column gap-2 w-full align-items-start">
-        <h3>Enter CV name</h3>
+        <h3 class="text-center w-full">{{ 'DIALOGS.addCv' | translate }}</h3>
         <app-labelled-input
+          class="w-full"
           controlName="newCvNameControl"
           [errors]="newCvNameControl.errors"
           [showError]="newCvNameControl.invalid && newCvNameControl.touched"
@@ -64,16 +62,17 @@
       </div>
     </ng-template>
     <ng-template pTemplate="footer">
-      <p-button
-        type="button"
-        icon="pi pi-times"
-        label="Cancel"
-        (click)="cd.reject()"></p-button>
-      <p-button
-        type="button"
-        icon="pi pi-check"
-        label="Save"
-        (click)="checkFormValidity(cd)"></p-button>
+      <div class="flex gap-2 align-items-center justify-content-end w-full">
+        <p-button
+          type="button"
+          styleClass="p-button-raised p-button-text"
+          [label]="'BUTTONS.cancel' | translate"
+          (click)="cd.reject()"></p-button>
+        <p-button
+          type="button"
+          [label]="'BUTTONS.save' | translate"
+          (click)="checkFormValidity(cd)"></p-button>
+      </div>
     </ng-template>
   </p-confirmDialog>
 </div>

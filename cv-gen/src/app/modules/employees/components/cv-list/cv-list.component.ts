@@ -26,7 +26,6 @@ import { ResizeService } from '../../../core/services/resize.service';
 })
 export class CvListComponent implements OnInit {
   @Input() employeeId = '';
-  @Input() selectedCv: CvInterface | null = null;
   @Output() setCvId = new EventEmitter<{ id: string; name: string }>();
 
   public cvsObservable$!: Observable<CvInterface[]>;
@@ -34,6 +33,7 @@ export class CvListComponent implements OnInit {
   public newCvNameControl!: FormControl<string | null>;
   public sidebarVisible = false;
   public widowSizeMedium$ = this.resizeService.widowSizeMedium$;
+  public selectedCv: CvInterface | null = null;
 
   constructor(
     private store: Store,
@@ -60,6 +60,7 @@ export class CvListComponent implements OnInit {
 
   public setPickedId(cvId: string, cvName: string): void {
     this.setCvId.emit({ id: cvId, name: cvName });
+    this.sidebarVisible = false;
   }
 
   public checkFormValidity(cd: ConfirmDialog): void {

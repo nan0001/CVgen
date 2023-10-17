@@ -86,7 +86,8 @@
     "cancel": "Cancel",
     "back": "Back to list",
     "archive": "Archive",
-    "newProject": "New project"
+    "newProject": "New project",
+    "addEmpty": "Add empty project"
   },
   "ENTITIES":{
     "title": "Entities",
@@ -111,5 +112,9 @@
   },
   "WELCOME": {
     "text": "Welcome to CV Gen!"
+  },
+  "DIALOGS":{
+    "cvProjects": "Add new empty project or choose an existing",
+    "addCv": "Enter CV name"
   }
 }

@@ -4,30 +4,44 @@ import {
   Output,
   EventEmitter,
   OnInit,
+  Input,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectProjectsCollection } from '../../../core/store/selectors/projects.selectors';
 import { CvProjectInterface } from '../../../core/models/cv.models';
 import { ProjectInterface } from '../../../core/models/project.model';
 import { ProjectsActions } from '../../../core/store/actions/projects.actions';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialog } from 'primeng/confirmdialog';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cv-projects',
   templateUrl: './cv-projects.component.html',
   styleUrls: ['./cv-projects.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ConfirmationService],
 })
 export class CvProjectsComponent implements OnInit {
-  @Output() pickProject = new EventEmitter<CvProjectInterface>();
+  @Input() openTable!: Observable<boolean>;
+  @Output() pickProject = new EventEmitter<CvProjectInterface | null>();
   public projects$ = this.store.select(selectProjectsCollection);
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private confirmationService: ConfirmationService
+  ) {}
 
   public ngOnInit(): void {
     this.store.dispatch(ProjectsActions.loadProjects({ update: false }));
+    this.openTable.subscribe(val => {
+      if (val) {
+        this.openConfirm();
+      }
+    });
   }
 
-  public projectPicked(project: ProjectInterface): void {
+  public projectPicked(project: ProjectInterface, cd: ConfirmDialog): void {
     const formattedObject: CvProjectInterface = {
       ...project,
       dates: {
@@ -37,5 +51,22 @@ export class CvProjectsComponent implements OnInit {
       responsibilities: [],
     };
     this.pickProject.emit(formattedObject);
+    cd.accept();
+  }
+
+  public acceptProject(
+    cd: ConfirmDialog,
+    project: CvProjectInterface | null
+  ): void {
+    this.pickProject.emit(project);
+    cd.accept();
+  }
+
+  public openConfirm(): void {
+    this.confirmationService.confirm({
+      reject: () => {
+        this.confirmationService.close();
+      },
+    });
   }
 }

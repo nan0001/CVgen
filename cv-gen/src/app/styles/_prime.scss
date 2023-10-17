@@ -62,7 +62,8 @@ app-header {
 }
 
 app-employee-table,
-app-projects-table {
+app-projects-table,
+app-cv-projects {
   .p-button.p-button-text:enabled:hover{
     background: rgba(0, 0, 0, 0.1);
     color: var(--primary-color);

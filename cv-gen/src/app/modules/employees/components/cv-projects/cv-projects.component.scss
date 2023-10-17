@@ -1,8 +1,71 @@
+@use '../../../../styles/mixins' as m;
+
 :host{
   width: 100%;
+
+  & ::ng-deep{
+    .projects-table{
+      width: 50vw;
+      max-height: 90vh;
+      overflow: auto;
+      background-color: var(--surface-a);
+
+      .p-dialog-header{
+        padding: var(--content-padding) !important;
+      }
+
+      .p-dialog-footer{
+        padding: 0 var(--content-padding) var(--content-padding);
+      }
+
+      @include m.small{
+        .p-paginator{
+          border: none;
+          flex-wrap: nowrap;
+          padding: 0.5rem 0;
+
+          .p-paginator-first,
+          .p-paginator-prev,
+          .p-paginator-next,
+          .p-paginator-last {
+            min-width: 2rem;
+            height: 2rem;
+          }
+        }
+      }
+
+      @include m.mobile{
+        width: 80vw;
+      }
+
+      @include m.mobile-vertical-l{
+        width: 90vw;
+
+        .p-dialog-header{
+          padding: 1rem !important;
+        }
+
+        .p-dialog-footer{
+          padding: 0 1rem 1rem;
+        }
+      }
+
+      @include m.mobile-horizontal{
+        .p-dialog-header{
+          padding: var(--content-padding) var(--content-padding) 0 !important;
+        }
+      }
+    }
+  }
 }
 
 .table-row:hover{
   background-color: var(--surface-c);
   cursor: pointer;
+}
+
+.btn-container{
+  @include m.mobile{
+    flex-direction: column;
+  }
 }
