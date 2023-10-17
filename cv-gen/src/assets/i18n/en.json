@@ -65,7 +65,8 @@
     "preview": "Preview",
     "download": "Download",
     "infoSaved": "Information has been saved",
-    "newAdded": "New item added"
+    "newAdded": "New item added",
+    "technologies": "Technologies"
   },
   "LANGS":{
     "ru":  "Russian",

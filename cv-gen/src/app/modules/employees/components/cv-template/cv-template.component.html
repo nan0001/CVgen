@@ -1,29 +1,33 @@
 <p-button
+  class="ml-3"
   styleClass="p-button-raised p-button-text"
   [label]="'INFO.download' | translate"
   (onClick)="exportPDF(forExport)">
 </p-button>
-<div class="container flex flex-column w-full mt-3">
-  <h2 class="name">{{ cv.firstName }} {{ cv.lastName }}</h2>
-  <p class="description">{{ cv.description }}</p>
+<div class="container container__visible flex flex-column w-full mt-3">
+  <div class="name-wrapper">
+    <h2 class="name">{{ cv.firstName }} {{ cv.lastName }}</h2>
+    <p class="description">{{ cv.description }}</p>
+  </div>
   <ng-container *ngTemplateOutlet="template"></ng-container>
 </div>
 
-<div #forExport class="export">
-  <div class="container flex flex-column w-full mt-3">
-    <h2 class="name">
-      {{ cv.firstName }}<span class="transparent">a</span>{{ cv.lastName }}
-    </h2>
-    <p class="description">{{ cv.description }}</p>
+<div #forExport class="export surface-ground">
+  <div class="container flex flex-column w-full">
+    <div class="name-wrapper">
+      <h2 class="name">
+        {{ cv.firstName }}<span class="transparent">a</span>{{ cv.lastName }}
+      </h2>
+      <p class="description">{{ cv.description }}</p>
+    </div>
     <ng-container *ngTemplateOutlet="template"></ng-container>
   </div>
 </div>
 
 <ng-template #template>
-  <div class="columns flex w-full gap-2">
-    <div class="left-col flex flex-column w-3 min-w-min">
-      <div>
-        <h2>Skills</h2>
+  <div class="columns flex w-full gap-3">
+    <div class="left-col flex flex-column w-3 min-w-min gap-3">
+      <p-fieldset [legend]="'ENTITIES.skills' | translate">
         <ul>
           <li
             *ngFor="let skill of cv.skills"
@@ -32,9 +36,8 @@
             <app-skill-level [level]="skill.level"></app-skill-level>
           </li>
         </ul>
-      </div>
-      <div>
-        <h2>Languages</h2>
+      </p-fieldset>
+      <p-fieldset [legend]="'ENTITIES.langs' | translate">
         <ul>
           <li
             *ngFor="let lang of cv.langs"
@@ -43,31 +46,40 @@
             <app-skill-level [level]="lang.level"></app-skill-level>
           </li>
         </ul>
-      </div>
+      </p-fieldset>
     </div>
     <div class="right-col flex flex-column flex-grow-1">
-      <ul>
+      <ul class="flex flex-column gap-3">
         <li
           *ngFor="let project of cv.projects"
-          class="flex flex-column align-items-start">
+          class="flex flex-column align-items-start project-item">
           <h2>{{ project.name }}</h2>
-          <small class="w-full text-right"
+          <small class="w-full text-right font-semibold"
             >{{ project.dates.start | date }} -
             {{ project.dates.end | date }}</small
           >
           <p>{{ project.description }}</p>
-          <h3>Responsibilities</h3>
-          <ul>
-            <li *ngFor="let resp of project.responsibilities">
-              {{ resp }}
-            </li>
-          </ul>
-          <h3>Technologies</h3>
-          <ul>
-            <li *ngFor="let tech of project.techStack">
-              {{ tech }}
-            </li>
-          </ul>
+          <div
+            class="flex flex-column justify-content-start align-items-start gap-2 w-full">
+            <div>
+              <p class="font-semibold">
+                {{ 'ENTITIES.responsibilities' | translate }}
+              </p>
+              <ul>
+                <li *ngFor="let resp of project.responsibilities">
+                  {{ resp }}
+                </li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-semibold">{{ 'INFO.technologies' | translate }}</p>
+              <ul>
+                <li *ngFor="let tech of project.techStack">
+                  {{ tech }}
+                </li>
+              </ul>
+            </div>
+          </div>
         </li>
       </ul>
     </div>

@@ -1,28 +1,81 @@
+@use '../../../../styles/mixins' as m;
+
+:host ::ng-deep {
+  .p-fieldset {
+    .p-fieldset-legend{
+      padding: 0.5rem;
+      color: inherit;
+      background: var(--surface-a);
+    }
+
+    .p-fieldset-content {
+      padding: 0 0.25rem;
+    }
+  }
+}
+
+.container{
+  background-color: var(--surface-b);
+  padding: 0 var(--content-padding) var(--content-padding);
+  border-radius: var(--border-radius);
+
+  &__visible{
+    @include m.mobile{
+      .columns {
+        flex-direction: column;
+      }
+
+      .left-col {
+        flex-direction: row !important;
+        width: 100% !important;
+        justify-content: space-between;
+        gap: 0.5rem !important;
+
+        p-fieldset{
+          flex-grow: 1;
+        }
+      }
+    }
+  }
+}
+
+.name-wrapper{
+  border-radius: var(--border-radius);
+  margin-left: calc(var(--content-padding) * -1);
+  margin-right: calc(var(--content-padding) * -1);
+}
+
 .name,
 .description{
   width: 100%;
-  border-radius: var(--border-radius);
   text-align: end;
-  padding: var(--content-padding);
 }
 
 .name{
   margin: 0;
-  background-color: var(--surface-300);
-  color: var(--primary-color-text);
+  padding: var(--content-padding);
+  background-color: var(--highlight-bg);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
 .description{
   margin: .5rem 0;
-  background-color: var(--surface-100);
+  padding: var(--content-padding);
 }
 
 .export{
   position: absolute;
   width: 575pt;
   top: -1000%;
+  background-color: var(--surface-a);
 }
 
 .transparent{
   color: transparent;
+}
+
+.project-item{
+  background-color: var(--surface-a);
+  border-radius: var(--border-radius);
+  padding: var(--content-padding);
 }

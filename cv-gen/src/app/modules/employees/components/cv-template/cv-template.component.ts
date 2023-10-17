@@ -18,12 +18,14 @@ export class CvTemplateComponent {
     doc.html(data, {
       callback(file) {
         // file.save('file.pdf');
+        console.log((data.querySelector('.container') as HTMLElement).style);
         window.open(file.output('bloburl'));
       },
-      x: 10,
-      y: 10,
+      x: 0,
+      y: 0,
+      autoPaging: 'text',
       html2canvas: {
-        scale: (width - 20) / data.clientWidth,
+        scale: width / data.clientWidth,
       },
     });
   }
