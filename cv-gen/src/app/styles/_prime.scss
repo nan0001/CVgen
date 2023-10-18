@@ -295,3 +295,29 @@ p-menu{
 .p-autocomplete{
   width: 100%;
 }
+
+.export{
+  .p-fieldset {
+    position: relative;
+
+    .p-fieldset-legend{
+      font-family: 'OpenSans-Bold';
+      padding: 0.4rem 0.75rem;
+      color: inherit;
+      background: var(--surface-a);
+      font-size: 0.8rem;
+      position: absolute;
+      top: -10%;
+      min-width: fit-content;
+      box-sizing: border-box;
+    }
+
+    .p-fieldset-content {
+      padding: 0.25rem;
+    }
+  }
+
+  .p-fieldset-legend-text{
+    font-family: 'OpenSans-Bold';
+  }
+}

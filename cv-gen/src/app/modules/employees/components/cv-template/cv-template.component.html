@@ -5,26 +5,20 @@
   (onClick)="exportPDF(forExport)">
 </p-button>
 <div class="container container__visible flex flex-column w-full mt-3">
-  <div class="name-wrapper">
-    <h2 class="name">{{ cv.firstName }} {{ cv.lastName }}</h2>
-    <p class="description">{{ cv.description }}</p>
-  </div>
   <ng-container *ngTemplateOutlet="template"></ng-container>
 </div>
 
 <div #forExport class="export surface-ground">
   <div class="container flex flex-column w-full">
-    <div class="name-wrapper">
-      <h2 class="name">
-        {{ cv.firstName }}<span class="transparent">a</span>{{ cv.lastName }}
-      </h2>
-      <p class="description">{{ cv.description }}</p>
-    </div>
     <ng-container *ngTemplateOutlet="template"></ng-container>
   </div>
 </div>
 
 <ng-template #template>
+  <div class="name-wrapper">
+    <h2 class="name">{{ cv.firstName }} {{ cv.lastName }}</h2>
+    <p class="description">{{ cv.description }}</p>
+  </div>
   <div class="columns flex w-full gap-3">
     <div class="left-col flex flex-column w-3 min-w-min gap-3">
       <p-fieldset [legend]="'ENTITIES.skills' | translate">
@@ -53,7 +47,7 @@
         <li
           *ngFor="let project of cv.projects"
           class="flex flex-column align-items-start project-item">
-          <h2>{{ project.name }}</h2>
+          <h2 class="project-name">{{ project.name }}</h2>
           <small class="w-full text-right font-semibold"
             >{{ project.dates.start | date }} -
             {{ project.dates.end | date }}</small
