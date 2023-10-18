@@ -1,5 +1,9 @@
 @use './mixins' as m;
 
+.p-component{
+  font-family: inherit;
+}
+
 .p-input-icon-right{
   position: relative;
 

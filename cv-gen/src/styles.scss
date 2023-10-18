@@ -1,4 +1,5 @@
 @use './app/styles/mixins' as m;
+@use './app/styles/variables' as v;
 @import 'primeicons/primeicons.css';
 @import 'primeflex/primeflex.scss';
 @import './app/styles/prime.scss';
@@ -40,7 +41,7 @@ body {
 }
 
 body {
-  font-family: var(--font-family);
+  font-family: v.$font;
   color: var(--text-color);
 }
 
