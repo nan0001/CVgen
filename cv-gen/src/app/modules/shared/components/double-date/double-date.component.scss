@@ -1,5 +1,21 @@
+@use '../../../../styles/mixins' as m;
+
 :host{
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.wrapper{
+  gap: 0.5rem;
+
+  @include m.mobile{
+    flex-direction: column;
+  }
+
+  & ::ng-deep{
+    .col-12{
+      padding: 0;
+    }
+  }
 }

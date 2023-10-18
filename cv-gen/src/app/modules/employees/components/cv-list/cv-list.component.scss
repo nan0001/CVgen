@@ -5,16 +5,85 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
-  border: 1px solid var(--surface-d);
-  border-radius: var(--border-radius);
-}
+  height: fit-content;
 
-.list{
-  height: 80%;
-  overflow: auto;
+  & ::ng-deep{
+    .p-sidebar{
+      background: var(--surface-b);
+    }
+
+    .p-sidebar-right{
+      width: auto;
+
+      .p-listbox {
+        background-color: var(--surface-a);
+
+        .p-listbox-list{
+          @include m.medium{
+            max-height: 50vh;
+          }
+        }
+
+        .p-listbox-header{
+          background: var(--surface-d);
+        }
+      }
+
+      .add-btn{
+        align-self: flex-end;
+      }
+
+      .content-wrapper{
+        height: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    .confirm{
+      width: 50vw;
+      background-color: var(--surface-a);
+
+      .p-dialog-header{
+        padding: var(--content-padding) !important;
+      }
+
+      .p-dialog-footer{
+        padding: 0 var(--content-padding) var(--content-padding);
+      }
+
+      @include m.mobile{
+        width: 80vw;
+      }
+
+      @include m.mobile-vertical-l{
+        width: 90vw;
+
+        .p-dialog-header{
+          padding: 1rem !important;
+        }
+
+        .p-dialog-footer{
+          padding: 0 1rem 1rem;
+        }
+      }
+    }
+  }
 }
 
 .cv-item{
   @include m.div-button;
+}
+
+.span{
+  max-width: 12rem;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  overflow: hidden;
+}
+
+.sidebar-btn{
+  position: fixed;
+  z-index: 100;
+  bottom: 3.25rem;
+  right: 1.5rem;
 }

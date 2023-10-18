@@ -4,7 +4,7 @@ import { ProjectInterface } from '../../../core/models/project.model';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ProjectsActions } from '../../../core/store/actions/projects.actions';
-import { selectProjectById } from '../../../core/store/selectors/projects.selectors';
+import { selectProjectById, selectProjectsLoading } from '../../../core/store/selectors/projects.selectors';
 
 @Component({
   selector: 'app-project-details',
@@ -27,6 +27,7 @@ export class ProjectDetailsComponent {
   public emptyProject$ = new BehaviorSubject(this.emptyProject);
   public project$!: Observable<ProjectInterface | null> | Observable<Omit<ProjectInterface, "id">>;
   public showSaveMessage = false;
+  public loading$ = this.store.select(selectProjectsLoading);
 
   constructor(
     private router: Router,

@@ -26,7 +26,7 @@ import { ThemeService } from '../../../core/services/theme.service';
       state(
         THEMES.Dark,
         style({
-          transform: 'translateX(calc(-100% + 16px))',
+          transform: 'translateX(calc(-100% + 1rem))',
         })
       ),
       transition(`${THEMES.Light} <=> ${THEMES.Dark}`, animate(500)),

@@ -1,30 +1,30 @@
-<div *ngIf="project$ | async as project; else fileAbsent" class="flex flex-column">
-  <div class="flex justify-content-between align-items-center w-full">
-    <h2>{{ project.name }}</h2>
-    <p-button
-    [label]="'BUTTONS.archive' | translate"
-    styleClass="p-button-raised p-button-text"
-    (onClick)="deleteProject()"></p-button>
+<ng-container *ngIf="(loading$ | async) === false ; else spinner">
+  <div *ngIf="project$ | async as project; else fileAbsent" class="flex flex-column">
+    <div class="top-container flex justify-content-between align-items-center w-full my-2">
+      <h2>{{ project.name }}</h2>
+      <p-button
+      class="archive-btn"
+      [label]="'BUTTONS.archive' | translate"
+      styleClass="p-button-raised p-button-text"
+      (onClick)="deleteProject()"></p-button>
+    </div>
+    <app-project-form [project]="project" [id]="id" (sendFormData)="submitData($event)">
+      <p-button
+      [label]="'BUTTONS.back' | translate"
+      styleClass="p-button-raised p-button-text"
+      type="button"
+      class="mr-auto"
+      (onClick)="navigateToList()"></p-button>
+    </app-project-form>
   </div>
-  <app-project-form [project]="project" [id]="id" (sendFormData)="submitData($event)">
-    <p-button
-    [label]="'BUTTONS.back' | translate"
-    styleClass="p-button-raised p-button-text"
-    type="button"
-    class="mr-auto"
-    (onClick)="navigateToList()"></p-button>
-  </app-project-form>
-</div>
+</ng-container>
 
 <ng-template #fileAbsent>
   <app-file-not-exist [buttonRoute]="'projects'"></app-file-not-exist>
 </ng-template>
 
-<p-dialog
-[(visible)]="showSaveMessage"
-header="Information has been saved"
-[modal]="true"
-[style]="{ width: '50vw', backgroundColor: 'var(--surface-a)' }"
-[draggable]="false"
-[resizable]="false">
-</p-dialog>
+<ng-template #spinner>
+  <app-spinner></app-spinner>
+</ng-template>
+
+<app-dialog [isShown]="showSaveMessage"></app-dialog>

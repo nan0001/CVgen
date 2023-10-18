@@ -11,6 +11,8 @@ import { LabelledInputComponent } from './components/labelled-input/labelled-inp
 import { ErrorMessageDirective } from './directives/error-message.directive';
 import { LevelInputComponent } from './components/level-input/level-input.component';
 import { FileNotExistComponent } from './components/file-not-exist/file-not-exist.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { FileNotExistComponent } from './components/file-not-exist/file-not-exis
     ErrorMessageDirective,
     LevelInputComponent,
     FileNotExistComponent,
+    SpinnerComponent,
+    DialogComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +43,8 @@ import { FileNotExistComponent } from './components/file-not-exist/file-not-exis
     ErrorMessageDirective,
     LevelInputComponent,
     FileNotExistComponent,
+    SpinnerComponent,
+    DialogComponent,
   ],
 })
 export class SharedModule {}

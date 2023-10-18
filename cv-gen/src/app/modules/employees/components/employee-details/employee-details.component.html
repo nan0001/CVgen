@@ -1,31 +1,30 @@
-<div class="info" *ngIf="employee$ | async as employee; else fileAbsent">
-  <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
-  <p-tabView>
-    <p-tabPanel [header]="'EMPLOYEES.tabs.info.title' | translate">
-      <app-employee-form [employee]="employee" (sendFormData)="showMessage()">
-        <p-button
-          [label]="'BUTTONS.back' | translate"
-          styleClass="p-button-raised p-button-text"
-          type="button"
-          class="mr-auto"
-          (onClick)="navigateToList()"></p-button>
-      </app-employee-form>
-    </p-tabPanel>
-    <p-tabPanel [header]="'EMPLOYEES.tabs.cvList.title' | translate">
-      <app-cvs [employee]="employee"></app-cvs>
-    </p-tabPanel>
-  </p-tabView>
-</div>
+<ng-container *ngIf="(loading$ | async) === false; else spinner">
+  <div class="info" *ngIf="employee$ | async as employee; else fileAbsent">
+    <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
+    <p-tabView>
+      <p-tabPanel [header]="'EMPLOYEES.tabs.info.title' | translate">
+        <app-employee-form [employee]="employee" (sendFormData)="showMessage()">
+          <p-button
+            [label]="'BUTTONS.back' | translate"
+            styleClass="p-button-raised p-button-text"
+            type="button"
+            class="mr-auto"
+            (onClick)="navigateToList()"></p-button>
+        </app-employee-form>
+      </p-tabPanel>
+      <p-tabPanel [header]="'EMPLOYEES.tabs.cvList.title' | translate">
+        <app-cvs [employee]="employee"></app-cvs>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</ng-container>
 
 <ng-template #fileAbsent>
   <app-file-not-exist [buttonRoute]="'employees'"></app-file-not-exist>
 </ng-template>
 
-<p-dialog
-  [(visible)]="showSaveMessage"
-  header="Information has been saved"
-  [modal]="true"
-  [style]="{ width: '50vw', backgroundColor: 'var(--surface-a)' }"
-  [draggable]="false"
-  [resizable]="false">
-</p-dialog>
+<ng-template #spinner>
+  <app-spinner></app-spinner>
+</ng-template>
+
+<app-dialog [isShown]="showSaveMessage"></app-dialog>

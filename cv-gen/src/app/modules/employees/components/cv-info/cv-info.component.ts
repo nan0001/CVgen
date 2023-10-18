@@ -34,15 +34,12 @@ import {
   selectSkills,
 } from '../../../core/store/selectors/entities.selectors';
 import { CvActions } from '../../store/actions/cv.actions';
-import { ConfirmationService } from 'primeng/api';
-import { ConfirmDialog } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-cv-info',
   templateUrl: './cv-info.component.html',
   styleUrls: ['./cv-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ConfirmationService],
 })
 export class CvInfoComponent implements OnInit, OnChanges {
   @Input() cv!: CvInterface | Omit<CvInterface, 'id'>;
@@ -55,6 +52,7 @@ export class CvInfoComponent implements OnInit, OnChanges {
   public message = '';
   public previewMode = false;
   public previewDisabled = false;
+  public openAddProjects$ = new BehaviorSubject(false);
 
   public skillsControl!: {
     name: string;
@@ -75,7 +73,6 @@ export class CvInfoComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private confirmationService: ConfirmationService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -98,8 +95,7 @@ export class CvInfoComponent implements OnInit, OnChanges {
         options: this.langOptions$,
       },
     ];
-    this.message =
-      'id' in this.cv ? 'Information has been saved' : 'New CV Added';
+    this.message = 'id' in this.cv ? 'INFO.infoSaved' : 'INFO.newAdded';
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -215,20 +211,8 @@ export class CvInfoComponent implements OnInit, OnChanges {
     this.resetProjects();
   }
 
-  public addProject(): void {
-    this.confirmationService.confirm({
-      reject: () => {
-        this.confirmationService.close();
-      },
-    });
-  }
-
-  public acceptProject(
-    cd: ConfirmDialog,
-    project: CvProjectInterface | null
-  ): void {
+  public acceptProject(project: CvProjectInterface | null): void {
     this.projects.push(this.createProjectGroup(project));
-    cd.accept();
   }
 
   public deleteProject(event: Event, index: number): void {
@@ -243,10 +227,6 @@ export class CvInfoComponent implements OnInit, OnChanges {
       this.showSaveMessage = false;
       this.cdr.markForCheck();
     }, 2000);
-  }
-
-  public togglePreviewMode(): void {
-    this.previewMode = !this.previewMode;
   }
 
   private resetArray(

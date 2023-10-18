@@ -1,23 +1,27 @@
-<div
-  class="container flex gap-2 w-full justify-content-between align-items-end">
-  <div class="flex flex-column gap-1">
-    <label htmlFor="option">{{ 'INFO.name' | translate }}</label>
-    <p-autoComplete
-      [dropdown]="true"
-      [suggestions]="filteredOptions"
-      [(ngModel)]="selectedOption"
-      (completeMethod)="filterOptions($event)"
-      name="option"></p-autoComplete>
-  </div>
-  <div class="flex flex-column gap-1" *ngIf="filteredLevels$ | async as levels">
-    <label htmlFor="level">{{ 'INFO.level' | translate }}</label>
-    <p-autoComplete
-      [dropdown]="true"
-      [suggestions]="levels"
-      (completeMethod)="filterLevel($event.query)"
-      [ngModel]="'LEVELS.' + levelsEnum[selectedLevelIndex] | translate"
-      (ngModelChange)="onLevelChange($event, levels)"
-      name="level"></p-autoComplete>
+<div class="wrapper flex gap-2 w-full justify-content-between align-items-end">
+  <div
+    class="container flex gap-2 w-full justify-content-between align-items-end">
+    <div class="flex flex-column gap-1 input w-5">
+      <label htmlFor="option">{{ 'INFO.name' | translate }}</label>
+      <p-autoComplete
+        [dropdown]="true"
+        [suggestions]="filteredOptions"
+        [(ngModel)]="selectedOption"
+        (completeMethod)="filterOptions($event)"
+        name="option"></p-autoComplete>
+    </div>
+    <div
+      class="flex flex-column gap-1 input w-5"
+      *ngIf="filteredLevels$ | async as levels">
+      <label htmlFor="level">{{ 'INFO.level' | translate }}</label>
+      <p-autoComplete
+        [dropdown]="true"
+        [suggestions]="levels"
+        (completeMethod)="filterLevel($event.query)"
+        [ngModel]="'LEVELS.' + levelsEnum[selectedLevelIndex] | translate"
+        (ngModelChange)="onLevelChange($event, levels)"
+        name="level"></p-autoComplete>
+    </div>
   </div>
 
   <p-button

@@ -1,0 +1,15 @@
+:host ::ng-deep{
+  .avatar{
+    background-color: var(--primary-color);
+    font-weight: 500;
+    color: var(--surface-a);
+    cursor: pointer;
+  }
+
+
+  .p-disabled{
+    opacity: 1;
+    cursor: auto !important;
+  }
+
+}

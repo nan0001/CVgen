@@ -1,9 +1,8 @@
 <p-image
   class="img"
   [src]="'assets/images/404-file-' + (currentTheme$ | async) + '.png'"
-  alt="404 Error"
-  width="200px"
-  id="not-found-image"></p-image>
+  alt="File not found"
+  width="200px"></p-image>
 <h2>{{ 'NOT_FOUND.fileNotExist' | translate }}</h2>
 <p-button
   [label]="'NOT_FOUND.backToList' | translate"

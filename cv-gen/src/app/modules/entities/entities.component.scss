@@ -11,4 +11,8 @@
 
 .container{
   padding: var(--content-padding);
+
+  @include m.mobile{
+    padding: 0;
+  }
 }

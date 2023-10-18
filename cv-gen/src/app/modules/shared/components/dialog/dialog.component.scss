@@ -1,0 +1,20 @@
+@use '../../../../styles/mixins' as m;
+
+::ng-deep{
+  .dialog{
+    width:50vw;
+    background-color: var(--surface-a);
+
+    @include m.small{
+      width: 60vw;
+    }
+
+    @include m.mobile{
+      width: 70vw;
+    }
+  }
+}
+
+.text{
+  color: var(--text-color-secondary);
+}

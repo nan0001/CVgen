@@ -3,14 +3,30 @@
 
 :host {
   @include m.host-flex;
+  position: relative;
+  overflow: hidden;
 }
 
 .auth-card{
   width: 40%;
+
+  @include m.small{
+    width: 60%;
+  }
+
+  @include m.mobile-vertical{
+    width: 80%;
+  }
+
+  @include m.mobile-horizontal{
+    width: 50%;
+  }
 }
 
 .error-msg{
+  margin: 0;
   color: var(--red-500);
+  font-size: 1rem;
 }
 
 .switchers{
@@ -18,3 +34,38 @@
   right: v.$padding-horizontal;
   top: v.$padding-vertical;
 }
+
+.img{
+  position: absolute;
+  z-index: 1;
+  right: -2%;
+  bottom: -10%;
+
+  @include m.mobile-vertical{
+    bottom: -2%;
+  }
+}
+
+::ng-deep{
+  .png{
+    width: 400px;
+
+    @include m.medium{
+      width: 300px;
+    }
+
+    @include m.small{
+      width: 200px;
+    }
+
+    @include m.mobile{
+      width: 150px;
+    }
+
+    @include m.mobile-vertical-l{
+      width: 200px;
+    }
+  }
+}
+
+

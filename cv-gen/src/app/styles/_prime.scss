@@ -1,3 +1,9 @@
+@use './mixins' as m;
+
+.p-component{
+  font-family: inherit;
+}
+
 .p-input-icon-right{
   position: relative;
 
@@ -20,19 +26,22 @@
 
 .p-button{
   cursor: pointer;
+  padding: 0.55rem 1.25rem;
 }
 
 app-theme-switch,
 app-lang-switch,
 app-employee-table,
 app-projects-table,
-app-login {
+app-login,
+app-navigation,
+app-header {
   .p-button{
     display: flex;
     padding: var(--inline-spacing);
     background-color: var(--surface-0);
     border-radius: calc(var(--border-radius) * 4);
-    width: 35px;
+    width: 2rem;
     overflow: hidden;
     cursor: pointer;
 
@@ -49,27 +58,70 @@ app-login {
     }
 
     &.p-button-icon-only{
-      width: 35px;
+      width: 2.1rem;
+      height: 2.1rem;
       padding: var(--inline-spacing);
     }
   }
 }
 
 app-employee-table,
-app-projects-table {
+app-projects-table,
+app-cv-projects {
   .p-button.p-button-text:enabled:hover{
     background: rgba(0, 0, 0, 0.1);
     color: var(--primary-color);
   }
+
+  .p-datatable .p-datatable-tbody > tr > td,
+  .p-datatable .p-datatable-thead > tr > th {
+    @include m.small{
+      padding: 0.5rem 0.5rem;
+    }
+
+    @include m.mobile-vertical{
+      max-width: 3.8rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+    }
+  }
+
+  .p-datatable .p-datatable-tbody > tr{
+    background: transparent;
+  }
+
+  .p-paginator {
+    background: none;
+    border: none;
+
+    .p-paginator-pages .p-paginator-page{
+      border-radius: 50%;
+
+      @include m.small{
+        min-width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
 }
 
-.p-card .p-card-content{
-  padding: var(--content-padding);
+.p-card {
+  position: relative;
+  z-index: 2;
+
+  &.p-card-content{
+    padding: var(--content-padding);
+  }
 }
 
 app-auth{
   .p-card .p-card-content{
     padding: var(--content-padding) var(--content-padding) 0;
+
+    @include m.small{
+      padding: 0.75rem 0.75rem 0;
+    }
   }
 }
 
@@ -101,6 +153,11 @@ app-crumbs{
 app-employee-details{
   .p-dialog-header{
     border-radius: var(--border-radius);
+    padding: .5rem .5rem 0 !important;
+  }
+
+  .p-dialog-content{
+    padding: 0 1rem 1rem !important;
   }
 
   .p-dialog-title{
@@ -108,12 +165,14 @@ app-employee-details{
     text-align: center;
   }
 
-  .p-dialog-content{
-    padding: 0 !important;
-  }
-
   .p-tabview .p-tabview-panels{
     padding: var(--content-padding) 0;
+    background: transparent;
+  }
+
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link,
+  .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background: transparent;
   }
 }
 
@@ -168,6 +227,97 @@ app-cv-list{
   padding: 0.35rem var(--content-padding) !important;
 }
 
-.p-listbox .p-listbox-list .p-listbox-item{
-  padding: 0;
+.p-listbox {
+  .p-listbox-list .p-listbox-item {
+    padding: 0;
+  }
+}
+
+.p-menu{
+  width: fit-content;
+}
+
+app-entities{
+  .p-carousel{
+    & > *{
+      box-sizing: border-box;
+    }
+  }
+
+  .p-carousel-items-container {
+    height: 10rem;
+    min-width: 9rem;
+  }
+
+  .p-carousel-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .p-carousel .p-carousel-content .p-carousel-prev, .p-carousel .p-carousel-content .p-carousel-next{
+    @include m.mobile{
+      margin: 0;
+    }
+  }
+
+  .p-button{
+    @include m.mobile{
+      padding: 0.55rem;
+    }
+  }
+}
+
+.p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link{
+  background: var(--surface-c);
+}
+
+p-menu{
+  z-index: 1001;
+}
+
+.p-component-overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.p-listbox{
+  background-color: transparent;
+}
+
+.p-autocomplete-dd .p-autocomplete-input, .p-autocomplete-dd .p-autocomplete-multiple-container{
+  flex-grow: 1;
+}
+
+.p-autocomplete{
+  width: 100%;
+}
+
+.export{
+  .p-fieldset {
+    position: relative;
+
+    .p-fieldset-legend{
+      font-family: 'OpenSans-Bold';
+      padding: 0.4rem 0.75rem;
+      color: inherit;
+      background: var(--surface-a);
+      font-size: 0.8rem;
+      position: absolute;
+      top: -10%;
+      min-width: fit-content;
+      box-sizing: border-box;
+    }
+
+    .p-fieldset-content {
+      padding: 0.25rem;
+    }
+  }
+
+  .p-fieldset-legend-text{
+    font-family: 'OpenSans-Bold';
+  }
 }

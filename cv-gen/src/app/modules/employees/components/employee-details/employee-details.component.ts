@@ -10,7 +10,10 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { EmployeeActions } from '../../store/actions/employee.actions';
-import { selectEmployeeById } from '../../store/selectors/employee.selectors';
+import {
+  selectEmployeeById,
+  selectEmployeeLoading,
+} from '../../store/selectors/employee.selectors';
 
 @Component({
   selector: 'app-employee-details',
@@ -23,6 +26,7 @@ export class EmployeeDetailsComponent implements OnInit {
 
   public employee$!: Observable<EmployeeInterface | null>;
   public showSaveMessage = false;
+  public loading$ = this.store.select(selectEmployeeLoading);
 
   constructor(
     private cdr: ChangeDetectorRef,

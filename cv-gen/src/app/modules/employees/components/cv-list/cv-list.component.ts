@@ -15,6 +15,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { nameExistsValidator } from '../../../core/utils/name-exists.async-validator';
 import { CvActions } from '../../store/actions/cv.actions';
+import { ResizeService } from '../../../core/services/resize.service';
 
 @Component({
   selector: 'app-cv-list',
@@ -30,10 +31,14 @@ export class CvListComponent implements OnInit {
   public cvsObservable$!: Observable<CvInterface[]>;
   public cvsArray: CvInterface[] = [];
   public newCvNameControl!: FormControl<string | null>;
+  public sidebarVisible = false;
+  public widowSizeMedium$ = this.resizeService.widowSizeMedium$;
+  public selectedCv: CvInterface | null = null;
 
   constructor(
     private store: Store,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private resizeService: ResizeService
   ) {}
 
   public ngOnInit(): void {
@@ -55,6 +60,7 @@ export class CvListComponent implements OnInit {
 
   public setPickedId(cvId: string, cvName: string): void {
     this.setCvId.emit({ id: cvId, name: cvName });
+    this.sidebarVisible = false;
   }
 
   public checkFormValidity(cd: ConfirmDialog): void {

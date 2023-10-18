@@ -1,17 +1,39 @@
+@use '../../../../styles/mixins' as m;
+
 :host {
   display: flex;
   height: 100%;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 1rem;
-}
 
-.list-container{
-  border: 1px solid var(--surface-d);
-  border-radius: var(--border-radius);
-}
+  @include m.mobile{
+    width: 100%;
 
-.list{
-  height: 80%;
-  overflow: auto;
+    p-listbox {
+      width: 100%;
+    }
+  }
+
+  & ::ng-deep{
+    .p-listbox{
+      .p-listbox-list .p-listbox-item.p-highlight{
+        color: inherit;
+        background: none;
+      }
+
+      .p-listbox-list .p-listbox-item:focus {
+        box-shadow: none;
+      }
+    }
+
+    .p-listbox-item{
+      cursor: default;
+    }
+
+    .p-listbox:not(.p-disabled) .p-listbox-item:not(.p-highlight):not(.p-disabled):hover{
+      color: inherit;
+      background: none;
+    }
+  }
 }

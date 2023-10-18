@@ -1,3 +1,5 @@
+@use '../../../../styles/mixins' as m;
+
 :host{
   display: flex;
   flex-grow: 1;
@@ -6,4 +8,44 @@
   justify-content: center;
   width: 100%;
   gap: 3rem;
+
+  @include m.mobile-horizontal{
+    gap: 1rem;
+  }
+}
+
+.wrapper{
+  @include m.small{
+    flex-direction: column-reverse;
+  }
+
+  @include m.mobile-horizontal{
+    flex-direction: row;
+  }
+}
+
+::ng-deep{
+  .png-404{
+    width: 400px;
+
+    @include m.large{
+      width: 300px;
+    }
+
+    @include m.medium{
+      width: 250px;
+    }
+
+    @include m.small{
+      width: 200px;
+    }
+
+    @include m.mobile{
+      width: 150px;
+    }
+
+    @include m.mobile-horizontal{
+      width: 150px;
+    }
+  }
 }

@@ -1,15 +1,47 @@
+@use './app/styles/mixins' as m;
+@use './app/styles/variables' as v;
 @import 'primeicons/primeicons.css';
 @import 'primeflex/primeflex.scss';
 @import './app/styles/prime.scss';
 
+html{
+  font-size: 18px;
+
+  @include m.large{
+    font-size: 16px;
+  }
+
+  @include m.small{
+    font-size: 14px;
+  }
+
+  @include m.mobile{
+    font-size: 12px;
+  }
+
+  @include m.mobile-vertical{
+    font-size: 16px;
+  }
+
+  @include m.mobile-vertical-l{
+    font-size: 20px;
+  }
+
+  @include m.mobile-horizontal-l{
+    font-size: 14px;
+  }
+}
+
 html,
 body {
-  height: 100%;
+  height: 100vh;
+  width: 100vw;
   margin: 0;
+  overflow: hidden;
 }
 
 body {
-  font-family: var(--font-family);
+  font-family: v.$font;
   color: var(--text-color);
 }
 
@@ -30,4 +62,31 @@ ul{
 
 li{
   list-style: none;
+}
+
+h1{
+  font-size: 2rem;
+  margin-block-start: 0.67rem;
+  margin-block-end: 0.67rem;
+}
+
+h2{
+  font-size: 1.5rem;
+  margin-block-start: 0.83rem;
+  margin-block-end: 0.83rem;
+}
+
+h3{
+  font-size: 1.17rem;
+  margin-block-start: 1rem;
+  margin-block-end: 1rem;
+}
+
+p{
+  margin-block-start: 0.75rem;
+  margin-block-end: 0.75rem;
+}
+
+:focus-visible{
+  outline: none;
 }

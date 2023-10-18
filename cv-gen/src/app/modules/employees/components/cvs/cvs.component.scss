@@ -8,3 +8,9 @@
   align-items: flex-start;
   gap: 1rem;
 }
+
+.wrapper{
+  @include m.medium{
+    flex-direction: column;
+  }
+}

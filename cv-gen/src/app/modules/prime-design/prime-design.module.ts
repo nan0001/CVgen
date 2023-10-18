@@ -17,6 +17,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ListboxModule } from 'primeng/listbox';
 import { ChipModule } from 'primeng/chip';
 import { ImageModule } from 'primeng/image';
+import { MenuModule } from 'primeng/menu';
+import { AvatarModule } from 'primeng/avatar';
+import { CarouselModule } from 'primeng/carousel';
+import { ToastModule } from 'primeng/toast';
+import { SidebarModule } from 'primeng/sidebar';
+import { FieldsetModule } from 'primeng/fieldset';
 
 @NgModule({
   declarations: [],
@@ -39,6 +45,12 @@ import { ImageModule } from 'primeng/image';
     ListboxModule,
     ChipModule,
     ImageModule,
+    MenuModule,
+    AvatarModule,
+    CarouselModule,
+    ToastModule,
+    SidebarModule,
+    FieldsetModule,
   ],
 })
 export class PrimeDesignModule {}

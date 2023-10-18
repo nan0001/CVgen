@@ -8,4 +8,13 @@
   align-items: flex-start;
   padding: var(--content-padding) 0;
   gap: 1rem;
+
+  @include m.mobile{
+    flex-direction: column-reverse;
+    gap: 2rem;
+
+    .form{
+      width: 100%;
+    }
+  }
 }

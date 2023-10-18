@@ -1,16 +1,18 @@
-<div class="list-container flex flex-column gap-3 p-3 h-full">
-  <ng-container *ngIf="itemsList$ | async as items">
-    <p-listbox [options]="items" [filter]="true">
-      <ng-template let-item pTemplate="item">
-        <div
-          class="flex justify-content-between align-items-center w-full px-3">
-          <span class="line-height-1">{{ item }}</span>
-          <p-button
-            icon="pi pi-trash"
-            styleClass="p-button-text p-button-rounded"
-            (onClick)="removeEntity(item)"></p-button>
-        </div>
-      </ng-template>
-    </p-listbox>
-  </ng-container>
-</div>
+<ng-container *ngIf="itemsList$ | async as items">
+  <p-listbox
+    [options]="items"
+    [filter]="true"
+    [readonly]="true"
+    [emptyFilterMessage]="'NOT_FOUND.noResult' | translate"
+    [emptyMessage]="'NOT_FOUND.noResult' | translate">
+    <ng-template let-item pTemplate="item">
+      <div class="flex justify-content-between align-items-center w-full px-3">
+        <span class="line-height-1">{{ item }}</span>
+        <p-button
+          icon="pi pi-trash"
+          styleClass="p-button-text p-button-rounded"
+          (onClick)="removeEntity(item)"></p-button>
+      </div>
+    </ng-template>
+  </p-listbox>
+</ng-container>
