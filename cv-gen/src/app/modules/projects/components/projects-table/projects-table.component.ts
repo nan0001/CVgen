@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectProjectsCollection } from '../../../core/store/selectors/projects.selectors';
+import { selectProjectsCollection, selectProjectsLoading } from '../../../core/store/selectors/projects.selectors';
 import { ProjectsActions } from '../../../core/store/actions/projects.actions';
 import { LanguageService } from '../../../core/services/language.service';
 
@@ -14,6 +14,7 @@ import { LanguageService } from '../../../core/services/language.service';
 export class ProjectsTableComponent {
   public projects$ = this.store.select(selectProjectsCollection);
   public currentLang$ = this.langService.currentLang$;
+  public loading$ = this.store.select(selectProjectsLoading);
 
   constructor(
     private router: Router,

@@ -1,34 +1,40 @@
-<p-table
-  [value]="(employees$ | async) || []"
-  [tableStyle]="{ 'min-width': '10rem', width: '100%' }"
-  [paginator]="true"
-  [rows]="10">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>{{ 'INFO.firstName' | translate }}</th>
-      <th>{{ 'INFO.lastName' | translate }}</th>
-      <th>{{ 'INFO.email' | translate }}</th>
-      <th></th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-employee>
-    <tr
-      class="table-row"
-      (click)="
-        navigateToInfo(
-          employee.id,
-          employee.firstName + ' ' + employee.lastName
-        )
-      ">
-      <td>{{ employee.firstName }}</td>
-      <td>{{ employee.lastName }}</td>
-      <td>{{ employee.email }}</td>
-      <td>
-        <p-button
-          icon="pi pi-trash"
-          styleClass="p-button-text"
-          (onClick)="removeEmployee($event, employee.id)"></p-button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+<ng-container *ngIf="(loading$ | async) === false; else spinner">
+  <p-table
+    [value]="(employees$ | async) || []"
+    [tableStyle]="{ 'min-width': '10rem', width: '100%' }"
+    [paginator]="true"
+    [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>{{ 'INFO.firstName' | translate }}</th>
+        <th>{{ 'INFO.lastName' | translate }}</th>
+        <th>{{ 'INFO.email' | translate }}</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-employee>
+      <tr
+        class="table-row"
+        (click)="
+          navigateToInfo(
+            employee.id,
+            employee.firstName + ' ' + employee.lastName
+          )
+        ">
+        <td>{{ employee.firstName }}</td>
+        <td>{{ employee.lastName }}</td>
+        <td>{{ employee.email }}</td>
+        <td>
+          <p-button
+            icon="pi pi-trash"
+            styleClass="p-button-text"
+            (onClick)="removeEmployee($event, employee.id)"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-container>
+
+<ng-template #spinner>
+  <app-spinner></app-spinner>
+</ng-template>

@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectEmployeeCollection } from '../../store/selectors/employee.selectors';
+import {
+  selectEmployeeCollection,
+  selectEmployeeLoading,
+} from '../../store/selectors/employee.selectors';
 import { EmployeeActions } from '../../store/actions/employee.actions';
 
 @Component({
@@ -12,6 +15,7 @@ import { EmployeeActions } from '../../store/actions/employee.actions';
 })
 export class EmployeeTableComponent {
   public employees$ = this.store.select(selectEmployeeCollection);
+  public loading$ = this.store.select(selectEmployeeLoading);
 
   constructor(
     private router: Router,
