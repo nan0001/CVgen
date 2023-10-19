@@ -108,7 +108,11 @@ export class ProjectEffects {
           const add$ = this.projectsService.addProject(action.newValue);
           const projectAction$ = add$.pipe(
             map(id => {
-              this.router.navigate(['projects', id]);
+              this.router.navigate(['projects', id], {
+                state: {
+                  name: action.newValue.name,
+                },
+              });
               return ProjectsActions.loadProjects({ update: true });
             }),
             catchError((errorResponse: FirestoreError) => {
