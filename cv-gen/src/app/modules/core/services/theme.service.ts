@@ -13,6 +13,7 @@ export class ThemeService {
   private currentTheme: THEMES = this.storedTheme
     ? (this.storedTheme as THEMES)
     : THEMES.Light;
+
   public currentTheme$ = new BehaviorSubject<THEMES>(this.currentTheme);
 
   constructor(

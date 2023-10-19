@@ -31,6 +31,7 @@ export class EntitiesService {
         return null;
       })
     );
+
     return entity$;
   }
 

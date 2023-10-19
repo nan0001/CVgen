@@ -10,6 +10,7 @@ import { LocalStorageService } from './local-storage.service';
 export class LanguageService {
   private storageKey = 'lang';
   private storedLang = this.localStorageService.getItem(this.storageKey);
+
   public currentLang = this.storedLang ? this.storedLang : LANGUAGE.En;
   public currentLang$ = new BehaviorSubject(this.currentLang);
 

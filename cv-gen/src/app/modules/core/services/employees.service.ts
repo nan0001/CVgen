@@ -39,6 +39,7 @@ export class EmployeesService {
         return null;
       })
     );
+
     return employee$;
   }
 
@@ -47,6 +48,7 @@ export class EmployeesService {
   ): Observable<string> {
     const docRef = addDoc(this.employeesRef, employee);
     const id$ = from(docRef).pipe(map(val => val.id));
+
     return id$;
   }
 

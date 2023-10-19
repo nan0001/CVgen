@@ -1,8 +1,4 @@
 {
-  "AUTH":{
-    "cancel": "Cancel",
-    "confirm":"Confirm"
-  },
   "ERRORS":{
     "required": "Enter your {{name}}.",
     "email": "{{name}} should be an email.",
@@ -88,7 +84,8 @@
     "back": "Back to list",
     "archive": "Archive",
     "newProject": "New project",
-    "addEmpty": "Add empty project"
+    "addEmpty": "Add empty project",
+    "confirm":"Confirm"
   },
   "ENTITIES":{
     "title": "Entities",

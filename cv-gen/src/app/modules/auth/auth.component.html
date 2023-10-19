@@ -32,17 +32,18 @@
             placeholder="********"></p-password>
         </app-labelled-input>
       </div>
+      <!-- For firebase errors like invalid data, etc. -->
       <p class="error-msg" *ngIf="loginError$ | async as error">
         {{ 'FIREBASE_ERRORS.' + error | translate }}
       </p>
     </div>
     <div class="btn-container flex justify-content-around gap-2">
       <p-button
-        [label]="'AUTH.confirm' | translate"
+        [label]="'BUTTONS.confirm' | translate"
         styleClass="p-button-raised"
         type="submit"></p-button>
       <p-button
-        [label]="'AUTH.cancel' | translate"
+        [label]="'BUTTONS.cancel' | translate"
         styleClass="p-button-raised p-button-text"
         (onClick)="onCancel()"></p-button>
     </div>
@@ -53,6 +54,6 @@
   <p-image
     class="img"
     [src]="'assets/images/saturn-' + (currentTheme$ | async) + '.png'"
-    alt="File not found"
-    imageClass="png"></p-image>
+    alt="Planet"
+    imageClass="planet"></p-image>
 </div>

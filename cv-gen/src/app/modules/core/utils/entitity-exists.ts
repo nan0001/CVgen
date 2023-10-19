@@ -10,8 +10,10 @@ export function entityExistsValidator(
       map(val => {
         if (val) {
           const obj = val.find(elem => elem === control.value);
+
           return obj ? { entityExists: true } : null;
         }
+
         return null;
       })
     );

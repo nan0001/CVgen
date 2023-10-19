@@ -10,6 +10,7 @@ export function filterOptions(
       const filteredArray = val.filter(elem =>
         elem.toLowerCase().includes(query.toLowerCase())
       );
+
       optionsFiltered$.next(filteredArray);
       return;
     }
