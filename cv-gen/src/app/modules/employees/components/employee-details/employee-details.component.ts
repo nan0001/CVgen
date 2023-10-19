@@ -3,7 +3,6 @@ import {
   Component,
   OnInit,
   Input,
-  ChangeDetectorRef,
 } from '@angular/core';
 import { EmployeeInterface } from '../../../core/models/employee.model';
 import { Observable } from 'rxjs';
@@ -29,7 +28,6 @@ export class EmployeeDetailsComponent implements OnInit {
   public loading$ = this.store.select(selectEmployeeLoading);
 
   constructor(
-    private cdr: ChangeDetectorRef,
     private router: Router,
     private store: Store
   ) {}
@@ -41,14 +39,5 @@ export class EmployeeDetailsComponent implements OnInit {
 
   public navigateToList() {
     this.router.navigateByUrl('employees');
-  }
-
-  public showMessage(): void {
-    this.showSaveMessage = true;
-
-    setTimeout(() => {
-      this.showSaveMessage = false;
-      this.cdr.markForCheck();
-    }, 2000);
   }
 }

@@ -9,7 +9,7 @@
       styleClass="p-button-raised p-button-text"
       (onClick)="deleteProject()"></p-button>
     </div>
-    <app-project-form [project]="project" [id]="id" (sendFormData)="submitData($event)">
+    <app-project-form [project]="project" [id]="id" (sendFormData)="submitData($event, dialog)">
       <p-button
       [label]="'BUTTONS.back' | translate"
       styleClass="p-button-raised p-button-text"
@@ -28,4 +28,4 @@
   <app-spinner></app-spinner>
 </ng-template>
 
-<app-dialog [isShown]="showSaveMessage"></app-dialog>
+<app-dialog #dialog></app-dialog>

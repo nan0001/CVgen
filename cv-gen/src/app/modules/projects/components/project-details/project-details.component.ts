@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
-import { BehaviorSubject, Observable, take } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ProjectInterface } from '../../../core/models/project.model';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ProjectsActions } from '../../../core/store/actions/projects.actions';
 import { selectProjectById, selectProjectsLoading } from '../../../core/store/selectors/projects.selectors';
+import { DialogComponent } from '../../../shared/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-project-details',
@@ -31,7 +32,6 @@ export class ProjectDetailsComponent {
 
   constructor(
     private router: Router,
-    private cdr: ChangeDetectorRef,
     private store: Store
   ) {}
 
@@ -52,9 +52,9 @@ export class ProjectDetailsComponent {
     this.router.navigateByUrl('projects');
   }
 
-  public submitData(formValue: Omit<ProjectInterface, 'id'>): void {
+  public submitData(formValue: Omit<ProjectInterface, 'id'>, dialog: DialogComponent): void {
+    dialog.showMessage();
     this.sendProjectData(formValue);
-    this.showMessage();
   }
 
   private sendProjectData(formValue: Omit<ProjectInterface, 'id'>): void {
@@ -63,14 +63,5 @@ export class ProjectDetailsComponent {
     : ProjectsActions.updateProject({newValue: formValue, id: this.id})
 
     this.store.dispatch(actionToDispatch)
-  }
-
-  private showMessage(): void {
-    this.showSaveMessage = true;
-
-    setTimeout(() => {
-      this.showSaveMessage = false;
-      this.cdr.markForCheck();
-    }, 2000);
   }
 }

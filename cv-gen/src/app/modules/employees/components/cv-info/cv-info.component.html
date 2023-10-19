@@ -7,7 +7,7 @@
 <app-cv-template *ngIf="previewMode" [cv]="cv"></app-cv-template>
 <form
   [formGroup]="infoForm"
-  (submit)="onSubmit()"
+  (submit)="onSubmit(dialog)"
   class="flex flex-column gap-2 mt-3"
   *ngIf="!previewMode">
   <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2]">
@@ -84,6 +84,4 @@
   </div>
 </form>
 
-<app-dialog
-  [isShown]="showSaveMessage"
-  [textToTranslate]="message"></app-dialog>
+<app-dialog [textToTranslate]="message" #dialog></app-dialog>

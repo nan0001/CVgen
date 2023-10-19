@@ -7,7 +7,6 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
-  ChangeDetectorRef,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -23,6 +22,7 @@ import {
   selectSkills,
 } from '../../../core/store/selectors/entities.selectors';
 import { CvActions } from '../../store/actions/cv.actions';
+import { DialogComponent } from '../../../shared/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-cv-info',
@@ -48,8 +48,7 @@ export class CvInfoComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store,
-    private cdr: ChangeDetectorRef
+    private store: Store
   ) {}
 
   public ngOnInit(): void {
@@ -77,8 +76,10 @@ export class CvInfoComponent implements OnInit, OnChanges {
     return this.infoForm.controls['description'] as FormControl<string>;
   }
 
-  public onSubmit(): void {
+  public onSubmit(dialog: DialogComponent): void {
     if (this.infoForm.valid) {
+      dialog.showMessage();
+
       const formValue = this.infoForm.getRawValue();
       const newValue = {
         ...formValue,
@@ -108,8 +109,6 @@ export class CvInfoComponent implements OnInit, OnChanges {
           employeeId: this.cv.employeeId,
         });
       }
-
-      this.showMessage();
     }
 
     this.infoForm.markAllAsTouched();
@@ -123,15 +122,6 @@ export class CvInfoComponent implements OnInit, OnChanges {
       description: this.cv.description,
     });
     this.resetForm$.next(true);
-  }
-
-  public showMessage(): void {
-    this.showSaveMessage = true;
-
-    setTimeout(() => {
-      this.showSaveMessage = false;
-      this.cdr.markForCheck();
-    }, 2000);
   }
 
   private createControls(): void {

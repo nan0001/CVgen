@@ -25,6 +25,7 @@ import { Observable } from 'rxjs';
 export class CvProjectsComponent implements OnInit {
   @Input() openTable!: Observable<boolean>;
   @Output() pickProject = new EventEmitter<CvProjectInterface | null>();
+
   public projects$ = this.store.select(selectProjectsCollection);
 
   constructor(
