@@ -32,6 +32,10 @@ export class LevelInputComponent implements ControlValueAccessor, OnInit {
   @Input() options: string[] = [];
   @Output() optionRemoved = new EventEmitter();
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public onChange: any = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  public onTouch: any = () => {};
   public levels$ = this.langService.getMultipleTranslationStream([
     'LEVELS.beginner',
     'LEVELS.intermediate',
@@ -45,11 +49,6 @@ export class LevelInputComponent implements ControlValueAccessor, OnInit {
 
   private _selectedOption = '';
   private _selectedLevelIndex = 0;
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public onChange: any = () => {};
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public onTouch: any = () => {};
 
   constructor(private langService: LanguageService) {}
 

@@ -28,14 +28,13 @@ import { Subscription } from 'rxjs';
 export class DoubleDateComponent
   implements ControlValueAccessor, OnInit, OnDestroy
 {
-  private _startDate = new Date();
-  private _endDate = new Date();
-
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public onChange: any = () => {};
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public onTouch: any = () => {};
 
+  private _startDate = new Date();
+  private _endDate = new Date();
   private currentLang$ = this.langService.currentLang$;
   private subscription!: Subscription;
 

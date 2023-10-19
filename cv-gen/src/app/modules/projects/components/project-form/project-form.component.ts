@@ -21,10 +21,11 @@ export class ProjectFormComponent implements OnInit{
   @Output() sendFormData = new EventEmitter<Omit<ProjectInterface, "id">>;
 
   public infoForm!: FormGroup<ProjectFormInterface>;
-  private options$ = this.store.select(selectSkills);
   public optionsFiltered$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
   >([]);
+
+  private options$ = this.store.select(selectSkills);
 
   constructor(
     private fb: FormBuilder,

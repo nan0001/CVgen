@@ -33,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.langService.setInitLang();
     this.themeService.setInitTheme();
     this.store.dispatch(AuthActions.checkUser());
+
     this.subscription = this.langService
       .getTranslationObservable('PRIMENG')
       .subscribe(res => {
