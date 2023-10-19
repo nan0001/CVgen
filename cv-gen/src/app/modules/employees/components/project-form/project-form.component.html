@@ -3,7 +3,7 @@
     class="add-btn my-2"
     icon="pi pi-plus"
     styleClass="p-button-text"
-    (onClick)="openAddProjects$.next(true)"
+    (onClick)="projectsTable.openConfirm()"
     type="button"
     [label]="'INFO.addProject' | translate"></p-button>
 
@@ -114,5 +114,5 @@
 </ng-container>
 
 <app-cv-projects
-  [openTable]="openAddProjects$"
-  (pickProject)="addProject($event)"></app-cv-projects>
+  (pickProject)="addProject($event)"
+  #projectsTable></app-cv-projects>

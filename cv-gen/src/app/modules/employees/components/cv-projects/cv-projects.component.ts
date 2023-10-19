@@ -4,7 +4,6 @@ import {
   Output,
   EventEmitter,
   OnInit,
-  Input,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectProjectsCollection } from '../../../core/store/selectors/projects.selectors';
@@ -13,7 +12,6 @@ import { ProjectInterface } from '../../../core/models/project.model';
 import { ProjectsActions } from '../../../core/store/actions/projects.actions';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialog } from 'primeng/confirmdialog';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cv-projects',
@@ -23,7 +21,6 @@ import { Observable } from 'rxjs';
   providers: [ConfirmationService],
 })
 export class CvProjectsComponent implements OnInit {
-  @Input() openTable!: Observable<boolean>;
   @Output() pickProject = new EventEmitter<CvProjectInterface | null>();
 
   public projects$ = this.store.select(selectProjectsCollection);
@@ -35,11 +32,6 @@ export class CvProjectsComponent implements OnInit {
 
   public ngOnInit(): void {
     this.store.dispatch(ProjectsActions.loadProjects({ update: false }));
-    this.openTable.subscribe(val => {
-      if (val) {
-        this.openConfirm();
-      }
-    });
   }
 
   public projectPicked(project: ProjectInterface, cd: ConfirmDialog): void {

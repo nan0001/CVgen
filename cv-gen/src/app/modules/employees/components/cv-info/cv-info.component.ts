@@ -36,15 +36,14 @@ export class CvInfoComponent implements OnInit, OnChanges {
     Omit<CvInterface, 'id'>
   >();
 
-  public resetForm$ = new BehaviorSubject(false);
-  public markAsTouched$ = new BehaviorSubject(false);
   public infoForm!: FormGroup;
-  public showSaveMessage = false;
   public message = '';
   public previewMode = false;
   public previewDisabled = false;
   public techOptions$ = this.store.select(selectSkills);
   public langOptions$ = this.store.select(selectLangs);
+  public resetForm$ = new BehaviorSubject(false);
+  public markAsTouched$ = new BehaviorSubject(false);
 
   constructor(
     private fb: FormBuilder,

@@ -22,6 +22,7 @@ export class CvEffects {
           }),
           catchError((errorResponse: FirestoreError) => {
             console.warn(errorResponse);
+
             return of(CvActions.loadingFailure());
           })
         );
@@ -40,6 +41,7 @@ export class CvEffects {
 
         if (cv) {
           const delete$ = this.cvService.deleteCv(action.id);
+
           const cvAction$ = delete$.pipe(
             map(() => {
               return EmployeeActions.updateCv({
@@ -50,6 +52,7 @@ export class CvEffects {
             }),
             catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
+
               return of(CvActions.loadingFailure());
             })
           );
@@ -71,12 +74,14 @@ export class CvEffects {
 
         if (cv) {
           const update$ = this.cvService.updateCv(action.data, action.id);
+
           const cvAction$ = update$.pipe(
             map(() => {
               return CvActions.loadCvs();
             }),
             catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
+
               return of(CvActions.loadingFailure());
             })
           );
@@ -98,6 +103,7 @@ export class CvEffects {
 
         if (!cv) {
           const add$ = this.cvService.addCv(action.newValue);
+
           const cvAction$ = add$.pipe(
             map(id => {
               return EmployeeActions.updateCv({
@@ -108,6 +114,7 @@ export class CvEffects {
             }),
             catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
+
               return of(CvActions.loadingFailure());
             })
           );

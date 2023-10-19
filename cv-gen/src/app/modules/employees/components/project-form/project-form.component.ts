@@ -46,7 +46,6 @@ export class ProjectFormComponent implements OnInit, OnChanges, OnDestroy {
   public respOptionsFiltered$: BehaviorSubject<string[]> = new BehaviorSubject<
     string[]
   >([]);
-  public openAddProjects$ = new BehaviorSubject(false);
   public projectsArray!: FormArray<FormGroup<CvProjectFormInterface>>;
 
   private techOptions$ = this.store.select(selectSkills);

@@ -37,7 +37,6 @@ export class CvTemplateComponent {
 
     doc.html(data, {
       callback(file) {
-        // file.save('file.pdf');
         window.open(file.output('bloburl'));
       },
       x: 0,
