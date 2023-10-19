@@ -29,12 +29,12 @@ import {
 } from '../../../core/store/selectors/entities.selectors';
 
 @Component({
-  selector: 'app-project-form',
-  templateUrl: './project-form.component.html',
-  styleUrls: ['./project-form.component.scss'],
+  selector: 'app-cv-project-form',
+  templateUrl: './cv-project-form.component.html',
+  styleUrls: ['./cv-project-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectFormComponent implements OnInit, OnChanges, OnDestroy {
+export class CvProjectFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() initProjects: CvProjectInterface[] = [];
   @Input({ required: true }) resetForm$!: Observable<boolean>;
   @Input({ required: true }) markAsTouched$!: Observable<boolean>;

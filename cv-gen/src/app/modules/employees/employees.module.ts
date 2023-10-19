@@ -23,7 +23,7 @@ import { CvProjectsComponent } from './components/cv-projects/cv-projects.compon
 import { CvTemplateComponent } from './components/cv-template/cv-template.component';
 import { SkillLevelComponent } from './components/skill-level/skill-level.component';
 import { SkillFormComponent } from './components/skill-form/skill-form.component';
-import { ProjectFormComponent } from './components/project-form/project-form.component';
+import { CvProjectFormComponent } from './components/cv-project-form/cv-project-form.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import { ProjectFormComponent } from './components/project-form/project-form.com
     CvTemplateComponent,
     SkillLevelComponent,
     SkillFormComponent,
-    ProjectFormComponent,
+    CvProjectFormComponent,
   ],
   imports: [
     CommonModule,

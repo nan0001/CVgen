@@ -10,8 +10,10 @@
   (submit)="onSubmit(dialog)"
   class="flex flex-column gap-2 mt-3"
   *ngIf="!previewMode">
-  <p-accordion [multiple]="true" [activeIndex]="[0, 1, 2]">
-    <p-accordionTab [header]="'EMPLOYEES.tabs.info.panelInfo' | translate">
+  <p-accordion [multiple]="true">
+    <p-accordionTab
+      [header]="'EMPLOYEES.tabs.info.panelInfo' | translate"
+      [selected]="true">
       <div class="inputs formgrid grid">
         <app-labelled-input
           controlName="firstName"
@@ -45,7 +47,8 @@
 
     <p-accordionTab
       [header]="'ENTITIES.skills' | translate"
-      contentStyleClass="flex flex-column gap-3 align-items-end">
+      contentStyleClass="flex flex-column gap-3 align-items-end"
+      [selected]="true">
       <app-skill-form
         arrayName="skills"
         [initValue]="cv.skills"
@@ -56,7 +59,8 @@
 
     <p-accordionTab
       [header]="'ENTITIES.langs' | translate"
-      contentStyleClass="flex flex-column gap-3 align-items-end">
+      contentStyleClass="flex flex-column gap-3 align-items-end"
+      [selected]="true">
       <app-skill-form
         arrayName="langs"
         [initValue]="cv.langs"
@@ -65,10 +69,10 @@
         [markAsTouched$]="markAsTouched$"></app-skill-form>
     </p-accordionTab>
 
-    <app-project-form
+    <app-cv-project-form
       [resetForm$]="resetForm$"
       [markAsTouched$]="markAsTouched$"
-      [initProjects]="cv.projects"></app-project-form>
+      [initProjects]="cv.projects"></app-cv-project-form>
   </p-accordion>
 
   <div class="btn-container flex justify-content-end gap-3">

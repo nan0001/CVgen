@@ -11,7 +11,8 @@
     <li *ngFor="let project of projectsArray.controls; let i = index">
       <p-accordionTab
         headerStyleClass="tab-header"
-        contentStyleClass="flex flex-column gap-4 align-items-end">
+        contentStyleClass="flex flex-column gap-4 align-items-end"
+        [selected]="true">
         <ng-template pTemplate="header">
           <div class="flex align-items-center justify-content-between w-full">
             <span class="vertical-align-middle">{{
