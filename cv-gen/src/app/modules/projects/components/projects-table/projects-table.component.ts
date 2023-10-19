@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectProjectsCollection } from '../../../core/store/selectors/projects.selectors';
 import { ProjectsActions } from '../../../core/store/actions/projects.actions';
+import { LanguageService } from '../../../core/services/language.service';
 
 @Component({
   selector: 'app-projects-table',
@@ -12,11 +13,13 @@ import { ProjectsActions } from '../../../core/store/actions/projects.actions';
 })
 export class ProjectsTableComponent {
   public projects$ = this.store.select(selectProjectsCollection);
+  public currentLang$ = this.langService.currentLang$;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private store: Store
+    private store: Store,
+    private langService: LanguageService,
   ) {}
 
   public navigateToInfo(id: string, name: string): void {
