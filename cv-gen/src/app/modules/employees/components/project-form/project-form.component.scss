@@ -1,0 +1,9 @@
+:host {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-btn{
+  align-self: flex-end;
+}

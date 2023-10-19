@@ -1,0 +1,118 @@
+<ng-container [formGroup]="parentForm">
+  <p-button
+    class="add-btn my-2"
+    icon="pi pi-plus"
+    styleClass="p-button-text"
+    (onClick)="openAddProjects$.next(true)"
+    type="button"
+    [label]="'INFO.addProject' | translate"></p-button>
+
+  <ul formArrayName="projects">
+    <li *ngFor="let project of projectsArray.controls; let i = index">
+      <p-accordionTab
+        headerStyleClass="tab-header"
+        contentStyleClass="flex flex-column gap-4 align-items-end">
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center justify-content-between w-full">
+            <span class="vertical-align-middle">{{
+              project.controls.name.value
+            }}</span>
+            <p-button
+              icon="pi pi-trash"
+              styleClass="p-button-text p-button-rounded"
+              (onClick)="deleteProject($event, i)"></p-button>
+          </div>
+        </ng-template>
+        <div
+          class="inputs formgrid grid"
+          [formGroup]="projectsArray.controls[i]">
+          <app-labelled-input
+            controlName="name"
+            class="field col-12 sm:col-4"
+            [errors]="project.controls.name.errors"
+            [showError]="
+              project.controls.name.invalid && project.controls.name.touched
+            ">
+            <input pInputText type="text" formControlName="name" />
+          </app-labelled-input>
+
+          <app-labelled-input
+            controlName="dates"
+            class="field col-12 sm:col-8"
+            [showLabel]="false"
+            [errors]="project.controls.dates.errors"
+            [showError]="
+              project.controls.dates.invalid && project.controls.dates.touched
+            "
+            [translationParams]="['INFO.startDate', 'INFO.endDate']">
+            <app-double-date
+              [startDate]="project.controls.dates.value.start"
+              [endDate]="project.controls.dates.value.end"
+              formControlName="dates">
+            </app-double-date>
+          </app-labelled-input>
+
+          <app-labelled-input
+            controlName="techStack"
+            [errors]="project.controls.techStack.errors"
+            class="field col-12 sm:col-7"
+            [showError]="
+              project.controls.techStack.invalid &&
+              project.controls.techStack.touched
+            ">
+            <p-autoComplete
+              formControlName="techStack"
+              [suggestions]="(techOptionsFiltered$ | async) || []"
+              (completeMethod)="filterTechStack($event.query)"
+              [multiple]="true"
+              [dropdown]="true"></p-autoComplete>
+          </app-labelled-input>
+
+          <app-labelled-input
+            controlName="responsibilities"
+            [errors]="project.controls.responsibilities.errors"
+            class="field col-12 sm:col-7"
+            [showError]="
+              project.controls.responsibilities.invalid &&
+              project.controls.responsibilities.touched
+            ">
+            <p-autoComplete
+              formControlName="responsibilities"
+              [suggestions]="(respOptionsFiltered$ | async) || []"
+              (completeMethod)="filterResponsibilities($event.query)"
+              [multiple]="true"
+              [dropdown]="true"></p-autoComplete>
+          </app-labelled-input>
+
+          <app-labelled-input
+            controlName="domain"
+            class="field col-12 sm:col-7"
+            [errors]="project.controls.domain.errors"
+            [showError]="
+              project.controls.domain.invalid && project.controls.domain.touched
+            ">
+            <input pInputText type="text" formControlName="domain" />
+          </app-labelled-input>
+
+          <app-labelled-input
+            controlName="description"
+            class="field col-12"
+            [errors]="project.controls.description.errors"
+            [showError]="
+              project.controls.description.invalid &&
+              project.controls.description.touched
+            ">
+            <textarea
+              rows="5"
+              pInputTextarea
+              formControlName="description"></textarea>
+          </app-labelled-input>
+        </div>
+      </p-accordionTab>
+    </li>
+  </ul>
+</ng-container>
+
+<app-cv-projects
+  [openTable]="openAddProjects$"
+  (pickProject)="addProject($event)"></app-cv-projects>

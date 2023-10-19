@@ -22,6 +22,8 @@ import { EmployeeEffects } from './store/effects/employee.effects';
 import { CvProjectsComponent } from './components/cv-projects/cv-projects.component';
 import { CvTemplateComponent } from './components/cv-template/cv-template.component';
 import { SkillLevelComponent } from './components/skill-level/skill-level.component';
+import { SkillFormComponent } from './components/skill-form/skill-form.component';
+import { ProjectFormComponent } from './components/project-form/project-form.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { SkillLevelComponent } from './components/skill-level/skill-level.compon
     CvProjectsComponent,
     CvTemplateComponent,
     SkillLevelComponent,
+    SkillFormComponent,
+    ProjectFormComponent,
   ],
   imports: [
     CommonModule,
