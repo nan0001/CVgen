@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+// import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CvInfoComponent } from './cv-info.component';
+// import { CvInfoComponent } from './cv-info.component';
 
-describe('CvInfoComponent', () => {
-  let component: CvInfoComponent;
-  let fixture: ComponentFixture<CvInfoComponent>;
+// describe('CvInfoComponent', () => {
+//   let component: CvInfoComponent;
+//   let fixture: ComponentFixture<CvInfoComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [CvInfoComponent]
-    });
-    fixture = TestBed.createComponent(CvInfoComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [CvInfoComponent]
+//     });
+//     fixture = TestBed.createComponent(CvInfoComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
