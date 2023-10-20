@@ -23,6 +23,7 @@ export class EmployeeEffects {
             }),
             catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
+
               return of(EmployeeActions.loadingFailure());
             })
           );
@@ -44,6 +45,7 @@ export class EmployeeEffects {
 
         if (employee) {
           const delete$ = this.employeeService.deleteEmployee(action.id);
+
           const employeeAction$ = delete$.pipe(
             map(() => {
               return EmployeeActions.loadEmployees({ update: true });
@@ -74,12 +76,14 @@ export class EmployeeEffects {
             action.newValue,
             action.id
           );
+
           const employeeAction$ = update$.pipe(
             map(() => {
               return EmployeeActions.loadEmployees({ update: true });
             }),
             catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
+
               return of(EmployeeActions.loadingFailure());
             })
           );
@@ -108,12 +112,14 @@ export class EmployeeEffects {
             newCvArray,
             action.employeeId
           );
+
           const employeeAction$ = update$.pipe(
             map(() => {
               return EmployeeActions.loadEmployees({ update: true });
             }),
             catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
+
               return of(EmployeeActions.loadingFailure());
             })
           );

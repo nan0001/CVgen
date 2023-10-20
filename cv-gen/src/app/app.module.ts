@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { NgModule, isDevMode, LOCALE_ID } from '@angular/core';
 import {
   HttpClientModule,
   HttpClient,
@@ -25,9 +25,15 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { FirestoreInterceptor } from './modules/core/interceptors/firestore.interceptor';
 
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+import { LANGUAGE } from './modules/core/constants/language.constant';
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
+registerLocaleData(localeRu, LANGUAGE.Ru);
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     AppRoutingModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'en',
+      defaultLanguage: LANGUAGE.En,
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
@@ -56,6 +62,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: FirestoreInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: LANGUAGE.Ru },
   ],
   bootstrap: [AppComponent],
 })

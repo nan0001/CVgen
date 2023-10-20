@@ -26,6 +26,7 @@ export class CrumbsComponent implements OnInit, OnDestroy {
   public path$!: Observable<MenuItem[] | null>;
   public locationChange$ = new BehaviorSubject<string>('');
   public home = { icon: 'pi pi-home', routerLink: '/' };
+
   private unsubscribeLocation!: () => void;
 
   constructor(
@@ -63,7 +64,6 @@ export class CrumbsComponent implements OnInit, OnDestroy {
     const state = this.location.getState() as {
       [key: string]: string | number;
     };
-
     const name = state['name'] ? (state['name'] as string) : '';
     const pathArr = arr.map((val, ind) => {
       if (ind === arr.length - 1 && name) {

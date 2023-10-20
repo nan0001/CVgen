@@ -6,20 +6,9 @@ import {
   EventEmitter,
   OnInit,
 } from '@angular/core';
-import {
-  EmployeeFormInterface,
-  EmployeeInterface,
-} from '../../../core/models/employee.model';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { SkillsInterface } from '../../../core/models/skills.model';
-import { bothFieldsRequired } from '../../../core/utils/skill.validator';
-import { Observable } from 'rxjs';
+import { EmployeeInterface } from '../../../core/models/employee.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { EmployeeActions } from '../../store/actions/employee.actions';
 import {
@@ -37,7 +26,7 @@ export class EmployeeFormComponent implements OnInit {
   @Input() employee!: EmployeeInterface;
   @Output() sendFormData = new EventEmitter();
 
-  public infoForm!: FormGroup<EmployeeFormInterface>;
+  public infoForm!: FormGroup;
   public personalInfoControlNames = [
     'firstName',
     'lastName',
@@ -45,16 +34,10 @@ export class EmployeeFormComponent implements OnInit {
     'department',
     'line',
   ];
-
-  public skillsControl!: {
-    name: string;
-    control: FormArray<FormControl<SkillsInterface | null>>;
-    itemName: string;
-    options: Observable<string[] | null>;
-  }[];
-
-  private techOptions$ = this.store.select(selectSkills);
-  private langOptions$ = this.store.select(selectLangs);
+  public techOptions$ = this.store.select(selectSkills);
+  public langOptions$ = this.store.select(selectLangs);
+  public resetForm$ = new BehaviorSubject(false);
+  public markAsTouched$ = new BehaviorSubject(false);
 
   constructor(
     private fb: FormBuilder,
@@ -63,39 +46,6 @@ export class EmployeeFormComponent implements OnInit {
 
   public ngOnInit(): void {
     this.createControls();
-    this.skillsControl = [
-      {
-        name: 'skills',
-        control: this.skills,
-        itemName: 'skill',
-        options: this.techOptions$,
-      },
-      {
-        name: 'langs',
-        control: this.langs,
-        itemName: 'lang',
-        options: this.langOptions$,
-      },
-    ];
-  }
-
-  public get skills(): FormArray<FormControl<SkillsInterface | null>> {
-    return this.infoForm.controls.skills;
-  }
-
-  public get langs(): FormArray<FormControl<SkillsInterface | null>> {
-    return this.infoForm.controls.langs;
-  }
-
-  public onItemRemove(
-    index: number,
-    array: FormArray<FormControl<SkillsInterface | null>>
-  ): void {
-    array.removeAt(index);
-  }
-
-  public addItem(array: FormArray<FormControl<SkillsInterface | null>>): void {
-    array.push(this.getNewSkillControl(null));
   }
 
   public onSubmit(): void {
@@ -103,8 +53,6 @@ export class EmployeeFormComponent implements OnInit {
       const formValue = this.infoForm.getRawValue();
       const newValue = {
         ...formValue,
-        skills: formValue.skills.filter(val => val !== null),
-        langs: formValue.langs.filter(val => val !== null),
       } as Omit<EmployeeInterface, 'id' | 'cvsId'>;
 
       this.store.dispatch(
@@ -116,6 +64,7 @@ export class EmployeeFormComponent implements OnInit {
     }
 
     this.infoForm.markAllAsTouched();
+    this.markAsTouched$.next(true);
   }
 
   public onCancel(): void {
@@ -126,18 +75,7 @@ export class EmployeeFormComponent implements OnInit {
       department: this.employee.department,
       line: this.employee.line,
     });
-    this.resetArray(this.skills, this.employee.skills);
-    this.resetArray(this.langs, this.employee.langs);
-  }
-
-  private resetArray(
-    formArray: FormArray<FormControl<SkillsInterface | null>>,
-    initArray: SkillsInterface[]
-  ): void {
-    formArray.clear();
-    this.getInitialControlArray(initArray).forEach(control => {
-      formArray.push(control);
-    });
+    this.resetForm$.next(true);
   }
 
   private createControls(): void {
@@ -162,26 +100,6 @@ export class EmployeeFormComponent implements OnInit {
         this.employee.line,
         [Validators.required, Validators.minLength(2)],
       ],
-      skills: this.fb.nonNullable.array(
-        this.getInitialControlArray(this.employee.skills)
-      ),
-      langs: this.fb.nonNullable.array(
-        this.getInitialControlArray(this.employee.langs)
-      ),
-    });
-  }
-
-  private getNewSkillControl(
-    val: SkillsInterface | null
-  ): FormControl<SkillsInterface | null> {
-    return this.fb.control(val, [bothFieldsRequired()]);
-  }
-
-  private getInitialControlArray(
-    array: SkillsInterface[]
-  ): FormControl<SkillsInterface | null>[] {
-    return array.map(val => {
-      return this.getNewSkillControl(val);
     });
   }
 }

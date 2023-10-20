@@ -19,35 +19,25 @@
     </p-accordionTab>
 
     <p-accordionTab
-      *ngFor="let array of skillsControl"
-      [header]="'ENTITIES.' + array.name | translate"
+      [header]="'ENTITIES.skills' | translate"
       contentStyleClass="flex flex-column gap-3 align-items-end">
-      <ul
-        [formArrayName]="array.name"
-        class="flex flex-column gap-2 justify-content-center w-full">
-        <li *ngFor="let item of array.control.controls; let i = index">
-          <app-labelled-input
-            [controlName]="array.itemName"
-            [showLabel]="false"
-            class="w-full"
-            [errors]="item.errors || null"
-            [showError]="item.invalid && item.touched">
-            <app-level-input
-              [formControlName]="i"
-              [options]="(array.options | async) || []"
-              [selectedLevelIndex]="item.value?.level || 0"
-              [selectedOption]="item.value?.name || ''"
-              (optionRemoved)="
-                onItemRemove(i, array.control)
-              "></app-level-input>
-          </app-labelled-input>
-        </li>
-      </ul>
-      <p-button
-        icon="pi pi-plus"
-        styleClass="p-button-text"
-        (onClick)="addItem(array.control)"
-        [label]="'INFO.add' + array.itemName | translate"></p-button>
+      <app-skill-form
+        arrayName="skills"
+        [initValue]="employee.skills"
+        [options$]="techOptions$"
+        [resetForm$]="resetForm$"
+        [markAsTouched$]="markAsTouched$"></app-skill-form>
+    </p-accordionTab>
+
+    <p-accordionTab
+      [header]="'ENTITIES.langs' | translate"
+      contentStyleClass="flex flex-column gap-3 align-items-end">
+      <app-skill-form
+        arrayName="langs"
+        [initValue]="employee.langs"
+        [options$]="langOptions$"
+        [resetForm$]="resetForm$"
+        [markAsTouched$]="markAsTouched$"></app-skill-form>
     </p-accordionTab>
   </p-accordion>
   <div class="btn-container flex justify-content-end gap-3 mt-3">

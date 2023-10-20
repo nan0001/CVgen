@@ -11,6 +11,7 @@ export class AuthService {
   private auth = getAuth();
   private storageKey = 'user';
   private localUser = this.localStorageService.getItem(this.storageKey);
+
   public user$ = new BehaviorSubject<string | null>(this.localUser);
 
   constructor(private localStorageService: LocalStorageService) {}

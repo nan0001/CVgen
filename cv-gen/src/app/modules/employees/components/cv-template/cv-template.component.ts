@@ -21,9 +21,12 @@ export class CvTemplateComponent {
     const backgroundColor = window.getComputedStyle(
       document.querySelector('.export') as Element
     ).backgroundColor;
-    const pagesNum = Math.ceil((data.clientHeight * 0.75) / height);
-    const documentHeightInPx = pagesNum * height * 1.332;
-    const documentWidthInPx = width * 1.332;
+    const pxToPtRatio = 1.332;
+    const pagesNum = Math.ceil(
+      (data.clientHeight * (1 / pxToPtRatio)) / height
+    );
+    const documentHeightInPx = pagesNum * height * pxToPtRatio;
+    const documentWidthInPx = width * pxToPtRatio;
 
     doc.addFileToVFS('OpenSans-Regular-normal.ttf', openSansRegular);
     doc.addFileToVFS('OpenSans-SemiBold-normal.ttf', openSansSemibold);
@@ -34,7 +37,6 @@ export class CvTemplateComponent {
 
     doc.html(data, {
       callback(file) {
-        // file.save('file.pdf');
         window.open(file.output('bloburl'));
       },
       x: 0,

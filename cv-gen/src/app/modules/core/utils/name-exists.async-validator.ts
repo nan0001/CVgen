@@ -13,8 +13,10 @@ export function nameExistsValidator(
           const obj = val.find(
             (elem: HasNameInterface) => elem.name === control.value
           );
+
           return obj ? { nameExists: true } : null;
         }
+
         return null;
       })
     );

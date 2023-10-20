@@ -1,0 +1,26 @@
+<ng-container [formGroup]="parentForm">
+  <ul
+    [formArrayName]="arrayName"
+    class="flex flex-column gap-2 justify-content-center w-full formgrid grid">
+    <li *ngFor="let item of controlArray.controls; let i = index">
+      <app-labelled-input
+        [controlName]="itemName"
+        [showLabel]="false"
+        class="w-full"
+        [errors]="item.errors || null"
+        [showError]="item.invalid && item.touched">
+        <app-level-input
+          [formControl]="controlArray.controls[i]"
+          [options]="(options$ | async) || []"
+          [selectedLevelIndex]="item.value?.level || 0"
+          [selectedOption]="item.value?.name || ''"
+          (optionRemoved)="controlArray.removeAt(i)"></app-level-input>
+      </app-labelled-input>
+    </li>
+  </ul>
+  <p-button
+    icon="pi pi-plus"
+    styleClass="p-button-text"
+    (onClick)="addItem()"
+    [label]="'INFO.add' + itemName | translate"></p-button>
+</ng-container>

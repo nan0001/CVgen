@@ -41,5 +41,6 @@ export const selectNewlyAddedCv = (props: { newCv: Omit<CvInterface, 'id'> }) =>
         val.employeeId === props.newCv.employeeId &&
         val.name === props.newCv.name
     );
+
     return cvWithId ? cvWithId : null;
   });

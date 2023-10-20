@@ -12,8 +12,6 @@ export class ErrorMsgPipe implements PipeTransform {
 
   transform(
     errors: ValidationErrors | null,
-    // name: string,
-    // secondName?: string,
     params: string[]
   ): Observable<string> {
     let message = of('Ok');

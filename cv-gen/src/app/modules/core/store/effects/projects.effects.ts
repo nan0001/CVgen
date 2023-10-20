@@ -27,12 +27,14 @@ export class ProjectEffects {
             }),
             catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
+
               return of(ProjectsActions.loadingFailure());
             })
           );
 
           return projectsAction$;
         }
+
         return of(ProjectsActions.successLoading({ data: projects }));
       })
     );
@@ -53,6 +55,7 @@ export class ProjectEffects {
             }),
             catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
+
               return of(ProjectsActions.loadingFailure());
             })
           );
@@ -83,6 +86,7 @@ export class ProjectEffects {
             }),
             catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
+
               return of(ProjectsActions.loadingFailure());
             })
           );
@@ -108,11 +112,17 @@ export class ProjectEffects {
           const add$ = this.projectsService.addProject(action.newValue);
           const projectAction$ = add$.pipe(
             map(id => {
-              this.router.navigate(['projects', id]);
+              this.router.navigate(['projects', id], {
+                state: {
+                  name: action.newValue.name,
+                },
+              });
+
               return ProjectsActions.loadProjects({ update: true });
             }),
             catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
+
               return of(ProjectsActions.loadingFailure());
             })
           );

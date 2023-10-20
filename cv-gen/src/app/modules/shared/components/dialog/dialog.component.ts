@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+} from '@angular/core';
 
 @Component({
   selector: 'app-dialog',
@@ -7,6 +12,19 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogComponent {
-  @Input() isShown = false;
   @Input() textToTranslate = 'INFO.infoSaved';
+
+  public isShown = false;
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  public showMessage(): void {
+    this.isShown = true;
+    this.cdr.markForCheck();
+
+    setTimeout(() => {
+      this.isShown = false;
+      this.cdr.markForCheck();
+    }, 2000);
+  }
 }

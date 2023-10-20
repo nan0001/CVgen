@@ -61,6 +61,7 @@ export class ProjectsService {
         return null;
       })
     );
+
     return project$;
   }
 
@@ -79,6 +80,7 @@ export class ProjectsService {
   public addProject(project: Omit<ProjectInterface, 'id'>): Observable<string> {
     const docRef = addDoc(this.projectsRef, project);
     const id$ = from(docRef).pipe(map(val => val.id));
+
     return id$;
   }
 

@@ -22,12 +22,14 @@ export class AuthEffects {
               'user',
               userCreds.user.email as string
             );
+
             return AuthActions.userStatusChange({
               email: userCreds.user.email,
             });
           }),
           catchError((error: AuthError) => {
             console.warn(error);
+
             return of(AuthActions.authFail({ error: error.message }));
           })
         );
@@ -47,12 +49,14 @@ export class AuthEffects {
           map(() => {
             this.router.navigate(['auth']);
             this.localStorageService.removeItem('user');
+
             return AuthActions.userStatusChange({
               email: null,
             });
           }),
           catchError((error: AuthError) => {
             console.warn(error);
+
             return of(AuthActions.authFail({ error: error.message }));
           })
         );

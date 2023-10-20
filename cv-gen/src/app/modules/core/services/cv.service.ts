@@ -53,6 +53,7 @@ export class CvService {
     const cv$ = from(promiseSnapshot).pipe(
       map(docSnap => {
         const data = docSnap.data() as CvInterface | undefined;
+
         if (data) {
           return {
             ...data,
@@ -62,12 +63,14 @@ export class CvService {
         return null;
       })
     );
+
     return cv$;
   }
 
   public addCv(newCv: Omit<CvInterface, 'id'>): Observable<string> {
     const docRef = addDoc(this.cvsRef, newCv);
     const id$ = from(docRef).pipe(map(val => val.id));
+
     return id$;
   }
 

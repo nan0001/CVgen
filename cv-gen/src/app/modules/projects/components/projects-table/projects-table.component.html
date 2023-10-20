@@ -1,4 +1,5 @@
-<p-table
+<ng-container *ngIf="(loading$ | async) === false ; else spinner">
+  <p-table
   [value]="(projects$ | async) || []"
   [tableStyle]="{ 'min-width': '10rem', width: '100%' }"
   [paginator]="true"
@@ -14,8 +15,8 @@
   <ng-template pTemplate="body" let-project>
     <tr class="table-row" (click)="navigateToInfo(project.id, project.name)">
       <td>{{ project.name }}</td>
-      <td>{{ project.start | date}}</td>
-      <td>{{ project.end | date}}</td>
+      <td>{{ project.start | date : undefined : undefined : (currentLang$ | async) || 'en'}}</td>
+      <td>{{ project.end | date  : undefined : undefined : (currentLang$ | async) || 'en'}}</td>
       <td>
         <p-button
           icon="pi pi-trash"
@@ -25,3 +26,8 @@
     </tr>
   </ng-template>
 </p-table>
+</ng-container>
+
+<ng-template #spinner>
+  <app-spinner></app-spinner>
+</ng-template>

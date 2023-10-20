@@ -16,7 +16,6 @@ export class EntitiesEffects {
         const langs$ = this.entitiesService.getEntityList('langs');
         const skills$ = this.entitiesService.getEntityList('skills');
         const resps$ = this.entitiesService.getEntityList('responsibilities');
-
         const entitiesCollection$ = combineLatest([langs$, skills$, resps$]);
 
         const entitiesAction$ = entitiesCollection$.pipe(
@@ -26,10 +25,12 @@ export class EntitiesEffects {
               skills: response[1] ? response[1] : [],
               responsibilities: response[2] ? response[2] : [],
             };
+
             return EntitiesActions.successLoading({ ...data });
           }),
           catchError((errorResponse: FirestoreError) => {
             console.warn(errorResponse);
+
             return of(EntitiesActions.loadingFailure());
           })
         );
@@ -45,6 +46,7 @@ export class EntitiesEffects {
       concatLatestFrom(() => this.store.select(selectEntities)),
       switchMap(([action, entitiesState]) => {
         const list = entitiesState[action.list];
+
         if (list.includes(action.item)) {
           const deleteItem$ = this.entitiesService.deleteEntity(
             action.item,
@@ -57,6 +59,7 @@ export class EntitiesEffects {
             }),
             catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
+
               return of(EntitiesActions.loadingFailure());
             })
           );
@@ -75,6 +78,7 @@ export class EntitiesEffects {
       concatLatestFrom(() => this.store.select(selectEntities)),
       switchMap(([action, entitiesState]) => {
         const list = entitiesState[action.list];
+
         if (!list.includes(action.item)) {
           const addItem$ = this.entitiesService.addEntity(
             action.item,
@@ -87,6 +91,7 @@ export class EntitiesEffects {
             }),
             catchError((errorResponse: FirestoreError) => {
               console.warn(errorResponse);
+
               return of(EntitiesActions.loadingFailure());
             })
           );
