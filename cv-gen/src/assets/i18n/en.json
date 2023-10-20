@@ -10,10 +10,10 @@
     "hasSpecialChars": "{{name}} must contain at least one special character.",
     "bothRequired": "Fill in both {{name}} fields",
     "noConflictDates": "End date can't be less than start date",
-    "noStartDate": "Enter {{name}}",
-    "noEndDate": "Enter {{secondName}}",
+    "noStartDate": "Enter start date",
+    "noEndDate": "Enter and date",
     "nameExists": "Such name already exists",
-    "entityExists": "Such name already exists"
+    "entityExists": "Such entity already exists"
   },
   "NAV": {
     "employees": "Employees",
@@ -63,11 +63,6 @@
     "infoSaved": "Information has been saved",
     "newAdded": "New item added",
     "technologies": "Technologies"
-  },
-  "LANGS":{
-    "ru":  "Russian",
-    "en": "English",
-    "fr": "French"
   },
   "LEVELS":{
     "beginner": "Beginner",
