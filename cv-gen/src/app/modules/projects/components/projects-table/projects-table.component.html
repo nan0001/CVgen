@@ -13,7 +13,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-project>
-    <tr class="table-row" (click)="navigateToInfo(project.id, project.name)">
+    <tr class="table-row" (click)="navigateToInfo(project.id)">
       <td>{{ project.name }}</td>
       <td>{{ project.start | date : undefined : undefined : (currentLang$ | async) || 'en'}}</td>
       <td>{{ project.end | date  : undefined : undefined : (currentLang$ | async) || 'en'}}</td>

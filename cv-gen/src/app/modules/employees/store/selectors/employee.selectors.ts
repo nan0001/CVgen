@@ -33,3 +33,22 @@ export const selectEmployeeById = (props: { id: string }) =>
 
     return null;
   });
+
+export const selectEmployeeNameById = (props: { id: string }) =>
+  createSelector(
+    selectEmployeeById({ id: props.id }),
+    (employee: EmployeeInterface | null) => {
+      return employee ? employee.firstName + ' ' + employee.lastName : '';
+    }
+  );
+
+export const selectEmployeeCrumbById = (props: { id: string; link: string }) =>
+  createSelector(
+    selectEmployeeById({ id: props.id }),
+    (employee: EmployeeInterface | null) => {
+      return {
+        label: employee ? employee.firstName + ' ' + employee.lastName : '',
+        routerLink: props.link,
+      };
+    }
+  );

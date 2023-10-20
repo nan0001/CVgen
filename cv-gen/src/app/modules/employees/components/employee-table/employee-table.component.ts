@@ -23,12 +23,9 @@ export class EmployeeTableComponent {
     private store: Store
   ) {}
 
-  public navigateToInfo(id: string, name: string): void {
+  public navigateToInfo(id: string): void {
     this.router.navigate([id], {
       relativeTo: this.route,
-      state: {
-        name,
-      },
     });
   }
 

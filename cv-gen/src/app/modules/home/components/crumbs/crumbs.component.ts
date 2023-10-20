@@ -15,6 +15,9 @@ import {
   switchMap,
 } from 'rxjs';
 import { LanguageService } from '../../../core/services/language.service';
+import { Store } from '@ngrx/store';
+import { selectEmployeeCrumbById } from '../../../employees/store/selectors/employee.selectors';
+import { selectProjectCrumbById } from '../../../core/store/selectors/projects.selectors';
 
 @Component({
   selector: 'app-crumbs',
@@ -31,13 +34,14 @@ export class CrumbsComponent implements OnInit, OnDestroy {
 
   constructor(
     private location: Location,
-    private langService: LanguageService
+    private langService: LanguageService,
+    private store: Store
   ) {}
 
   public ngOnInit(): void {
     this.path$ = this.locationChange$.pipe(
       switchMap(() => {
-        return this.getPathArr();
+        return this.getCrumbsArr();
       })
     );
 
@@ -50,46 +54,68 @@ export class CrumbsComponent implements OnInit, OnDestroy {
     this.unsubscribeLocation();
   }
 
-  public getPathArr(): Observable<MenuItem[] | null> {
-    const arr = this.location.path().split('/').slice(1);
+  private getCrumbsArr(): Observable<MenuItem[] | null> {
+    const splittedLocationPath = this.location.path().split('/').slice(1);
 
-    if (arr.length === 0) {
-      return of(null);
+    if (splittedLocationPath.length === 0) {
+      return of(null); //hide crumbs on main page
     }
 
-    if (arr[0] === 'not-found') {
-      return of([]);
+    if (splittedLocationPath[0] === 'not-found') {
+      return of([]); //display only home icon on not-found page
     }
 
-    const state = this.location.getState() as {
-      [key: string]: string | number;
-    };
-    const name = state['name'] ? (state['name'] as string) : '';
-    const pathArr = arr.map((val, ind) => {
-      if (ind === arr.length - 1 && name) {
-        return of({
-          label: name,
-          routerLink: '/' + arr.slice(0, ind + 1).join('/'),
-        });
+    const crumbsArray$ = splittedLocationPath.map((val, ind) => {
+      //labels for base pages (employees, entities, projects)
+      if (ind === 0) {
+        return this.getNavLabel(val);
       }
 
-      const translation$ = this.langService.getTranslationObservable(
-        (arr[0] === 'entities' && ind === arr.length - 1 && ind !== 0
-          ? 'ENTITIES.'
-          : 'NAV.') + val
-      );
+      //translated labels for entities (languages, skills, responsibilities)
+      if (splittedLocationPath[0] === 'entities') {
+        const link = '/' + splittedLocationPath.slice(0, ind + 1).join('/');
+        return this.getEntitiesLabel(val, link);
+      }
 
-      const translatedLabel$ = translation$.pipe(
-        map(translated => {
+      //find name for employee or project in the store
+      const link = '/' + splittedLocationPath.slice(0, ind + 1).join('/');
+
+      return this.store.select(
+        splittedLocationPath[0] === 'employees'
+          ? selectEmployeeCrumbById({ id: val, link })
+          : selectProjectCrumbById({ id: val, link })
+      );
+    });
+
+    return combineLatest(crumbsArray$);
+  }
+
+  private getNavLabel(
+    pathSegment: string
+  ): Observable<{ label: string; routerLink: string }> {
+    return this.langService.getTranslationObservable('NAV.' + pathSegment).pipe(
+      map(translatedLabel => {
+        return {
+          label: translatedLabel,
+          routerLink: '/' + pathSegment,
+        };
+      })
+    );
+  }
+
+  private getEntitiesLabel(
+    pathSegment: string,
+    link: string
+  ): Observable<{ label: string; routerLink: string }> {
+    return this.langService
+      .getTranslationObservable('ENTITIES.' + pathSegment)
+      .pipe(
+        map(translatedLabel => {
           return {
-            label: translated,
-            routerLink: '/' + arr.slice(0, ind + 1).join('/'),
+            label: translatedLabel,
+            routerLink: link,
           };
         })
       );
-      return translatedLabel$;
-    });
-
-    return combineLatest(pathArr);
   }
 }
