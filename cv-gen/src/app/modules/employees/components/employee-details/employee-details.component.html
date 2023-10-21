@@ -1,7 +1,9 @@
 <ng-container *ngIf="(loading$ | async) === false; else spinner">
   <div class="info" *ngIf="employee$ | async as employee; else fileAbsent">
     <h2>{{ employee.firstName }} {{ employee.lastName }}</h2>
-    <p-tabView>
+    <p-tabView
+      (onChange)="changeActivePage($event)"
+      [activeIndex]="currentPageIndex">
       <p-tabPanel [header]="'EMPLOYEES.tabs.info.title' | translate">
         <app-employee-form
           [employee]="employee"

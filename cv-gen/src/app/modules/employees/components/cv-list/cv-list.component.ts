@@ -9,11 +9,10 @@ import {
 import { CvInterface } from '../../../core/models/cv.models';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectCvsArrayByEmployeeId } from '../../store/selectors/cv.selectors';
-import { ConfirmationService } from 'primeng/api';
-import { FormControl, Validators } from '@angular/forms';
-import { ConfirmDialog } from 'primeng/confirmdialog';
-import { nameExistsValidator } from '../../../core/utils/name-exists.async-validator';
+import {
+  selectCvsArrayByEmployeeId,
+  selectPickedCv,
+} from '../../store/selectors/cv.selectors';
 import { CvActions } from '../../store/actions/cv.actions';
 import { ResizeService } from '../../../core/services/resize.service';
 
@@ -22,22 +21,18 @@ import { ResizeService } from '../../../core/services/resize.service';
   templateUrl: './cv-list.component.html',
   styleUrls: ['./cv-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ConfirmationService],
 })
 export class CvListComponent implements OnInit {
   @Input() employeeId = '';
-  @Output() setCvId = new EventEmitter<{ id: string; name: string }>();
+  @Output() openAddCvPopup = new EventEmitter();
 
   public cvsObservable$!: Observable<CvInterface[]>;
-  public cvsArray: CvInterface[] = [];
-  public newCvNameControl!: FormControl<string | null>;
+  public pickedCv$ = this.store.select(selectPickedCv);
   public sidebarVisible = false;
   public widowSizeMedium$ = this.resizeService.widowSizeMedium$;
-  public selectedCv: CvInterface | null = null;
 
   constructor(
     private store: Store,
-    private confirmationService: ConfirmationService,
     private resizeService: ResizeService
   ) {}
 
@@ -45,44 +40,19 @@ export class CvListComponent implements OnInit {
     this.cvsObservable$ = this.store.select(
       selectCvsArrayByEmployeeId({ employeeId: this.employeeId })
     );
-
-    this.newCvNameControl = new FormControl('', {
-      validators: [Validators.required],
-      asyncValidators: [nameExistsValidator(this.cvsObservable$)],
-      updateOn: 'change',
-    });
   }
 
-  public removeCv(event: Event, id: string): void {
+  public removeCv(event: Event, id: string, isDeletedCvPicked: boolean): void {
     event.stopPropagation();
     this.store.dispatch(CvActions.deleteCv({ id }));
-  }
 
-  public setPickedId(cvId: string, cvName: string): void {
-    this.setCvId.emit({ id: cvId, name: cvName });
-    this.sidebarVisible = false;
-  }
-
-  public checkFormValidity(cd: ConfirmDialog): void {
-    this.newCvNameControl.updateValueAndValidity();
-    if (this.newCvNameControl.valid) {
-      cd.accept();
-    } else {
-      this.newCvNameControl.markAsTouched();
+    if (isDeletedCvPicked) {
+      this.changePickedCv(null);
     }
   }
 
-  public addCv(): void {
-    this.confirmationService.confirm({
-      accept: () => {
-        this.setPickedId(
-          'new',
-          this.newCvNameControl.value ? this.newCvNameControl.value : ''
-        );
-      },
-      reject: () => {
-        this.confirmationService.close();
-      },
-    });
+  public changePickedCv(cv: CvInterface | null) {
+    this.store.dispatch(CvActions.setPickedCv({ cv }));
+    this.sidebarVisible = false;
   }
 }

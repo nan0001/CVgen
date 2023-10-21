@@ -17,5 +17,10 @@ export const CvActions = createActionGroup({
       newValue: Omit<CvInterface, 'id'>;
     }>(),
     'Cv with such name already exists': emptyProps(),
+    'Set picked Cv': props<{
+      cv: CvInterface | null;
+      updateEmployee?: boolean;
+    }>(),
+    'Void action': emptyProps(),
   },
 });

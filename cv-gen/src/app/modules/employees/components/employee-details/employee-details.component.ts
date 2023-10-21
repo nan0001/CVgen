@@ -13,6 +13,7 @@ import {
   selectEmployeeById,
   selectEmployeeLoading,
 } from '../../store/selectors/employee.selectors';
+import { TabViewChangeEvent } from 'primeng/tabview';
 
 @Component({
   selector: 'app-employee-details',
@@ -24,8 +25,8 @@ export class EmployeeDetailsComponent implements OnInit {
   @Input() id = '';
 
   public employee$!: Observable<EmployeeInterface | null>;
-  public showSaveMessage = false;
   public loading$ = this.store.select(selectEmployeeLoading);
+  public currentPageIndex = 0;
 
   constructor(
     private router: Router,
@@ -39,5 +40,9 @@ export class EmployeeDetailsComponent implements OnInit {
 
   public navigateToList() {
     this.router.navigateByUrl('employees');
+  }
+
+  public changeActivePage(event: TabViewChangeEvent): void {
+    this.currentPageIndex = event.index;
   }
 }

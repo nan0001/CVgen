@@ -1,9 +1,37 @@
 <div class="wrapper flex gap-3 w-full">
   <app-cv-list
-    (setCvId)="setPickedCv($event)"
+    (openAddCvPopup)="addCv()"
     [employeeId]="employee.id"></app-cv-list>
-  <app-cv-info
-    *ngIf="pickedCv$ | async as cv"
-    [cv]="cv"
-    (changePickedCvAfterAdding)="changePicked($event)"></app-cv-info>
+  <app-cv-info *ngIf="pickedCv$ | async as cv" [cv]="cv"></app-cv-info>
+</div>
+
+<div class="card flex justify-content-center gap-2">
+  <p-confirmDialog #cd styleClass="confirm">
+    <ng-template pTemplate="header">
+      <div class="flex flex-column gap-2 w-full align-items-start">
+        <h3 class="text-center w-full">{{ 'DIALOGS.addCv' | translate }}</h3>
+        <app-labelled-input
+          class="w-full"
+          controlName="newCvNameControl"
+          [errors]="newCvNameControl.errors"
+          [showError]="newCvNameControl.invalid && newCvNameControl.touched"
+          [showLabel]="false">
+          <input type="text" pInputText [formControl]="newCvNameControl" />
+        </app-labelled-input>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="flex gap-2 align-items-center justify-content-end w-full">
+        <p-button
+          type="button"
+          styleClass="p-button-raised p-button-text"
+          [label]="'BUTTONS.cancel' | translate"
+          (click)="cd.reject()"></p-button>
+        <p-button
+          type="button"
+          [label]="'BUTTONS.save' | translate"
+          (click)="checkFormValidity(cd)"></p-button>
+      </div>
+    </ng-template>
+  </p-confirmDialog>
 </div>

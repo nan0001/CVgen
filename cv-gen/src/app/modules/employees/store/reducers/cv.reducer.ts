@@ -5,11 +5,13 @@ import { CvInterface } from '../../../core/models/cv.models';
 export interface CvState {
   cvs: CvInterface[];
   isLoading: boolean;
+  pickedCv: CvInterface | null;
 }
 
 export const initialState: CvState = {
   cvs: [],
   isLoading: false,
+  pickedCv: null,
 };
 
 export const reducer = createReducer(
@@ -26,5 +28,9 @@ export const reducer = createReducer(
   on(
     CvActions.loadingFailure,
     (state): CvState => ({ ...state, cvs: [], isLoading: false })
+  ),
+  on(
+    CvActions.setPickedCv,
+    (state, action): CvState => ({ ...state, pickedCv: action.cv })
   )
 );
