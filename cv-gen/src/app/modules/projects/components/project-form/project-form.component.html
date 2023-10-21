@@ -27,8 +27,7 @@
       class="field col-12 sm:col-8"
       [showLabel]="false"
       [errors]="dates.errors"
-      [showError]="dates.invalid && dates.touched"
-      [translationParams]="['INFO.startDate', 'INFO.endDate']">
+      [showError]="dates.invalid && dates.touched">
       <app-double-date
         [startDate]="dates.value.start"
         [endDate]="dates.value.end"

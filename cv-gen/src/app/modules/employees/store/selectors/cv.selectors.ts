@@ -16,6 +16,11 @@ export const selectCvsCollection = createSelector(
   (state: CvState) => state.cvs
 );
 
+export const selectPickedCv = createSelector(
+  selectCvs,
+  (state: CvState) => state.pickedCv
+);
+
 export const selectCvById = (props: { id: string }) =>
   createSelector(selectCvs, (state: CvState) => {
     const cv: CvInterface | undefined = state.cvs.find(
@@ -32,15 +37,4 @@ export const selectCvById = (props: { id: string }) =>
 export const selectCvsArrayByEmployeeId = (props: { employeeId: string }) =>
   createSelector(selectCvs, (state: CvState) => {
     return state.cvs.filter(val => val.employeeId === props.employeeId);
-  });
-
-export const selectNewlyAddedCv = (props: { newCv: Omit<CvInterface, 'id'> }) =>
-  createSelector(selectCvs, (state: CvState) => {
-    const cvWithId = state.cvs.find(
-      val =>
-        val.employeeId === props.newCv.employeeId &&
-        val.name === props.newCv.name
-    );
-
-    return cvWithId ? cvWithId : null;
   });

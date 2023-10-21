@@ -16,21 +16,33 @@
   <ng-container *ngIf="cvsObservable$ | async as items">
     <div class="flex flex-column gap-3 content-wrapper">
       <p-listbox
+        *ngIf="{ pickedCv: pickedCv$ | async } as pickedCvObject"
         [options]="items"
         optionLabel="name"
         [filter]="true"
-        [(ngModel)]="selectedCv"
+        [ngModel]="pickedCv$ | async"
+        (ngModelChange)="changePickedCv($event)"
         [style]="{ width: '15rem' }">
         <ng-template let-item pTemplate="item">
-          <div class="flex justify-content-between align-items-center w-full">
+          <div
+            class="flex justify-content-between align-items-center w-full item-wrapper"
+            [ngClass]="{
+              'p-highlight': item.id === pickedCvObject.pickedCv?.id
+            }">
             <button
               class="cv-item flex justify-content-between align-items-center w-full"
-              (click)="setPickedId(item.id, item.name)">
+              (click)="changePickedCv(item)">
               <span class="span line-height-1">{{ item.name }}</span>
               <p-button
                 icon="pi pi-trash"
                 styleClass="p-button-text p-button-rounded"
-                (onClick)="removeCv($event, item.id)"></p-button>
+                (onClick)="
+                  removeCv(
+                    $event,
+                    item.id,
+                    item.id === pickedCvObject.pickedCv?.id
+                  )
+                "></p-button>
             </button>
           </div>
         </ng-template>
@@ -41,38 +53,7 @@
         [label]="'CV.addCv' | translate"
         styleClass="p-button-raised"
         type="submit"
-        (onClick)="addCv()"></p-button>
+        (onClick)="openAddCvPopup.emit()"></p-button>
     </div>
   </ng-container>
 </ng-template>
-
-<div class="card flex justify-content-center gap-2">
-  <p-confirmDialog #cd styleClass="confirm">
-    <ng-template pTemplate="header">
-      <div class="flex flex-column gap-2 w-full align-items-start">
-        <h3 class="text-center w-full">{{ 'DIALOGS.addCv' | translate }}</h3>
-        <app-labelled-input
-          class="w-full"
-          controlName="newCvNameControl"
-          [errors]="newCvNameControl.errors"
-          [showError]="newCvNameControl.invalid && newCvNameControl.touched"
-          [showLabel]="false">
-          <input type="text" pInputText [formControl]="newCvNameControl" />
-        </app-labelled-input>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <div class="flex gap-2 align-items-center justify-content-end w-full">
-        <p-button
-          type="button"
-          styleClass="p-button-raised p-button-text"
-          [label]="'BUTTONS.cancel' | translate"
-          (click)="cd.reject()"></p-button>
-        <p-button
-          type="button"
-          [label]="'BUTTONS.save' | translate"
-          (click)="checkFormValidity(cd)"></p-button>
-      </div>
-    </ng-template>
-  </p-confirmDialog>
-</div>

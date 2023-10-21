@@ -44,8 +44,7 @@
             [errors]="project.controls.dates.errors"
             [showError]="
               project.controls.dates.invalid && project.controls.dates.touched
-            "
-            [translationParams]="['INFO.startDate', 'INFO.endDate']">
+            ">
             <app-double-date
               [startDate]="project.controls.dates.value.start"
               [endDate]="project.controls.dates.value.end"

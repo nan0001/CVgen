@@ -5,8 +5,6 @@ import {
   OnInit,
   OnChanges,
   SimpleChanges,
-  Output,
-  EventEmitter,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -31,10 +29,7 @@ import { DialogComponent } from '../../../shared/components/dialog/dialog.compon
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CvInfoComponent implements OnInit, OnChanges {
-  @Input() cv!: CvInterface | Omit<CvInterface, 'id'>;
-  @Output() changePickedCvAfterAdding = new EventEmitter<
-    Omit<CvInterface, 'id'>
-  >();
+  @Input() cv!: CvInterface;
 
   public infoForm!: FormGroup;
   public message = '';
@@ -53,13 +48,13 @@ export class CvInfoComponent implements OnInit, OnChanges {
   public ngOnInit(): void {
     this.createControls();
 
-    this.previewDisabled = !('id' in this.cv);
-    this.message = 'id' in this.cv ? 'INFO.infoSaved' : 'INFO.newAdded';
+    this.previewDisabled = !this.cv.id;
+    this.message = this.cv.id ? 'INFO.infoSaved' : 'INFO.newAdded';
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['cv']) {
-      this.createControls();
+    if (changes['cv'] && this.infoForm) {
+      this.updateValuesOnCvChange();
     }
   }
 
@@ -76,6 +71,8 @@ export class CvInfoComponent implements OnInit, OnChanges {
   }
 
   public onSubmit(dialog: DialogComponent): void {
+    this.infoForm.updateValueAndValidity();
+
     if (this.infoForm.valid) {
       dialog.showMessage();
 
@@ -84,7 +81,7 @@ export class CvInfoComponent implements OnInit, OnChanges {
         ...formValue,
       } as Omit<CvInterface, 'id' | 'employeeId' | 'name'>;
 
-      if ('id' in this.cv) {
+      if (this.cv.id) {
         this.store.dispatch(
           CvActions.updateCv({
             data: newValue,
@@ -101,12 +98,6 @@ export class CvInfoComponent implements OnInit, OnChanges {
             },
           })
         );
-
-        this.changePickedCvAfterAdding.emit({
-          ...newValue,
-          name: this.cv.name,
-          employeeId: this.cv.employeeId,
-        });
       }
     }
 
@@ -138,5 +129,13 @@ export class CvInfoComponent implements OnInit, OnChanges {
         [Validators.required, Validators.minLength(2)],
       ],
     });
+  }
+
+  private updateValuesOnCvChange(): void {
+    this.previewDisabled = !this.cv.id;
+    this.message = this.cv.id ? 'INFO.infoSaved' : 'INFO.newAdded';
+    this.firstName.setValue(this.cv.firstName);
+    this.lastName.setValue(this.cv.lastName);
+    this.description.setValue(this.cv.description);
   }
 }

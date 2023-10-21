@@ -33,3 +33,22 @@ export const selectProjectById = (props: { id: string }) =>
 
     return null;
   });
+
+export const selectProjectNameById = (props: { id: string }) =>
+  createSelector(
+    selectProjectById({ id: props.id }),
+    (project: ProjectInterface | null) => {
+      return project ? project.name : '';
+    }
+  );
+
+export const selectProjectCrumbById = (props: { id: string; link: string }) =>
+  createSelector(
+    selectProjectById({ id: props.id }),
+    (project: ProjectInterface | null) => {
+      return {
+        label: project ? project.name : '',
+        routerLink: props.link,
+      };
+    }
+  );

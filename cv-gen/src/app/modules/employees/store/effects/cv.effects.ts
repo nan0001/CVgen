@@ -106,10 +106,9 @@ export class CvEffects {
 
           const cvAction$ = add$.pipe(
             map(id => {
-              return EmployeeActions.updateCv({
-                cvId: id,
-                employeeId: action.newValue.employeeId,
-                addCv: true,
+              return CvActions.setPickedCv({
+                cv: { ...action.newValue, id },
+                updateEmployee: true,
               });
             }),
             catchError((errorResponse: FirestoreError) => {
@@ -123,6 +122,25 @@ export class CvEffects {
         }
 
         return of(CvActions.cvWithSuchNameAlreadyExists());
+      })
+    );
+  });
+
+  public updateEmployeeOnNewCv$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(CvActions.setPickedCv),
+      switchMap(action => {
+        if (action.updateEmployee) {
+          return of(
+            EmployeeActions.updateCv({
+              cvId: action.cv?.id || '',
+              employeeId: action.cv?.employeeId || '',
+              addCv: true,
+            })
+          );
+        }
+
+        return of(CvActions.voidAction());
       })
     );
   });

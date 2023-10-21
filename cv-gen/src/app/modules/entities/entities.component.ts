@@ -41,15 +41,9 @@ export class EntitiesComponent {
     private resizeService: ResizeService
   ) {}
 
-  public navigateToEntitiesList(
-    listName: EntitiesListsType,
-    name: string
-  ): void {
+  public navigateToEntitiesList(listName: EntitiesListsType): void {
     this.router.navigate([listName], {
       relativeTo: this.route,
-      state: {
-        name,
-      },
     });
   }
 }

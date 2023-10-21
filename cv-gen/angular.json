@@ -31,6 +31,7 @@
             "polyfills": [
               "zone.js"
             ],
+            "allowedCommonJsDependencies": ["rgbcolor", "html2canvas", "dompurify", "raf", "core-js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
