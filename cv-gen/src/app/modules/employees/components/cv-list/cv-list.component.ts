@@ -51,7 +51,7 @@ export class CvListComponent implements OnInit {
     }
   }
 
-  public changePickedCv(cv: CvInterface | null) {
+  public changePickedCv(cv: CvInterface | null): void {
     this.store.dispatch(CvActions.setPickedCv({ cv }));
     this.sidebarVisible = false;
   }
