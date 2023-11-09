@@ -7,12 +7,12 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { ValidatorType } from './models/validator.model';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '../core/store/actions/auth.actions';
 import { selectAuthError } from '../core/store/selectors/auth.selectors';
 import { ThemeService } from '../core/services/theme.service';
+import { VALIDATORS } from './constants/validators.constant';
 
 @Component({
   selector: 'app-auth',
@@ -37,10 +37,10 @@ export class AuthComponent {
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(15),
-        this.createValidator('hasLowerCase'),
-        this.createValidator('hasUpperCase'),
-        this.createValidator('hasNumeric'),
-        this.createValidator('hasSpecialChars'),
+        this.createValidator(VALIDATORS.HasLowerCase),
+        this.createValidator(VALIDATORS.HasUpperCase),
+        this.createValidator(VALIDATORS.HasNumeric),
+        this.createValidator(VALIDATORS.HasSpecialChars),
       ],
     ],
   });
@@ -79,22 +79,22 @@ export class AuthComponent {
     this.router.navigate(['']);
   }
 
-  private createValidator(propName: ValidatorType): ValidatorFn {
+  private createValidator(propName: VALIDATORS): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
       let passwordValid = false;
 
       switch (propName) {
-        case 'hasLowerCase':
+        case VALIDATORS.HasLowerCase:
           passwordValid = /[a-z]+/.test(value);
           break;
-        case 'hasNumeric':
+        case VALIDATORS.HasNumeric:
           passwordValid = /[0-9]+/.test(value);
           break;
-        case 'hasUpperCase':
+        case VALIDATORS.HasUpperCase:
           passwordValid = /[A-Z]+/.test(value);
           break;
-        case 'hasSpecialChars':
+        case VALIDATORS.HasSpecialChars:
           passwordValid = /\W|_+/.test(value);
           break;
         default:
